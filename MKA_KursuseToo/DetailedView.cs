@@ -29,9 +29,43 @@ namespace MKA_KursuseToo
                 {
                     con.Open();
 
-                    string query = @"SELECT *
-                                     FROM weapons
-                                     WHERE Id = @id;";
+
+                    string query = @"
+                                    SELECT
+                                        w.id AS weapon_id,
+                                        w.name,
+                                        w.weapon_type_id,
+                                        w.physical_damage,
+                                        w.magic_damage,
+                                        w.fire_damage,
+                                        w.lightning_damage,
+                                        w.holy_damage,
+                                        w.critical,
+                                        w.guard_boost,
+                                        w.weight,
+                                        w.upgrade_path,
+                                        w.max_upgrade_level,
+                                        w.passive_effect,
+                                        w.location,
+
+                                        wr.strength AS required_strength,
+                                        wr.dexterity AS required_dexterity,
+                                        wr.intelligence AS required_intelligence,
+                                        wr.faith AS required_faith,
+                                        wr.arcane AS required_arcane,
+
+                                        ws.strength_grade_id,
+                                        ws.dexterity_grade_id,
+                                        ws.intelligence_grade_id,
+                                        ws.faith_grade_id,
+                                        ws.arcane_grade_id
+
+                                    FROM weapons w
+                                    LEFT JOIN weapon_requirements wr ON w.id = wr.weapon_id
+                                    LEFT JOIN weapon_scaling ws ON w.id = ws.weapon_id
+                                    WHERE w.id = @id;";
+
+
 
                     using (var cmd = new SqliteCommand(query, con))
                     {
