@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
@@ -240,6 +241,32 @@ namespace MKA_KursuseToo
             }
 
             DetailedViewGrid.DataSource = displayTable;
+            FitWindowToContent();
+        }
+
+        // Resizes the window so the whole grid fits without scrollbars (capped to the screen size)
+        private void FitWindowToContent()
+        {
+            DetailedViewGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            DetailedViewGrid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
+
+            int gridWidth = DetailedViewGrid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
+                            + SystemInformation.VerticalScrollBarWidth   // room in case a scrollbar is still needed
+                            + 2;                                         // grid border
+            int gridHeight = DetailedViewGrid.ColumnHeadersHeight
+                             + DetailedViewGrid.Rows.GetRowsHeight(DataGridViewElementStates.Visible)
+                             + 2;
+
+            int width = Math.Max(gridWidth, Math.Max(lblName.PreferredWidth, pnlScalingOptions.PreferredSize.Width));
+            int height = lblName.Height + pnlScalingOptions.Height + gridHeight;
+
+            // Don't grow past the screen the window is on
+            Rectangle screen = Screen.FromControl(this).WorkingArea;
+            Size chrome = Size - ClientSize;   // title bar + borders
+            width = Math.Min(width, screen.Width - chrome.Width);
+            height = Math.Min(height, screen.Height - chrome.Height);
+
+            ClientSize = new Size(width, height);
         }
 
         private void cmbAffinity_SelectedIndexChanged(object sender, EventArgs e)
