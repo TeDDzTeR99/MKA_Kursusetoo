@@ -124,7 +124,7 @@ namespace MKA_KursuseToo
         {
             try
             {
-                int enabled = 1;
+                var enabled = 1;
                 DwmSetWindowAttribute(form.Handle, DwmUseImmersiveDarkMode, ref enabled, sizeof(int));
             }
             catch (Exception)

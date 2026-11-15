@@ -67,5 +67,48 @@ namespace MKA_KursuseToo.Properties
                 resourceCulture = value;
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to: Database not found at:  {0}
+        /// </summary>
+        internal static string DatabaseNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("DatabaseNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Error
+        /// </summary>
+        internal static string ErrorTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Please enter something to search.
+        /// </summary>
+        internal static string EnterSearchText
+        {
+            get
+            {
+                return ResourceManager.GetString("EnterSearchText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Weapon not found.
+        /// </summary>
+        internal static string WeaponNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("WeaponNotFound", resourceCulture);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Drawing;
 using System.Windows.Forms;
+using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
@@ -60,7 +61,7 @@ namespace MKA_KursuseToo
 
         private void LoadGradeRanges()
         {
-            DataTable grades = WeaponDatabase.Query("SELECT grade, min_value, max_value FROM scaling_grades;");
+            var grades = WeaponDatabase.Query("SELECT grade, min_value, max_value FROM scaling_grades;");
 
             foreach (DataRow g in grades.Rows)
             {
@@ -78,7 +79,7 @@ namespace MKA_KursuseToo
         // Fills the affinity dropdown with the affinities that have scaling data for this weapon
         private void LoadAffinities()
         {
-            DataTable affinities = WeaponDatabase.Query(
+            var affinities = WeaponDatabase.Query(
                 @"SELECT DISTINCT a.id, a.name
                   FROM weapon_scaling ws
                   JOIN affinities a ON a.id = ws.affinity_id
@@ -101,7 +102,7 @@ namespace MKA_KursuseToo
         // Fills the level dropdown with the levels that have data for the selected affinity
         private void LoadLevels()
         {
-            DataTable levels = WeaponDatabase.Query(
+            var levels = WeaponDatabase.Query(
                 @"SELECT upgrade_level, '+' || upgrade_level AS label
                   FROM weapon_scaling
                   WHERE weapon_id = @id AND affinity_id = @affinity
@@ -176,21 +177,21 @@ namespace MKA_KursuseToo
                 LEFT JOIN scaling_grades g_arc ON g_arc.id = ws.arcane_grade_id
                 WHERE w.id = @id;";
 
-            DataTable dt = WeaponDatabase.Query(query, new Dictionary<string, object>
+            var dt = WeaponDatabase.Query(query, new Dictionary<string, object>
             {
                 { "@id", _itemId },
-                { "@affinity", cmbAffinity.SelectedValue ?? (object)DBNull.Value },
-                { "@level", cmbLevel.SelectedValue ?? (object)DBNull.Value }
+                { "@affinity", cmbAffinity.SelectedValue ?? DBNull.Value },
+                { "@level", cmbLevel.SelectedValue ?? DBNull.Value }
             });
 
             if (dt.Rows.Count == 0)
             {
-                MessageBox.Show("Weapon not found.");
+                MessageBox.Show(Resources.WeaponNotFound);
                 Close();
                 return;
             }
 
-            DataRow row = dt.Rows[0];
+            var row = dt.Rows[0];
             lblName.Text = row["name"].ToString();
 
             var displayTable = new DataTable();
@@ -206,12 +207,12 @@ namespace MKA_KursuseToo
                     || col.ColumnName.EndsWith("_scaling_value"))
                     continue;
 
-                string value = row[col]?.ToString();
+                var value = row[col]?.ToString();
 
                 if (col.ColumnName.EndsWith("_scaling") && !string.IsNullOrEmpty(value))
                 {
-                    string grade = value;
-                    string number = row[col.ColumnName + "_value"]?.ToString();
+                    var grade = value;
+                    var number = row[col.ColumnName + "_value"]?.ToString();
 
                     // Show the exact number when we have it, e.g. "52 (D)"; otherwise just "D"
                     if (!string.IsNullOrEmpty(number))
@@ -227,13 +228,18 @@ namespace MKA_KursuseToo
 
             DetailedViewGrid.DataSource = displayTable;
 
-            // Field names in a shaded gold column, like a wiki infobox
-            DataGridViewCellStyle fieldStyle = DetailedViewGrid.Columns["Field"].DefaultCellStyle;
-            fieldStyle.BackColor = Theme.HeaderBack;
-            fieldStyle.ForeColor = Theme.Accent;
-            fieldStyle.SelectionBackColor = Theme.HeaderBack;
-            fieldStyle.SelectionForeColor = Theme.Accent;
-            fieldStyle.Font = Theme.BoldFont;
+            // Field names in a shaded gold column, like a wiki infobox.
+            // Columns["..."] returns null if no column has that name, so check before using it.
+            var fieldColumn = DetailedViewGrid.Columns["Field"];
+            if (fieldColumn != null)
+            {
+                var fieldStyle = fieldColumn.DefaultCellStyle;
+                fieldStyle.BackColor = Theme.HeaderBack;
+                fieldStyle.ForeColor = Theme.Accent;
+                fieldStyle.SelectionBackColor = Theme.HeaderBack;
+                fieldStyle.SelectionForeColor = Theme.Accent;
+                fieldStyle.Font = Theme.BoldFont;
+            }
 
             FitWindowToContent();
         }
@@ -245,7 +251,10 @@ namespace MKA_KursuseToo
         private void FitWindowToContent()
         {
             // Measure columns on one line first (with wrapping on, WinForms picks the narrowest possible width)
-            DataGridViewColumn valueColumn = DetailedViewGrid.Columns["Value"];
+            var valueColumn = DetailedViewGrid.Columns["Value"];
+            if (valueColumn == null)
+                return;   // nothing loaded into the grid yet
+
             DetailedViewGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
             DetailedViewGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
@@ -256,23 +265,23 @@ namespace MKA_KursuseToo
 
             DetailedViewGrid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
 
-            int gridWidth = DetailedViewGrid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
+            var gridWidth = DetailedViewGrid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
                             + SystemInformation.VerticalScrollBarWidth   // room in case a scrollbar is still needed
                             + 2;                                         // grid border
-            int headerHeight = DetailedViewGrid.ColumnHeadersVisible ? DetailedViewGrid.ColumnHeadersHeight : 0;
-            int gridHeight = headerHeight
+            var headerHeight = DetailedViewGrid.ColumnHeadersVisible ? DetailedViewGrid.ColumnHeadersHeight : 0;
+            var gridHeight = headerHeight
                              + DetailedViewGrid.Rows.GetRowsHeight(DataGridViewElementStates.Visible)
                              + 2;
 
-            int width = Math.Max(gridWidth, Math.Max(lblName.PreferredWidth, pnlScalingOptions.PreferredSize.Width));
+            var width = Math.Max(gridWidth, Math.Max(lblName.PreferredWidth, pnlScalingOptions.PreferredSize.Width));
             // Space taken by everything above the grid (title + dropdowns), measured after layout
             PerformLayout();
-            int spaceAboveGrid = ClientSize.Height - DetailedViewGrid.Height;
-            int height = spaceAboveGrid + gridHeight;
+            var spaceAboveGrid = ClientSize.Height - DetailedViewGrid.Height;
+            var height = spaceAboveGrid + gridHeight;
 
             // Don't grow past the screen the window is on
-            Rectangle screen = Screen.FromControl(this).WorkingArea;
-            Size chrome = Size - ClientSize;   // title bar + borders
+            var screen = Screen.FromControl(this).WorkingArea;
+            var chrome = Size - ClientSize;   // title bar + borders
             width = Math.Min(width, screen.Width - chrome.Width);
             height = Math.Min(height, screen.Height - chrome.Height);
 
@@ -283,9 +292,9 @@ namespace MKA_KursuseToo
         // Moves the window so it is fully inside the screen (e.g. after it grew taller)
         private void KeepOnScreen()
         {
-            Rectangle screen = Screen.FromControl(this).WorkingArea;
-            int left = Math.Max(screen.Left, Math.Min(Left, screen.Right - Width));
-            int top = Math.Max(screen.Top, Math.Min(Top, screen.Bottom - Height));
+            var screen = Screen.FromControl(this).WorkingArea;
+            var left = Math.Max(screen.Left, Math.Min(Left, screen.Right - Width));
+            var top = Math.Max(screen.Top, Math.Min(Top, screen.Bottom - Height));
             Location = new Point(left, top);
         }
 
@@ -315,7 +324,7 @@ namespace MKA_KursuseToo
         // Turns a database column name into a label for the user, e.g. "weapon_type" -> "Weapon Type"
         private static string ToDisplayName(string columnName)
         {
-            string spaced = columnName.Replace('_', ' ');
+            var spaced = columnName.Replace('_', ' ');
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spaced);
         }
 
@@ -325,7 +334,7 @@ namespace MKA_KursuseToo
 
             var field = DetailedViewGrid.Rows[e.RowIndex].Cells["Field"].Value as string;
 
-            if (field != null && _toolTips.TryGetValue(field, out string tip))
+            if (field != null && _toolTips.TryGetValue(field, out var tip))
                 e.ToolTipText = tip;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows.Forms;
+using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
@@ -36,8 +36,8 @@ namespace MKA_KursuseToo
             if (!WeaponDatabase.Exists)
             {
                 MessageBox.Show(
-                    "Database not found at:\n\n" + WeaponDatabase.DbPath,
-                    "Error",
+                    string.Format(Resources.DatabaseNotFound, WeaponDatabase.DbPath),
+                    Resources.ErrorTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -48,7 +48,7 @@ namespace MKA_KursuseToo
             LoadWeapons(@"SELECT id AS Id, name AS Name FROM weapons ORDER BY name;");
         }
 
-        // Loads a list of weapons. The query must return Id and Name columns.
+        // Loads a list of weapons. The query must return ID and Name columns.
         private void LoadWeapons(string query, Dictionary<string, object> parameters = null)
         {
             ShowList(query, parameters, "Weapon Name", ViewMode.Weapons);
@@ -78,23 +78,24 @@ namespace MKA_KursuseToo
                 });
         }
 
-        // Shows a query result (Id + Name) in the grid: a hidden Id column and a clickable Name column
+        // Shows a query result (ID + Name) in the grid: a hidden ID column and a clickable Name column
         private void ShowList(string query, Dictionary<string, object> parameters, string header, ViewMode mode)
         {
             try
             {
-                DataTable dt = WeaponDatabase.Query(query, parameters);
+                var dt = WeaponDatabase.Query(query, parameters);
 
                 DataOutput.DataSource = null;
                 DataOutput.Columns.Clear();
                 DataOutput.AutoGenerateColumns = false;
 
-                DataOutput.Columns.Add(new DataGridViewTextBoxColumn
+                var idColumn = new DataGridViewTextBoxColumn
                 {
                     Name = "Id",
                     DataPropertyName = "Id",
                     Visible = false
-                });
+                };
+                DataOutput.Columns.Add(idColumn);
 
                 var nameColumn = new DataGridViewLinkColumn
                 {
@@ -108,7 +109,7 @@ namespace MKA_KursuseToo
 
                 // Attach the data after the columns exist, otherwise WinForms can un-hide the Id column
                 DataOutput.DataSource = dt;
-                DataOutput.Columns["Id"].Visible = false;
+                idColumn.Visible = false;
 
                 _currentViewMode = mode;
             }
@@ -120,11 +121,11 @@ namespace MKA_KursuseToo
 
         private void Search_Click(object sender, EventArgs e)
         {
-            string searchValue = SearchBox.Text.Trim();
+            var searchValue = SearchBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(searchValue))
             {
-                MessageBox.Show("Please enter something to search.");
+                MessageBox.Show(Resources.EnterSearchText);
                 return;
             }
 
