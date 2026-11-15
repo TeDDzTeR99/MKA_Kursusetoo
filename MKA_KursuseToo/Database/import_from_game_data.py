@@ -5,6 +5,7 @@ Imports weapon data from the game into elden_ring_weapons.db:
   - base damage (Standard, +0) in the weapons table
   - stat requirements (weapon_requirements)
   - upgrade path / max upgrade level
+  - weapon type
 
 Data source: Elden Ring regulation data (patch 1.17) extracted by the
 elden-ring-weapon-calculator project by Tom Clark (MIT license):
@@ -29,6 +30,18 @@ import sys
 import unicodedata
 
 ATTRIBUTES = ["str", "dex", "int", "fai", "arc"]
+
+# weaponType id in the game data -> name in our weapon_types table
+# (ids from src/calculator/weaponTypes.ts in elden-ring-weapon-calculator)
+WEAPON_TYPES = {
+    1: "Dagger", 3: "Straight Sword", 5: "Greatsword", 7: "Colossal Sword",
+    9: "Curved Sword", 11: "Curved Greatsword", 13: "Katana", 14: "Twinblade",
+    15: "Thrusting Sword", 16: "Heavy Thrusting Sword", 17: "Axe", 19: "Greataxe",
+    21: "Hammer", 23: "Great Hammer", 24: "Flail", 25: "Spear", 28: "Great Spear",
+    29: "Halberd", 31: "Reaper", 35: "Fist", 37: "Claw", 39: "Whip",
+    41: "Colossal Weapon", 50: "Light Bow", 51: "Bow", 53: "Greatbow",
+    55: "Crossbow", 56: "Ballista", 57: "Glintstone Staff", 61: "Sacred Seal",
+}
 
 # Attack type ids in the game data: 0 physical, 1 magic, 2 fire, 3 lightning, 4 holy
 DAMAGE_TYPES = [0, 1, 2, 3, 4]
@@ -67,6 +80,8 @@ def main(data_path, db_path):
     cur = con.cursor()
     affinity_ids = dict(cur.execute("SELECT name, id FROM affinities"))
     grade_ids = dict(cur.execute("SELECT grade, id FROM scaling_grades"))
+    type_ids = dict(cur.execute("SELECT name, id FROM weapon_types"))
+    type_fixes = []
 
     imported, path_fixes, unmatched, rows = 0, [], [], 0
     damage_fixes, requirement_fixes = 0, 0
@@ -88,6 +103,16 @@ def main(data_path, db_path):
 
         # Base entry = Standard affinity (0) or unique weapon (-1)
         base_entry = next(e for e in entries if e["affinityId"] in (0, -1))
+
+        # Weapon type
+        game_type = WEAPON_TYPES[base_entry["weaponType"]]
+        old_type = cur.execute(
+            """SELECT wt.name FROM weapons w JOIN weapon_types wt ON wt.id = w.weapon_type_id
+               WHERE w.id = ?""", (weapon_id,)).fetchone()[0]
+        if old_type != game_type:
+            type_fixes.append((name, old_type, game_type))
+            cur.execute("UPDATE weapons SET weapon_type_id = ? WHERE id = ?",
+                        (type_ids[game_type], weapon_id))
 
         # Base damage (Standard, +0) in the weapons table
         base_attack = dict(base_entry["attack"])
@@ -156,6 +181,9 @@ def main(data_path, db_path):
     print(f"Imported {imported} weapons ({rows} scaling rows, {rows} damage rows)")
     print(f"Corrected base damage for {damage_fixes} weapons")
     print(f"Corrected requirements for {requirement_fixes} weapons")
+    print(f"Corrected weapon type for {len(type_fixes)} weapons:")
+    for fix in type_fixes:
+        print(f"  {fix[0]}: {fix[1]} -> {fix[2]}")
     print(f"Corrected upgrade path for {len(path_fixes)} weapons:")
     for fix in path_fixes:
         print(f"  {fix[0]}: {fix[1]} -> {fix[2]}")

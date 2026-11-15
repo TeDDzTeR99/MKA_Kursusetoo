@@ -92,12 +92,14 @@ There is also a view, `v_weapons_overview`, that joins all of the above into one
 
 ### Where the data comes from
 
-Damage, scaling, requirements and upgrade paths come from the game's own data (patch 1.17), as extracted by the open-source
+Damage, scaling, requirements, weapon types and upgrade paths come from the game's own data (patch 1.17), as extracted by the open-source
 [Elden Ring Weapon Calculator](https://github.com/ThomasJClark/elden-ring-weapon-calculator) by Tom Clark (MIT license).
 In the game, damage and scaling at a given level = the weapon's base value × the upgrade multiplier for that level.
 The values were spot-checked against the [Fextralife wiki](https://eldenring.wiki.fextralife.com).
 
-Weight, critical, guard boost, passive effect and location are not in that data and have not been verified.
+Weight, critical, guard boost and passive effect come from the weapon type pages on the
+[Fextralife wiki](https://eldenring.wiki.fextralife.com) (e.g. [Daggers](https://eldenring.wiki.fextralife.com/Daggers)),
+see `004_weight_critical_guard_passive.sql`. Location is not filled in yet.
 
 To re-import, download `public/regulation-vanilla-v1.17.js` from that repository and run:
 
@@ -114,6 +116,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `001_scaling_levels_affinities.sql` | Adds affinities, upgrade levels and grade ranges to the scaling data |
 | `002_remove_non_weapons.sql` | Removes 12 entries that weren't real weapons or were duplicates |
 | `003_damage_per_level_affinity.sql` | Adds the `weapon_damage` table for damage per affinity and upgrade level |
+| `004_weight_critical_guard_passive.sql` | Sets weight, critical, guard boost and passive effect from Fextralife |
 
 ## Author
 
