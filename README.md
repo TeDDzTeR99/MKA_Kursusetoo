@@ -15,7 +15,7 @@ Built as a course project (*kursusetöö*).
   - passive effect and location
   - required Strength / Dexterity / Intelligence / Faith / Arcane
   - scaling for each stat as exact value and grade, e.g. `52 (D)`. Hover over it to see the grade's range (`D: 25–59`)
-  - pick any **affinity** (Standard, Heavy, Keen, …) and **upgrade level** (+0 to +25, or +10 for somber weapons) to see how scaling changes
+  - pick any **affinity** (Standard, Heavy, Keen, …) and **upgrade level** (+0 to +25, or +10 for somber weapons) to see how damage and scaling change
   - the window sizes itself to fit its content
 
 ## Tech stack
@@ -71,6 +71,7 @@ MKA_KursuseToo/
 | `weapon_types` | Weapon categories (Dagger, Greatsword, …) |
 | `weapon_requirements` | Stat requirements per weapon |
 | `weapon_scaling` | Scaling grade (`*_grade_id`) and exact value (`*_value`) per stat, one row per weapon, affinity and upgrade level |
+| `weapon_damage` | Physical, magic, fire, lightning and holy damage, one row per weapon, affinity and upgrade level |
 | `affinities` | Standard, Heavy, Keen, Quality, Fire, Flame Art, Lightning, Sacred, Magic, Cold, Poison, Blood, Occult |
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
 | `damage_types` | Physical, Magic, Fire, Lightning, Holy, Pierce, Slash, Strike |
@@ -89,17 +90,19 @@ There is also a view, `v_weapons_overview`, that joins all of the above into one
 | D | 25–59 |
 | E | 1–24 |
 
-### Where the scaling data comes from
+### Where the data comes from
 
-Scaling values come from the game's own data (patch 1.17), as extracted by the open-source
+Damage, scaling, requirements and upgrade paths come from the game's own data (patch 1.17), as extracted by the open-source
 [Elden Ring Weapon Calculator](https://github.com/ThomasJClark/elden-ring-weapon-calculator) by Tom Clark (MIT license).
-In the game, scaling at a given level = the weapon's base scaling × the upgrade multiplier for that level.
+In the game, damage and scaling at a given level = the weapon's base value × the upgrade multiplier for that level.
 The values were spot-checked against the [Fextralife wiki](https://eldenring.wiki.fextralife.com).
+
+Weight, critical, guard boost, passive effect and location are not in that data and have not been verified.
 
 To re-import, download `public/regulation-vanilla-v1.17.js` from that repository and run:
 
 ```
-python MKA_KursuseToo/Database/import_scaling_from_game_data.py regulation-vanilla-v1.17.js MKA_KursuseToo/elden_ring_weapons.db
+python MKA_KursuseToo/Database/import_from_game_data.py regulation-vanilla-v1.17.js MKA_KursuseToo/elden_ring_weapons.db
 ```
 
 ### Migrations
@@ -110,6 +113,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 |---|---|
 | `001_scaling_levels_affinities.sql` | Adds affinities, upgrade levels and grade ranges to the scaling data |
 | `002_remove_non_weapons.sql` | Removes 12 entries that weren't real weapons or were duplicates |
+| `003_damage_per_level_affinity.sql` | Adds the `weapon_damage` table for damage per affinity and upgrade level |
 
 ## Author
 

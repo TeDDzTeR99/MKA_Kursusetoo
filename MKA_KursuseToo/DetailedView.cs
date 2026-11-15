@@ -147,11 +147,12 @@ namespace MKA_KursuseToo
                     w.id AS weapon_id,
                     w.name,
                     wt.name AS weapon_type,
-                    w.physical_damage,
-                    w.magic_damage,
-                    w.fire_damage,
-                    w.lightning_damage,
-                    w.holy_damage,
+                    -- Damage for the selected affinity and level
+                    wd.physical_damage,
+                    wd.magic_damage,
+                    wd.fire_damage,
+                    wd.lightning_damage,
+                    wd.holy_damage,
                     w.critical,
                     w.guard_boost,
                     w.weight,
@@ -181,6 +182,9 @@ namespace MKA_KursuseToo
                 FROM weapons w
                 LEFT JOIN weapon_types wt ON wt.id = w.weapon_type_id
                 LEFT JOIN weapon_requirements wr ON w.id = wr.weapon_id
+                LEFT JOIN weapon_damage wd ON w.id = wd.weapon_id
+                                          AND wd.affinity_id = @affinity
+                                          AND wd.upgrade_level = @level
                 LEFT JOIN weapon_scaling ws ON w.id = ws.weapon_id
                                            AND ws.affinity_id = @affinity
                                            AND ws.upgrade_level = @level

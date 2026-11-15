@@ -1,6 +1,10 @@
 """
-Imports exact attribute scaling for every weapon, affinity and upgrade level
-into elden_ring_weapons.db, and corrects each weapon's upgrade path / max level.
+Imports weapon data from the game into elden_ring_weapons.db:
+  - attribute scaling for every weapon, affinity and upgrade level (weapon_scaling)
+  - attack damage for every weapon, affinity and upgrade level (weapon_damage)
+  - base damage (Standard, +0) in the weapons table
+  - stat requirements (weapon_requirements)
+  - upgrade path / max upgrade level
 
 Data source: Elden Ring regulation data (patch 1.17) extracted by the
 elden-ring-weapon-calculator project by Tom Clark (MIT license):
@@ -12,8 +16,11 @@ How scaling works in the game:
 The number shown in game is that value * 100, rounded down. The letter grade is
 derived from the value: S >= 175, A >= 140, B >= 90, C >= 60, D >= 25, E > 0.
 
+Damage works the same way:
+    damage at level L = base damage * upgrade multiplier for level L, rounded down
+
 Usage:
-    python import_scaling_from_game_data.py <path to regulation-vanilla-v1.17.js> <path to elden_ring_weapons.db>
+    python import_from_game_data.py <path to regulation-vanilla-v1.17.js> <path to elden_ring_weapons.db>
 """
 import json
 import math
@@ -22,6 +29,9 @@ import sys
 import unicodedata
 
 ATTRIBUTES = ["str", "dex", "int", "fai", "arc"]
+
+# Attack type ids in the game data: 0 physical, 1 magic, 2 fire, 3 lightning, 4 holy
+DAMAGE_TYPES = [0, 1, 2, 3, 4]
 
 # affinityId in the game data -> name in our affinities table (-1 = unique weapon, no affinity)
 AFFINITIES = {
@@ -59,6 +69,7 @@ def main(data_path, db_path):
     grade_ids = dict(cur.execute("SELECT grade, id FROM scaling_grades"))
 
     imported, path_fixes, unmatched, rows = 0, [], [], 0
+    damage_fixes, requirement_fixes = 0, 0
 
     cur.execute("BEGIN")
     for weapon_id, name, path, max_level in cur.execute(
@@ -75,14 +86,54 @@ def main(data_path, db_path):
             cur.execute("UPDATE weapons SET upgrade_path = ?, max_upgrade_level = ? WHERE id = ?",
                         (game_path, game_max, weapon_id))
 
+        # Base entry = Standard affinity (0) or unique weapon (-1)
+        base_entry = next(e for e in entries if e["affinityId"] in (0, -1))
+
+        # Base damage (Standard, +0) in the weapons table
+        base_attack = dict(base_entry["attack"])
+        base_damage = [int(base_attack.get(t, 0)) for t in DAMAGE_TYPES]
+        old_damage = cur.execute(
+            """SELECT physical_damage, magic_damage, fire_damage, lightning_damage, holy_damage
+               FROM weapons WHERE id = ?""", (weapon_id,)).fetchone()
+        if list(old_damage) != base_damage:
+            damage_fixes += 1
+            cur.execute(
+                """UPDATE weapons SET physical_damage = ?, magic_damage = ?, fire_damage = ?,
+                                      lightning_damage = ?, holy_damage = ?
+                   WHERE id = ?""", (*base_damage, weapon_id))
+
+        # Requirements are the same for every affinity
+        req = base_entry["requirements"]
+        new_req = [req.get(a, 0) for a in ATTRIBUTES]
+        old_req = cur.execute(
+            """SELECT strength, dexterity, intelligence, faith, arcane
+               FROM weapon_requirements WHERE weapon_id = ?""", (weapon_id,)).fetchone()
+        if old_req is None or [x or 0 for x in old_req] != new_req:
+            requirement_fixes += 1
+            cur.execute("DELETE FROM weapon_requirements WHERE weapon_id = ?", (weapon_id,))
+            cur.execute(
+                """INSERT INTO weapon_requirements (weapon_id, strength, dexterity, intelligence, faith, arcane)
+                   VALUES (?, ?, ?, ?, ?, ?)""", (weapon_id, *new_req))
+
         cur.execute("DELETE FROM weapon_scaling WHERE weapon_id = ?", (weapon_id,))
+        cur.execute("DELETE FROM weapon_damage WHERE weapon_id = ?", (weapon_id,))
 
         for entry in entries:
             affinity_id = affinity_ids[AFFINITIES[entry["affinityId"]]]
             base = dict(entry["attributeScaling"])
+            attack = dict(entry["attack"])
             levels = reinforce[str(entry["reinforceTypeId"])]
 
             for level, multipliers in enumerate(levels):
+                damage = [math.floor(attack.get(t, 0) * multipliers["attack"][str(t)] + 1e-9)
+                          for t in DAMAGE_TYPES]
+                cur.execute(
+                    """INSERT INTO weapon_damage (
+                           weapon_id, affinity_id, upgrade_level,
+                           physical_damage, magic_damage, fire_damage, lightning_damage, holy_damage)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (weapon_id, affinity_id, level, *damage))
+
                 grades, values = [], []
                 for attr in ATTRIBUTES:
                     raw = base.get(attr, 0) * multipliers["attributeScaling"][attr]
@@ -102,7 +153,9 @@ def main(data_path, db_path):
 
     con.commit()
 
-    print(f"Imported {imported} weapons ({rows} scaling rows)")
+    print(f"Imported {imported} weapons ({rows} scaling rows, {rows} damage rows)")
+    print(f"Corrected base damage for {damage_fixes} weapons")
+    print(f"Corrected requirements for {requirement_fixes} weapons")
     print(f"Corrected upgrade path for {len(path_fixes)} weapons:")
     for fix in path_fixes:
         print(f"  {fix[0]}: {fix[1]} -> {fix[2]}")
