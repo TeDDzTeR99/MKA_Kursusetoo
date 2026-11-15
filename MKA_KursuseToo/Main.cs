@@ -24,16 +24,16 @@ namespace MKA_KursuseToo
             if (!File.Exists(DbPath))
             {
                 MessageBox.Show(
-                    "❌ Database NOT found at:\n\n" + DbPath,
-                    "Test Result"
+                    "Database not found at:\n\n" + DbPath,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
                 );
                 return;
             }
 
-            MessageBox.Show(
-                "✅ Database file found at:\n\n" + DbPath,
-                "Test Result"
-            );
+            // Show all weapons on startup so the grid isn't empty
+            LoadWeapons(@"SELECT Id, Name FROM weapons ORDER BY Name;");
         }
 
         // Loads weapons (Id + Name)
