@@ -60,10 +60,9 @@
             this.pnlScalingOptions.Controls.Add(this.lblLevel);
             this.pnlScalingOptions.Controls.Add(this.cmbLevel);
             this.pnlScalingOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlScalingOptions.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlScalingOptions.Location = new System.Drawing.Point(0, 36);
+                        this.pnlScalingOptions.Location = new System.Drawing.Point(0, 36);
             this.pnlScalingOptions.Name = "pnlScalingOptions";
-            this.pnlScalingOptions.Padding = new System.Windows.Forms.Padding(4);
+            this.pnlScalingOptions.Padding = new System.Windows.Forms.Padding(10, 2, 10, 10);
             this.pnlScalingOptions.Size = new System.Drawing.Size(800, 40);
             this.pnlScalingOptions.TabIndex = 2;
             //
@@ -71,6 +70,7 @@
             //
             this.lblAffinity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblAffinity.AutoSize = true;
+            this.lblAffinity.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblAffinity.Name = "lblAffinity";
             this.lblAffinity.Text = "Affinity:";
             //
@@ -86,7 +86,7 @@
             //
             this.lblLevel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLevel.AutoSize = true;
-            this.lblLevel.Margin = new System.Windows.Forms.Padding(20, 0, 3, 0);
+            this.lblLevel.Margin = new System.Windows.Forms.Padding(20, 6, 3, 0);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Text = "Upgrade Level:";
             //
@@ -102,7 +102,8 @@
             // 
             this.lblName.AutoSize = true;
             this.lblName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Font = new System.Drawing.Font("Georgia", 20F, System.Drawing.FontStyle.Bold);
+            this.lblName.Padding = new System.Windows.Forms.Padding(12, 10, 12, 4);
             this.lblName.Location = new System.Drawing.Point(0, 0);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(0, 36);
@@ -117,11 +118,12 @@
             this.Controls.Add(this.DetailedViewGrid);
             this.Controls.Add(this.pnlScalingOptions);
             this.Controls.Add(this.lblName);
-            this.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.Name = "DetailedView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Weapon Details";
             this.Load += new System.EventHandler(this.DetailedView_Load);
+            this.Shown += new System.EventHandler(this.DetailedView_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DetailedViewGrid)).EndInit();
             this.pnlScalingOptions.ResumeLayout(false);
             this.pnlScalingOptions.PerformLayout();

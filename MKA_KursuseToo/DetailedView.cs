@@ -28,14 +28,24 @@ namespace MKA_KursuseToo
 
         private void DetailedView_Load(object sender, EventArgs e)
         {
+            Theme.Apply(this);
+            lblName.Font = Theme.TitleFont;
+            lblName.ForeColor = Theme.Accent;
+
             DetailedViewGrid.ReadOnly = true;
             DetailedViewGrid.AllowUserToAddRows = false;
             DetailedViewGrid.AllowUserToDeleteRows = false;
             DetailedViewGrid.RowHeadersVisible = false;
-            DetailedViewGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            DetailedViewGrid.ColumnHeadersVisible = false;   // "Field" / "Value" headers aren't needed
+            DetailedViewGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;   // sized in FitWindowToContent
             DetailedViewGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DetailedViewGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DetailedViewGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Infobox look: no stripes, and no visible selection since this table is read-only
+            DetailedViewGrid.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle();
+            DetailedViewGrid.DefaultCellStyle.SelectionBackColor = Theme.Surface;
+            DetailedViewGrid.DefaultCellStyle.SelectionForeColor = Theme.Text;
 
             try
             {
@@ -216,24 +226,49 @@ namespace MKA_KursuseToo
             }
 
             DetailedViewGrid.DataSource = displayTable;
+
+            // Field names in a shaded gold column, like a wiki infobox
+            DataGridViewCellStyle fieldStyle = DetailedViewGrid.Columns["Field"].DefaultCellStyle;
+            fieldStyle.BackColor = Theme.HeaderBack;
+            fieldStyle.ForeColor = Theme.Accent;
+            fieldStyle.SelectionBackColor = Theme.HeaderBack;
+            fieldStyle.SelectionForeColor = Theme.Accent;
+            fieldStyle.Font = Theme.BoldFont;
+
             FitWindowToContent();
         }
+
+        // Long values (e.g. locations) wrap onto several lines instead of making the window very wide
+        private const int MaxValueColumnWidth = 480;
 
         // Resizes the window so the whole grid fits without scrollbars (capped to the screen size)
         private void FitWindowToContent()
         {
+            // Measure columns on one line first (with wrapping on, WinForms picks the narrowest possible width)
+            DataGridViewColumn valueColumn = DetailedViewGrid.Columns["Value"];
+            DetailedViewGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
             DetailedViewGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+            // Then cap the value column and let only that column wrap
+            if (valueColumn.Width > MaxValueColumnWidth)
+                valueColumn.Width = MaxValueColumnWidth;
+            valueColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             DetailedViewGrid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
 
             int gridWidth = DetailedViewGrid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
                             + SystemInformation.VerticalScrollBarWidth   // room in case a scrollbar is still needed
                             + 2;                                         // grid border
-            int gridHeight = DetailedViewGrid.ColumnHeadersHeight
+            int headerHeight = DetailedViewGrid.ColumnHeadersVisible ? DetailedViewGrid.ColumnHeadersHeight : 0;
+            int gridHeight = headerHeight
                              + DetailedViewGrid.Rows.GetRowsHeight(DataGridViewElementStates.Visible)
                              + 2;
 
             int width = Math.Max(gridWidth, Math.Max(lblName.PreferredWidth, pnlScalingOptions.PreferredSize.Width));
-            int height = lblName.Height + pnlScalingOptions.Height + gridHeight;
+            // Space taken by everything above the grid (title + dropdowns), measured after layout
+            PerformLayout();
+            int spaceAboveGrid = ClientSize.Height - DetailedViewGrid.Height;
+            int height = spaceAboveGrid + gridHeight;
 
             // Don't grow past the screen the window is on
             Rectangle screen = Screen.FromControl(this).WorkingArea;
@@ -242,6 +277,23 @@ namespace MKA_KursuseToo
             height = Math.Min(height, screen.Height - chrome.Height);
 
             ClientSize = new Size(width, height);
+            KeepOnScreen();
+        }
+
+        // Moves the window so it is fully inside the screen (e.g. after it grew taller)
+        private void KeepOnScreen()
+        {
+            Rectangle screen = Screen.FromControl(this).WorkingArea;
+            int left = Math.Max(screen.Left, Math.Min(Left, screen.Right - Width));
+            int top = Math.Max(screen.Top, Math.Min(Top, screen.Bottom - Height));
+            Location = new Point(left, top);
+        }
+
+        private void DetailedView_Shown(object sender, EventArgs e)
+        {
+            // Rows get their final height only once the window is on screen, so measure again now.
+            // This also moves the window back inside the screen if it got too tall.
+            FitWindowToContent();
         }
 
         private void cmbAffinity_SelectedIndexChanged(object sender, EventArgs e)

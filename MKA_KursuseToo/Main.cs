@@ -29,6 +29,10 @@ namespace MKA_KursuseToo
             DataOutput.RowHeadersVisible = false;
             DataOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+            Theme.Apply(this);
+            lblTitle.Font = Theme.TitleFont;
+            lblTitle.ForeColor = Theme.Accent;
+
             if (!WeaponDatabase.Exists)
             {
                 MessageBox.Show(
@@ -50,10 +54,13 @@ namespace MKA_KursuseToo
             ShowList(query, parameters, "Weapon Name", ViewMode.Weapons);
         }
 
-        // Loads the list of weapon types
+        // Loads the list of weapon types that have at least one weapon
         private void LoadWeaponTypes()
         {
-            ShowList(@"SELECT id AS Id, name AS Name FROM weapon_types ORDER BY name;",
+            ShowList(@"SELECT wt.id AS Id, wt.name AS Name
+                       FROM weapon_types wt
+                       WHERE EXISTS (SELECT 1 FROM weapons w WHERE w.weapon_type_id = wt.id)
+                       ORDER BY wt.name;",
                      null, "Weapon Type", ViewMode.Types);
         }
 
@@ -78,9 +85,9 @@ namespace MKA_KursuseToo
             {
                 DataTable dt = WeaponDatabase.Query(query, parameters);
 
+                DataOutput.DataSource = null;
                 DataOutput.Columns.Clear();
                 DataOutput.AutoGenerateColumns = false;
-                DataOutput.DataSource = dt;
 
                 DataOutput.Columns.Add(new DataGridViewTextBoxColumn
                 {
@@ -89,13 +96,19 @@ namespace MKA_KursuseToo
                     Visible = false
                 });
 
-                DataOutput.Columns.Add(new DataGridViewLinkColumn
+                var nameColumn = new DataGridViewLinkColumn
                 {
                     Name = "Name",
                     HeaderText = header,
                     DataPropertyName = "Name",
                     UseColumnTextForLinkValue = false
-                });
+                };
+                Theme.StyleLinkColumn(nameColumn);
+                DataOutput.Columns.Add(nameColumn);
+
+                // Attach the data after the columns exist, otherwise WinForms can un-hide the Id column
+                DataOutput.DataSource = dt;
+                DataOutput.Columns["Id"].Visible = false;
 
                 _currentViewMode = mode;
             }
