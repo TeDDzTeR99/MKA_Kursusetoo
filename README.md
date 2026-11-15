@@ -99,7 +99,8 @@ The values were spot-checked against the [Fextralife wiki](https://eldenring.wik
 
 Weight, critical, guard boost and passive effect come from the weapon type pages on the
 [Fextralife wiki](https://eldenring.wiki.fextralife.com) (e.g. [Daggers](https://eldenring.wiki.fextralife.com/Daggers)),
-see `004_weight_critical_guard_passive.sql`. Location is not filled in yet.
+see `004_weight_critical_guard_passive.sql`. Locations come from each weapon's own Fextralife page,
+see `005_locations.sql`.
 
 To re-import, download `public/regulation-vanilla-v1.17.js` from that repository and run:
 
@@ -117,6 +118,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `002_remove_non_weapons.sql` | Removes 12 entries that weren't real weapons or were duplicates |
 | `003_damage_per_level_affinity.sql` | Adds the `weapon_damage` table for damage per affinity and upgrade level |
 | `004_weight_critical_guard_passive.sql` | Sets weight, critical, guard boost and passive effect from Fextralife |
+| `005_locations.sql` | Sets where to find each weapon, from Fextralife |
 
 ## Author
 
