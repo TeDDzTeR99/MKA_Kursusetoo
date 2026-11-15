@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
@@ -9,6 +10,17 @@ namespace MKA_KursuseToo
     public partial class DetailedView : Form
     {
         private int _itemId;
+
+        // Elden Ring scaling grade -> scaling value range
+        private static readonly Dictionary<string, string> GradeRanges = new Dictionary<string, string>
+        {
+            { "S", "175+" },
+            { "A", "140–174" },
+            { "B", "90–139" },
+            { "C", "60–89" },
+            { "D", "25–59" },
+            { "E", "1–24" }
+        };
 
         private string DbPath =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "elden_ring_weapons.db");
@@ -34,7 +46,7 @@ namespace MKA_KursuseToo
                                     SELECT
                                         w.id AS weapon_id,
                                         w.name,
-                                        w.weapon_type_id,
+                                        wt.name AS weapon_type,
                                         w.physical_damage,
                                         w.magic_damage,
                                         w.fire_damage,
@@ -54,15 +66,27 @@ namespace MKA_KursuseToo
                                         wr.faith AS required_faith,
                                         wr.arcane AS required_arcane,
 
-                                        ws.strength_grade_id,
-                                        ws.dexterity_grade_id,
-                                        ws.intelligence_grade_id,
-                                        ws.faith_grade_id,
-                                        ws.arcane_grade_id
+                                        g_str.grade AS strength_scaling,
+                                        g_dex.grade AS dexterity_scaling,
+                                        g_int.grade AS intelligence_scaling,
+                                        g_fai.grade AS faith_scaling,
+                                        g_arc.grade AS arcane_scaling,
+
+                                        ws.strength_value AS strength_scaling_value,
+                                        ws.dexterity_value AS dexterity_scaling_value,
+                                        ws.intelligence_value AS intelligence_scaling_value,
+                                        ws.faith_value AS faith_scaling_value,
+                                        ws.arcane_value AS arcane_scaling_value
 
                                     FROM weapons w
+                                    LEFT JOIN weapon_types wt ON wt.id = w.weapon_type_id
                                     LEFT JOIN weapon_requirements wr ON w.id = wr.weapon_id
                                     LEFT JOIN weapon_scaling ws ON w.id = ws.weapon_id
+                                    LEFT JOIN scaling_grades g_str ON g_str.id = ws.strength_grade_id
+                                    LEFT JOIN scaling_grades g_dex ON g_dex.id = ws.dexterity_grade_id
+                                    LEFT JOIN scaling_grades g_int ON g_int.id = ws.intelligence_grade_id
+                                    LEFT JOIN scaling_grades g_fai ON g_fai.id = ws.faith_grade_id
+                                    LEFT JOIN scaling_grades g_arc ON g_arc.id = ws.arcane_grade_id
                                     WHERE w.id = @id;";
 
 
@@ -93,21 +117,27 @@ namespace MKA_KursuseToo
 
                             foreach (DataColumn col in dt.Columns)
                             {
-                                displayTable.Rows.Add(col.ColumnName, row[col]?.ToString());
-                            }
-                            DetailedViewGrid.DataSource = displayTable;
-                            foreach (DataRow r in displayTable.Rows)
-                            {
-                                if (r["Field"].ToString() == "Id" || r["Field"].ToString() == "Name")
+                                // Id and name are already shown elsewhere (name is in lblName)
+                                // *_scaling_value columns are merged into their *_scaling row below
+                                if (col.ColumnName == "weapon_id" || col.ColumnName == "name"
+                                    || col.ColumnName.EndsWith("_scaling_value"))
+                                    continue;
+
+                                string value = row[col]?.ToString();
+
+                                if (col.ColumnName.EndsWith("_scaling") && !string.IsNullOrEmpty(value))
                                 {
-                                    r.Delete();
+                                    string number = row[col.ColumnName + "_value"]?.ToString();
+
+                                    if (!string.IsNullOrEmpty(number))
+                                        value = $"{number} ({value})";                       // e.g. "47 (D)"
+                                    else if (GradeRanges.ContainsKey(value))
+                                        value = $"{value} ({GradeRanges[value]})";           // e.g. "D (25–59)"
                                 }
+
+                                displayTable.Rows.Add(col.ColumnName, value);
                             }
-                            displayTable.AcceptChanges();
-                            DetailedViewGrid.ReadOnly = true;
-                            DetailedViewGrid.RowHeadersVisible = false;
-                            DetailedViewGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                            DetailedViewGrid.AllowUserToAddRows = false;
+
                             DetailedViewGrid.DataSource = displayTable;
 
                             DetailedViewGrid.ReadOnly = true;

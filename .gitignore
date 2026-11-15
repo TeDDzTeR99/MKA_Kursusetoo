@@ -1,0 +1,19 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# NuGet packages (restored automatically from packages.config)
+packages/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# JetBrains Rider
+.idea/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
