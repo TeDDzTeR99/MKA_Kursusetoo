@@ -38,7 +38,7 @@ Built as a course project (*kursusetöö*).
 
 1. Clone the repository:
    ```
-   git clone <repo-url>
+   git clone https://github.com/TeDDzTeR99/MKA_Kursusetoo.git
    ```
 2. Open `MKA_KursuseToo.slnx` in Visual Studio.
 3. Restore NuGet packages (Visual Studio usually does this automatically).
