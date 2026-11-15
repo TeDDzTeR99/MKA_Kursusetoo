@@ -124,7 +124,7 @@ namespace MKA_KursuseToo
 
         private void LoadDetails()
         {
-            var query = @"
+            const string query = @"
                 SELECT
                     w.id AS weapon_id,
                     w.name,
@@ -219,8 +219,8 @@ namespace MKA_KursuseToo
                         value = $"{number} ({grade})";
 
                     // Grade range goes in the tooltip, e.g. "D: 25–59"
-                    if (_gradeRanges.ContainsKey(grade))
-                        _toolTips[ToDisplayName(col.ColumnName)] = $"{grade}: {_gradeRanges[grade]}";
+                    if (_gradeRanges.TryGetValue(grade, out var range))
+                        _toolTips[ToDisplayName(col.ColumnName)] = $"{grade}: {range}";
                 }
 
                 displayTable.Rows.Add(ToDisplayName(col.ColumnName), value);
@@ -332,10 +332,12 @@ namespace MKA_KursuseToo
         {
             if (e.RowIndex < 0) return;
 
-            var field = DetailedViewGrid.Rows[e.RowIndex].Cells["Field"].Value as string;
-
-            if (field != null && _toolTips.TryGetValue(field, out var tip))
+            // "is string field" checks the type and creates the variable in one step (no null check needed)
+            if (DetailedViewGrid.Rows[e.RowIndex].Cells["Field"].Value is string field
+                && _toolTips.TryGetValue(field, out var tip))
+            {
                 e.ToolTipText = tip;
+            }
         }
     }
 }

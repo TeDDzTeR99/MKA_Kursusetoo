@@ -147,16 +147,27 @@ namespace MKA_KursuseToo
 
             var id = Convert.ToInt32(DataOutput.Rows[e.RowIndex].Cells["Id"].Value);
 
-            if (_currentViewMode == ViewMode.Types)
+            switch (_currentViewMode)
             {
-                LoadWeaponsByTypeId(id);
-            }
-            else if (_currentViewMode == ViewMode.Weapons && DataOutput.Columns[e.ColumnIndex].Name == "Name")
-            {
-                using (var detailsForm = new DetailedView(id))
-                {
-                    detailsForm.ShowDialog();
-                }
+                case ViewMode.Types:
+                    LoadWeaponsByTypeId(id);
+                    break;
+
+                case ViewMode.Weapons:
+                    // Only open details when the weapon name (the link) was clicked
+                    if (DataOutput.Columns[e.ColumnIndex].Name != "Name")
+                        break;
+
+                    using (var detailsForm = new DetailedView(id))
+                    {
+                        detailsForm.ShowDialog();
+                    }
+                    break;
+
+                // Can't happen with the two view modes above; if a new one is added and
+                // forgotten here, this makes the mistake obvious instead of silently doing nothing
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(_currentViewMode), _currentViewMode, null);
             }
         }
 
