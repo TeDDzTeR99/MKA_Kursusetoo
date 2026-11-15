@@ -88,7 +88,7 @@
             this.lblLevel.AutoSize = true;
             this.lblLevel.Margin = new System.Windows.Forms.Padding(20, 0, 3, 0);
             this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Text = "Upgrade level:";
+            this.lblLevel.Text = "Upgrade Level:";
             //
             // cmbLevel
             //
@@ -120,7 +120,7 @@
             this.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "DetailedView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DetailedView";
+            this.Text = "Weapon Details";
             this.Load += new System.EventHandler(this.DetailedView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DetailedViewGrid)).EndInit();
             this.pnlScalingOptions.ResumeLayout(false);

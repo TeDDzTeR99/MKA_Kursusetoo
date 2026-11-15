@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using Microsoft.Data.Sqlite;
 
 namespace MKA_KursuseToo
 {
@@ -20,9 +19,6 @@ namespace MKA_KursuseToo
 
         // True while the dropdowns are being filled, so their change events don't reload the grid
         private bool _fillingDropdowns;
-
-        private string DbPath =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "elden_ring_weapons.db");
 
         public DetailedView(int itemId)
         {
@@ -52,41 +48,16 @@ namespace MKA_KursuseToo
             }
         }
 
-        // Runs a query and returns the result as a DataTable
-        private DataTable Query(string sql, Dictionary<string, object> parameters = null)
-        {
-            using (var con = new SqliteConnection($"Data Source={DbPath}"))
-            {
-                con.Open();
-
-                using (var cmd = new SqliteCommand(sql, con))
-                {
-                    if (parameters != null)
-                    {
-                        foreach (var param in parameters)
-                            cmd.Parameters.AddWithValue(param.Key, param.Value);
-                    }
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
-                        return dt;
-                    }
-                }
-            }
-        }
-
         private void LoadGradeRanges()
         {
-            DataTable grades = Query("SELECT grade, min_value, max_value FROM scaling_grades;");
+            DataTable grades = WeaponDatabase.Query("SELECT grade, min_value, max_value FROM scaling_grades;");
 
             foreach (DataRow g in grades.Rows)
             {
                 if (g["min_value"] == DBNull.Value)
                     continue;   // "-" has no range
 
-                string range = g["max_value"] == DBNull.Value
+                var range = g["max_value"] == DBNull.Value
                     ? $"{g["min_value"]}+"
                     : $"{g["min_value"]}–{g["max_value"]}";
 
@@ -97,7 +68,7 @@ namespace MKA_KursuseToo
         // Fills the affinity dropdown with the affinities that have scaling data for this weapon
         private void LoadAffinities()
         {
-            DataTable affinities = Query(
+            DataTable affinities = WeaponDatabase.Query(
                 @"SELECT DISTINCT a.id, a.name
                   FROM weapon_scaling ws
                   JOIN affinities a ON a.id = ws.affinity_id
@@ -120,7 +91,7 @@ namespace MKA_KursuseToo
         // Fills the level dropdown with the levels that have data for the selected affinity
         private void LoadLevels()
         {
-            DataTable levels = Query(
+            DataTable levels = WeaponDatabase.Query(
                 @"SELECT upgrade_level, '+' || upgrade_level AS label
                   FROM weapon_scaling
                   WHERE weapon_id = @id AND affinity_id = @affinity
@@ -142,7 +113,7 @@ namespace MKA_KursuseToo
 
         private void LoadDetails()
         {
-            string query = @"
+            var query = @"
                 SELECT
                     w.id AS weapon_id,
                     w.name,
@@ -195,7 +166,7 @@ namespace MKA_KursuseToo
                 LEFT JOIN scaling_grades g_arc ON g_arc.id = ws.arcane_grade_id
                 WHERE w.id = @id;";
 
-            DataTable dt = Query(query, new Dictionary<string, object>
+            DataTable dt = WeaponDatabase.Query(query, new Dictionary<string, object>
             {
                 { "@id", _itemId },
                 { "@affinity", cmbAffinity.SelectedValue ?? (object)DBNull.Value },
@@ -212,7 +183,7 @@ namespace MKA_KursuseToo
             DataRow row = dt.Rows[0];
             lblName.Text = row["name"].ToString();
 
-            DataTable displayTable = new DataTable();
+            var displayTable = new DataTable();
             displayTable.Columns.Add("Field");
             displayTable.Columns.Add("Value");
             _toolTips.Clear();
@@ -238,10 +209,10 @@ namespace MKA_KursuseToo
 
                     // Grade range goes in the tooltip, e.g. "D: 25–59"
                     if (_gradeRanges.ContainsKey(grade))
-                        _toolTips[col.ColumnName] = $"{grade}: {_gradeRanges[grade]}";
+                        _toolTips[ToDisplayName(col.ColumnName)] = $"{grade}: {_gradeRanges[grade]}";
                 }
 
-                displayTable.Rows.Add(col.ColumnName, value);
+                displayTable.Rows.Add(ToDisplayName(col.ColumnName), value);
             }
 
             DetailedViewGrid.DataSource = displayTable;
@@ -289,11 +260,18 @@ namespace MKA_KursuseToo
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
+        // Turns a database column name into a label for the user, e.g. "weapon_type" -> "Weapon Type"
+        private static string ToDisplayName(string columnName)
+        {
+            string spaced = columnName.Replace('_', ' ');
+            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spaced);
+        }
+
         private void DetailedViewGrid_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            string field = DetailedViewGrid.Rows[e.RowIndex].Cells["Field"].Value as string;
+            var field = DetailedViewGrid.Rows[e.RowIndex].Cells["Field"].Value as string;
 
             if (field != null && _toolTips.TryGetValue(field, out string tip))
                 e.ToolTipText = tip;

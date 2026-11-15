@@ -1,30 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Windows.Forms;
-using Microsoft.Data.Sqlite;
 
 namespace MKA_KursuseToo
 {
     public partial class Main : Form
     {
-        private string currentViewMode = "weapons";
+        // What the grid is currently showing, so a click knows what to do
+        private enum ViewMode
+        {
+            Weapons,
+            Types
+        }
+
+        private ViewMode _currentViewMode = ViewMode.Weapons;
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private string DbPath =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "elden_ring_weapons.db");
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!File.Exists(DbPath))
+            DataOutput.ReadOnly = true;
+            DataOutput.AllowUserToAddRows = false;
+            DataOutput.AllowUserToDeleteRows = false;
+            DataOutput.RowHeadersVisible = false;
+            DataOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            if (!WeaponDatabase.Exists)
             {
                 MessageBox.Show(
-                    "Database not found at:\n\n" + DbPath,
+                    "Database not found at:\n\n" + WeaponDatabase.DbPath,
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
@@ -33,146 +41,68 @@ namespace MKA_KursuseToo
             }
 
             // Show all weapons on startup so the grid isn't empty
-            LoadWeapons(@"SELECT Id, Name FROM weapons ORDER BY Name;");
+            LoadWeapons(@"SELECT id AS Id, name AS Name FROM weapons ORDER BY name;");
         }
 
-        // Loads weapons (Id + Name)
+        // Loads a list of weapons. The query must return Id and Name columns.
         private void LoadWeapons(string query, Dictionary<string, object> parameters = null)
         {
-            string connectionString = $"Data Source={DbPath}";
-
-            try
-            {
-                using (var con = new SqliteConnection(connectionString))
-                {
-                    con.Open();
-
-                    using (var cmd = new SqliteCommand(query, con))
-                    {
-                        if (parameters != null)
-                        {
-                            foreach (var param in parameters)
-                            {
-                                cmd.Parameters.AddWithValue(param.Key, param.Value);
-                            }
-                        }
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            DataTable dt = new DataTable();
-                            dt.Load(reader);
-
-                            DataOutput.Columns.Clear();
-                            DataOutput.AutoGenerateColumns = false;
-                            DataOutput.DataSource = dt;
-
-                            //ID column
-                            DataGridViewTextBoxColumn idColumn = new DataGridViewTextBoxColumn
-                            {
-                                Name = "Id",
-                                DataPropertyName = "Id",
-                                Visible = false
-                            };
-                            DataOutput.Columns.Add(idColumn);
-
-                            // Clickable Name column
-                            DataGridViewLinkColumn nameColumn = new DataGridViewLinkColumn
-                            {
-                                Name = "Name",
-                                HeaderText = "Weapon Name",
-                                DataPropertyName = "Name",
-                                UseColumnTextForLinkValue = false
-                            };
-                            DataOutput.Columns.Add(nameColumn);
-
-                            // Formatting
-                            DataOutput.ReadOnly = true;
-                            DataOutput.AllowUserToAddRows = false;
-                            DataOutput.AllowUserToDeleteRows = false;
-                            DataOutput.RowHeadersVisible = false;
-                            DataOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                            currentViewMode = "weapons";
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            ShowList(query, parameters, "Weapon Name", ViewMode.Weapons);
         }
 
-        // Loads distinct weapon types from weapons table
+        // Loads the list of weapon types
         private void LoadWeaponTypes()
         {
-            string connectionString = $"Data Source={DbPath}";
-
-            try
-            {
-                using (var con = new SqliteConnection(connectionString))
-                {
-                    con.Open();
-
-                    string query = @"SELECT id AS Id, name
-                                     FROM weapon_types
-                                     ORDER BY name;";
-
-                    using (var cmd = new SqliteCommand(query, con))
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
-
-                        DataOutput.Columns.Clear();
-                        DataOutput.AutoGenerateColumns = false;
-                        DataOutput.DataSource = dt;
-
-                        DataGridViewTextBoxColumn idColumn = new DataGridViewTextBoxColumn
-                        {
-                            Name = "Id",
-                            DataPropertyName = "Id",
-                            Visible = false
-                        };
-                        DataOutput.Columns.Add(idColumn);
-
-                        DataGridViewLinkColumn typeColumn = new DataGridViewLinkColumn
-                        {
-                            Name = "name",
-                            HeaderText = "Weapon Type",
-                            DataPropertyName = "name",
-                            UseColumnTextForLinkValue = false
-                        };
-                        DataOutput.Columns.Add(typeColumn);
-
-                        DataOutput.ReadOnly = true;
-                        DataOutput.AllowUserToAddRows = false;
-                        DataOutput.AllowUserToDeleteRows = false;
-                        DataOutput.RowHeadersVisible = false;
-                        DataOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                        currentViewMode = "types";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            ShowList(@"SELECT id AS Id, name AS Name FROM weapon_types ORDER BY name;",
+                     null, "Weapon Type", ViewMode.Types);
         }
 
         // Loads all weapons for one type
         private void LoadWeaponsByTypeId(int typeId)
         {
             LoadWeapons(
-                @"SELECT id AS Id, name
+                @"SELECT id AS Id, name AS Name
                   FROM weapons
-                  WHERE weapon_type_Id = @typeid
-                  ORDER BY Name;",
+                  WHERE weapon_type_id = @typeid
+                  ORDER BY name;",
                 new Dictionary<string, object>
                 {
                     { "@typeid", typeId }
                 });
+        }
+
+        // Shows a query result (Id + Name) in the grid: a hidden Id column and a clickable Name column
+        private void ShowList(string query, Dictionary<string, object> parameters, string header, ViewMode mode)
+        {
+            try
+            {
+                DataTable dt = WeaponDatabase.Query(query, parameters);
+
+                DataOutput.Columns.Clear();
+                DataOutput.AutoGenerateColumns = false;
+                DataOutput.DataSource = dt;
+
+                DataOutput.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Id",
+                    DataPropertyName = "Id",
+                    Visible = false
+                });
+
+                DataOutput.Columns.Add(new DataGridViewLinkColumn
+                {
+                    Name = "Name",
+                    HeaderText = header,
+                    DataPropertyName = "Name",
+                    UseColumnTextForLinkValue = false
+                });
+
+                _currentViewMode = mode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Search_Click(object sender, EventArgs e)
@@ -186,10 +116,10 @@ namespace MKA_KursuseToo
             }
 
             LoadWeapons(
-                @"SELECT Id, Name
+                @"SELECT id AS Id, name AS Name
                   FROM weapons
-                  WHERE Name LIKE @search
-                  ORDER BY Name;",
+                  WHERE name LIKE @search
+                  ORDER BY name;",
                 new Dictionary<string, object>
                 {
                     { "@search", "%" + searchValue + "%" }
@@ -201,20 +131,16 @@ namespace MKA_KursuseToo
             if (e.RowIndex < 0)
                 return;
 
-            if (currentViewMode == "types")
-            {
-                    int typeId = Convert.ToInt32(DataOutput.Rows[e.RowIndex].Cells["Id"].Value);
+            var id = Convert.ToInt32(DataOutput.Rows[e.RowIndex].Cells["Id"].Value);
 
-                    LoadWeaponsByTypeId(typeId);
-            
+            if (_currentViewMode == ViewMode.Types)
+            {
+                LoadWeaponsByTypeId(id);
             }
-            else if (currentViewMode == "weapons")
+            else if (_currentViewMode == ViewMode.Weapons && DataOutput.Columns[e.ColumnIndex].Name == "Name")
             {
-                if (DataOutput.Columns[e.ColumnIndex].Name == "Name")
+                using (var detailsForm = new DetailedView(id))
                 {
-                    int itemId = Convert.ToInt32(DataOutput.Rows[e.RowIndex].Cells["Id"].Value);
-
-                    DetailedView detailsForm = new DetailedView(itemId);
                     detailsForm.ShowDialog();
                 }
             }
@@ -226,7 +152,7 @@ namespace MKA_KursuseToo
 
         private void List_All_Button_Click(object sender, EventArgs e)
         {
-            LoadWeapons(@"SELECT Id, Name FROM weapons ORDER BY Name;");
+            LoadWeapons(@"SELECT id AS Id, name AS Name FROM weapons ORDER BY name;");
         }
 
         private void List_All_Types_Click(object sender, EventArgs e)
