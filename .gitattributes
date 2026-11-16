@@ -1,0 +1,9 @@
+# Use LF line endings everywhere: in the repository and in the working folder.
+# Git then no longer converts files to CRLF on Windows (and stops warning about it).
+* text=auto eol=lf
+
+# Binary files: never change them
+*.db   binary
+*.png  binary
+*.dll  binary
+*.exe  binary

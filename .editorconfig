@@ -1,0 +1,6 @@
+# Editor settings shared by Rider, Visual Studio and VS Code
+root = true
+
+[*]
+# LF line endings, matching .gitattributes
+end_of_line = lf
