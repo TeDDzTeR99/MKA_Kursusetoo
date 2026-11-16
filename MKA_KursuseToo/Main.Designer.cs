@@ -70,7 +70,6 @@
             this.SearchBox.Name = "SearchBox";
             this.SearchBox.Size = new System.Drawing.Size(320, 26);
             this.SearchBox.TabIndex = 0;
-            this.SearchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
             //
             // Search
             //
@@ -128,7 +127,7 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Elden Ring Wiki";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Main_Load);
             this.pnlToolbar.ResumeLayout(false);
             this.pnlToolbar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataOutput)).EndInit();

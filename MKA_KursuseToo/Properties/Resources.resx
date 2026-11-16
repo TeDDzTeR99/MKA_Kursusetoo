@@ -130,4 +130,103 @@
   <data name="WeaponNotFound" xml:space="preserve">
     <value>Weapon not found.</value>
   </data>
+  <data name="AppWindowTitle" xml:space="preserve">
+    <value>Elden Ring Wiki</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Elden Ring Weapons</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ListAllButton" xml:space="preserve">
+    <value>List All</value>
+  </data>
+  <data name="CategoriesButton" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="WeaponNameHeader" xml:space="preserve">
+    <value>Weapon Name</value>
+  </data>
+  <data name="WeaponTypeHeader" xml:space="preserve">
+    <value>Weapon Type</value>
+  </data>
+  <data name="DetailsWindowTitle" xml:space="preserve">
+    <value>Weapon Details</value>
+  </data>
+  <data name="AffinityLabel" xml:space="preserve">
+    <value>Affinity:</value>
+  </data>
+  <data name="UpgradeLevelLabel" xml:space="preserve">
+    <value>Upgrade Level:</value>
+  </data>
+  <data name="Field_weapon_type" xml:space="preserve">
+    <value>Weapon Type</value>
+  </data>
+  <data name="Field_physical_damage" xml:space="preserve">
+    <value>Physical Damage</value>
+  </data>
+  <data name="Field_magic_damage" xml:space="preserve">
+    <value>Magic Damage</value>
+  </data>
+  <data name="Field_fire_damage" xml:space="preserve">
+    <value>Fire Damage</value>
+  </data>
+  <data name="Field_lightning_damage" xml:space="preserve">
+    <value>Lightning Damage</value>
+  </data>
+  <data name="Field_holy_damage" xml:space="preserve">
+    <value>Holy Damage</value>
+  </data>
+  <data name="Field_critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Field_guard_boost" xml:space="preserve">
+    <value>Guard Boost</value>
+  </data>
+  <data name="Field_weight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="Field_upgrade_path" xml:space="preserve">
+    <value>Upgrade Path</value>
+  </data>
+  <data name="Field_max_upgrade_level" xml:space="preserve">
+    <value>Max Upgrade Level</value>
+  </data>
+  <data name="Field_passive_effect" xml:space="preserve">
+    <value>Passive Effect</value>
+  </data>
+  <data name="Field_location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Field_required_strength" xml:space="preserve">
+    <value>Required Strength</value>
+  </data>
+  <data name="Field_required_dexterity" xml:space="preserve">
+    <value>Required Dexterity</value>
+  </data>
+  <data name="Field_required_intelligence" xml:space="preserve">
+    <value>Required Intelligence</value>
+  </data>
+  <data name="Field_required_faith" xml:space="preserve">
+    <value>Required Faith</value>
+  </data>
+  <data name="Field_required_arcane" xml:space="preserve">
+    <value>Required Arcane</value>
+  </data>
+  <data name="Field_strength_scaling" xml:space="preserve">
+    <value>Strength Scaling</value>
+  </data>
+  <data name="Field_dexterity_scaling" xml:space="preserve">
+    <value>Dexterity Scaling</value>
+  </data>
+  <data name="Field_intelligence_scaling" xml:space="preserve">
+    <value>Intelligence Scaling</value>
+  </data>
+  <data name="Field_faith_scaling" xml:space="preserve">
+    <value>Faith Scaling</value>
+  </data>
+  <data name="Field_arcane_scaling" xml:space="preserve">
+    <value>Arcane Scaling</value>
+  </data>
 </root>

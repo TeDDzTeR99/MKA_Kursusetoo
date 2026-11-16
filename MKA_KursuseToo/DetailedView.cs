@@ -29,6 +29,11 @@ namespace MKA_KursuseToo
 
         private void DetailedView_Load(object sender, EventArgs e)
         {
+            // Texts come from Properties/Resources (English) or Resources.et (Estonian)
+            Text = Resources.DetailsWindowTitle;
+            lblAffinity.Text = Resources.AffinityLabel;
+            lblLevel.Text = Resources.UpgradeLevelLabel;
+
             Theme.Apply(this);
             lblName.Font = Theme.TitleFont;
             lblName.ForeColor = Theme.Accent;
@@ -220,10 +225,10 @@ namespace MKA_KursuseToo
 
                     // Grade range goes in the tooltip, e.g. "D: 25–59"
                     if (_gradeRanges.TryGetValue(grade, out var range))
-                        _toolTips[ToDisplayName(col.ColumnName)] = $"{grade}: {range}";
+                        _toolTips[FieldLabel(col.ColumnName)] = $"{grade}: {range}";
                 }
 
-                displayTable.Rows.Add(ToDisplayName(col.ColumnName), value);
+                displayTable.Rows.Add(FieldLabel(col.ColumnName), value);
             }
 
             DetailedViewGrid.DataSource = displayTable;
@@ -322,8 +327,14 @@ namespace MKA_KursuseToo
         }
 
         // Turns a database column name into a label for the user, e.g. "weapon_type" -> "Weapon Type"
-        private static string ToDisplayName(string columnName)
+        // (or "Relva tüüp" in Estonian). The label is looked up in the resources as "Field_weapon_type";
+        // if there is none, a readable version of the column name is used instead.
+        private static string FieldLabel(string columnName)
         {
+            var label = Resources.ResourceManager.GetString("Field_" + columnName, Resources.Culture);
+            if (!string.IsNullOrEmpty(label))
+                return label;
+
             var spaced = columnName.Replace('_', ' ');
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spaced);
         }

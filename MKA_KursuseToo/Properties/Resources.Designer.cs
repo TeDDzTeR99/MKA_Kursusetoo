@@ -110,5 +110,115 @@ namespace MKA_KursuseToo.Properties
                 return ResourceManager.GetString("WeaponNotFound", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Elden Ring Wiki
+        /// </summary>
+        internal static string AppWindowTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("AppWindowTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Elden Ring Weapons
+        /// </summary>
+        internal static string AppTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Search
+        /// </summary>
+        internal static string SearchButton
+        {
+            get
+            {
+                return ResourceManager.GetString("SearchButton", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: List All
+        /// </summary>
+        internal static string ListAllButton
+        {
+            get
+            {
+                return ResourceManager.GetString("ListAllButton", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Categories
+        /// </summary>
+        internal static string CategoriesButton
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoriesButton", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Weapon Name
+        /// </summary>
+        internal static string WeaponNameHeader
+        {
+            get
+            {
+                return ResourceManager.GetString("WeaponNameHeader", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Weapon Type
+        /// </summary>
+        internal static string WeaponTypeHeader
+        {
+            get
+            {
+                return ResourceManager.GetString("WeaponTypeHeader", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Weapon Details
+        /// </summary>
+        internal static string DetailsWindowTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("DetailsWindowTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Affinity:
+        /// </summary>
+        internal static string AffinityLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("AffinityLabel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Upgrade Level:
+        /// </summary>
+        internal static string UpgradeLevelLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("UpgradeLevelLabel", resourceCulture);
+            }
+        }
     }
 }

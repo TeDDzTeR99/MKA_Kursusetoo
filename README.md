@@ -23,7 +23,7 @@ Built as a course project (*kursusetöö*).
   - the window sizes itself to fit its content; long text such as locations wraps
 - **Dark theme** with gold accents, inspired by the Fextralife wiki, and a dark title bar on Windows 10/11.
 - **Resizable** main window: the list fills the window.
-- **Estonian** error messages when Windows is set to Estonian (see [Languages](#languages)).
+- **Estonian interface** when Windows is set to Estonian (see [Languages](#languages)).
 
 ## Tech stack
 
@@ -68,8 +68,8 @@ MKA_KursuseToo/
 ├── WeaponDatabase.cs        # Shared database access (path + query helper)
 ├── Theme.cs                 # Dark theme with gold accents, used by both windows
 ├── Properties/
-│   ├── Resources.resx       # User-facing messages (English, default)
-│   └── Resources.et.resx    # Estonian translations of the messages
+│   ├── Resources.resx       # All interface texts (English, default)
+│   └── Resources.et.resx    # Estonian translations
 ├── elden_ring_weapons.db    # SQLite database
 ├── Database/                # Database migrations and the game-data import script
 ├── App.config
@@ -79,18 +79,21 @@ docs/                        # Screenshots used in this README
 
 ## Languages
 
-Message boxes (for example "Please enter something to search.") are stored in `Properties/Resources.resx`,
-with Estonian translations in `Properties/Resources.et.resx`. .NET picks the language from the Windows
-**display language**, so Estonian Windows shows "Palun sisesta otsingusõna." automatically.
+All interface texts (window titles, buttons, column headers, field names and messages) are stored in
+`Properties/Resources.resx`, with Estonian translations in `Properties/Resources.et.resx`. .NET picks the
+language from the Windows **display language**, so on Estonian Windows the buttons read "Otsi",
+"Kõik relvad" and "Kategooriad" automatically. Field names are stored as `Field_<column name>`,
+e.g. `Field_weapon_type` = "Weapon Type" / "Relva tüüp".
 
-To try the Estonian messages without changing Windows, add this line at the start of `Main()` in `Program.cs`:
+To try the Estonian interface without changing Windows, add this line at the start of `Main()` in `Program.cs`:
 
 ```csharp
 System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("et");
 ```
 
 To add another language, copy `Resources.et.resx` to e.g. `Resources.fi.resx`, translate the values,
-and add it to the project the same way. The rest of the interface (buttons, field names) is English.
+and add it to the project the same way. Game data (weapon names, locations, affinity names) stays in English,
+as it comes from English sources.
 
 ## Database
 
@@ -103,8 +106,6 @@ and add it to the project the same way. The rest of the interface (buttons, fiel
 | `weapon_damage` | Physical, magic, fire, lightning and holy damage, one row per weapon, affinity and upgrade level |
 | `affinities` | Standard, Heavy, Keen, Quality, Fire, Flame Art, Lightning, Sacred, Magic, Cold, Poison, Blood, Occult |
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
-| `damage_types` | Physical, Magic, Fire, Lightning, Holy, Pierce, Slash, Strike |
-| `weapon_damage_types` | Weapon ↔ damage type links (not yet populated) |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -147,6 +148,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `003_damage_per_level_affinity.sql` | Adds the `weapon_damage` table for damage per affinity and upgrade level |
 | `004_weight_critical_guard_passive.sql` | Sets weight, critical, guard boost and passive effect from Fextralife |
 | `005_locations.sql` | Sets where to find each weapon, from Fextralife |
+| `006_remove_damage_types.sql` | Removes the unused `damage_types` tables (replaced by `affinities`) |
 
 ## Author
 

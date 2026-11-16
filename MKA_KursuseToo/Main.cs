@@ -21,8 +21,15 @@ namespace MKA_KursuseToo
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
+            // Texts come from Properties/Resources (English) or Resources.et (Estonian)
+            Text = Resources.AppWindowTitle;
+            lblTitle.Text = Resources.AppTitle;
+            Search.Text = Resources.SearchButton;
+            List_All_Button.Text = Resources.ListAllButton;
+            List_All_Types.Text = Resources.CategoriesButton;
+
             DataOutput.ReadOnly = true;
             DataOutput.AllowUserToAddRows = false;
             DataOutput.AllowUserToDeleteRows = false;
@@ -41,6 +48,9 @@ namespace MKA_KursuseToo
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
+
+                // Nothing can be loaded without the database, so don't let the user try
+                pnlToolbar.Enabled = false;
                 return;
             }
 
@@ -51,7 +61,7 @@ namespace MKA_KursuseToo
         // Loads a list of weapons. The query must return ID and Name columns.
         private void LoadWeapons(string query, Dictionary<string, object> parameters = null)
         {
-            ShowList(query, parameters, "Weapon Name", ViewMode.Weapons);
+            ShowList(query, parameters, Resources.WeaponNameHeader, ViewMode.Weapons);
         }
 
         // Loads the list of weapon types that have at least one weapon
@@ -61,7 +71,7 @@ namespace MKA_KursuseToo
                        FROM weapon_types wt
                        WHERE EXISTS (SELECT 1 FROM weapons w WHERE w.weapon_type_id = wt.id)
                        ORDER BY wt.name;",
-                     null, "Weapon Type", ViewMode.Types);
+                     null, Resources.WeaponTypeHeader, ViewMode.Types);
         }
 
         // Loads all weapons for one type
@@ -132,12 +142,19 @@ namespace MKA_KursuseToo
             LoadWeapons(
                 @"SELECT id AS Id, name AS Name
                   FROM weapons
-                  WHERE name LIKE @search
+                  WHERE name LIKE @search ESCAPE '\'
                   ORDER BY name;",
                 new Dictionary<string, object>
                 {
-                    { "@search", "%" + searchValue + "%" }
+                    { "@search", "%" + EscapeLike(searchValue) + "%" }
                 });
+        }
+
+        // In LIKE, % and _ are wildcards. Put a \ in front of them (and of \ itself) so they are
+        // searched for as normal characters, e.g. searching "_" finds names containing "_".
+        private static string EscapeLike(string text)
+        {
+            return text.Replace(@"\", @"\\").Replace("%", @"\%").Replace("_", @"\_");
         }
 
         private void DataOutput_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -169,10 +186,6 @@ namespace MKA_KursuseToo
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_currentViewMode), _currentViewMode, null);
             }
-        }
-
-        private void SearchBox_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void List_All_Button_Click(object sender, EventArgs e)
