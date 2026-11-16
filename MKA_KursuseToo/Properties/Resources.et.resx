@@ -127,4 +127,25 @@
   <data name="Field_arcane_scaling" xml:space="preserve">
     <value>Müstika skaleerumine</value>
   </data>
+  <data name="Status_bleed" xml:space="preserve">
+    <value>Verejooks</value>
+  </data>
+  <data name="Status_frost" xml:space="preserve">
+    <value>Külmakahjustus</value>
+  </data>
+  <data name="Status_poison" xml:space="preserve">
+    <value>Mürgitus</value>
+  </data>
+  <data name="Status_scarlet_rot" xml:space="preserve">
+    <value>Helepunane mädanik</value>
+  </data>
+  <data name="Status_sleep" xml:space="preserve">
+    <value>Uni</value>
+  </data>
+  <data name="Status_madness" xml:space="preserve">
+    <value>Hullus</value>
+  </data>
+  <data name="Status_death_blight" xml:space="preserve">
+    <value>Surmatõbi</value>
+  </data>
 </root>

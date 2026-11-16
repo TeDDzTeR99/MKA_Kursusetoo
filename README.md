@@ -16,7 +16,8 @@ Built as a course project (*kursusetöö*).
 - **Detailed view**: click a weapon name to open its details in a wiki-style info table:
   - weapon type, damage (physical, magic, fire, lightning, holy), critical, guard boost, weight
   - upgrade path and max upgrade level
-  - passive effect (e.g. `Hemorrhage (50)`) and where to find the weapon
+  - passive effect (e.g. `Hemorrhage (50)`) and where to find the weapon. Status buildup follows the affinity and
+    upgrade level, e.g. a Blood Dagger shows `Hemorrhage (57)` at +0 and `Hemorrhage (82)` at +25
   - required Strength / Dexterity / Intelligence / Faith / Arcane
   - scaling for each stat as exact value and grade, e.g. `52 (D)`. Hover over it to see the grade's range (`D: 25–59`)
   - pick any **affinity** (Standard, Heavy, Keen, …) and **upgrade level** (+0 to +25, or +10 for somber weapons) to see how damage and scaling change
@@ -99,11 +100,11 @@ as it comes from English sources.
 
 | Table | Contents |
 |---|---|
-| `weapons` | Name, type, damage values, critical, guard boost, weight, upgrade info, passive effect, location |
+| `weapons` | Name, type, base damage, critical, guard boost, weight, upgrade info, special effect (staffs/seals), location |
 | `weapon_types` | Weapon categories (Dagger, Greatsword, …) |
 | `weapon_requirements` | Stat requirements per weapon |
 | `weapon_scaling` | Scaling grade (`*_grade_id`) and exact value (`*_value`) per stat, one row per weapon, affinity and upgrade level |
-| `weapon_damage` | Physical, magic, fire, lightning and holy damage, one row per weapon, affinity and upgrade level |
+| `weapon_damage` | Physical, magic, fire, lightning and holy damage, plus status buildup (bleed, frost, poison, scarlet rot, sleep, madness, death blight), one row per weapon, affinity and upgrade level |
 | `affinities` | Standard, Heavy, Keen, Quality, Fire, Flame Art, Lightning, Sacred, Magic, Cold, Poison, Blood, Occult |
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
 
@@ -122,7 +123,7 @@ There is also a view, `v_weapons_overview`, that joins all of the above into one
 
 ### Where the data comes from
 
-Damage, scaling, requirements, weapon types and upgrade paths come from the game's own data (patch 1.17), as extracted by the open-source
+Damage, status buildup, scaling, requirements, weapon types and upgrade paths come from the game's own data (patch 1.17), as extracted by the open-source
 [Elden Ring Weapon Calculator](https://github.com/ThomasJClark/elden-ring-weapon-calculator) by Tom Clark (MIT license).
 In the game, damage and scaling at a given level = the weapon's base value × the upgrade multiplier for that level.
 The values were spot-checked against the [Fextralife wiki](https://eldenring.wiki.fextralife.com).
@@ -132,7 +133,7 @@ To re-import them, download `public/regulation-vanilla-v1.17.js` from the calcul
 python MKA_KursuseToo/Database/import_from_game_data.py regulation-vanilla-v1.17.js MKA_KursuseToo/elden_ring_weapons.db
 ```
 
-Weight, critical, guard boost and passive effect come from the weapon type pages on the
+Weight, critical, guard boost and the special effects of staffs and seals come from the weapon type pages on the
 [Fextralife wiki](https://eldenring.wiki.fextralife.com) (e.g. [Daggers](https://eldenring.wiki.fextralife.com/Daggers)),
 see `004_weight_critical_guard_passive.sql`. Locations come from each weapon's own Fextralife page,
 shortened to the main one or two sources, see `005_locations.sql`.
@@ -149,6 +150,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `004_weight_critical_guard_passive.sql` | Sets weight, critical, guard boost and passive effect from Fextralife |
 | `005_locations.sql` | Sets where to find each weapon, from Fextralife |
 | `006_remove_damage_types.sql` | Removes the unused `damage_types` tables (replaced by `affinities`) |
+| `007_status_buildup_per_level_affinity.sql` | Adds status buildup per affinity and level; `passive_effect` becomes `special_effect` |
 
 ## Author
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using MKA_KursuseToo.Properties;
@@ -140,12 +141,20 @@ namespace MKA_KursuseToo
                     wd.fire_damage,
                     wd.lightning_damage,
                     wd.holy_damage,
+                    -- Status buildup for the selected affinity and level (combined into one row below)
+                    wd.poison_buildup,
+                    wd.scarlet_rot_buildup,
+                    wd.bleed_buildup,
+                    wd.frost_buildup,
+                    wd.sleep_buildup,
+                    wd.madness_buildup,
+                    wd.death_blight_buildup,
                     w.critical,
                     w.guard_boost,
                     w.weight,
                     w.upgrade_path,
                     w.max_upgrade_level,
-                    w.passive_effect,
+                    w.special_effect AS passive_effect,
                     w.location,
 
                     wr.strength AS required_strength,
@@ -208,11 +217,15 @@ namespace MKA_KursuseToo
             {
                 // Id and name are already shown elsewhere (name is in lblName)
                 // *_scaling_value columns are merged into their *_scaling row below
+                // *_buildup columns are merged into the passive effect row below
                 if (col.ColumnName == "weapon_id" || col.ColumnName == "name"
-                    || col.ColumnName.EndsWith("_scaling_value"))
+                    || col.ColumnName.EndsWith("_scaling_value")
+                    || col.ColumnName.EndsWith("_buildup"))
                     continue;
 
-                var value = row[col]?.ToString();
+                var value = col.ColumnName == "passive_effect"
+                    ? PassiveEffectText(row)
+                    : row[col]?.ToString();
 
                 if (col.ColumnName.EndsWith("_scaling") && !string.IsNullOrEmpty(value))
                 {
@@ -324,6 +337,30 @@ namespace MKA_KursuseToo
 
             try { LoadDetails(); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        // Status effects in display order: buildup column in weapon_damage -> resource key of the name
+        private static readonly string[] StatusEffects =
+        {
+            "bleed", "frost", "poison", "scarlet_rot", "sleep", "madness", "death_blight"
+        };
+
+        // Builds the "Passive Effect" text, e.g. "Hemorrhage (57)" or "Hemorrhage (38), Poison (95)",
+        // followed by any special effect such as "Boosts Glintblade Sorceries (15%)" on staffs and seals
+        private static string PassiveEffectText(DataRow row)
+        {
+            // One "Name (buildup)" entry for every status effect this weapon builds up
+            var parts = (from effect in StatusEffects
+                         let buildup = row[effect + "_buildup"]
+                         where buildup != DBNull.Value && Convert.ToInt64(buildup) > 0
+                         let name = Resources.ResourceManager.GetString("Status_" + effect, Resources.Culture) ?? effect
+                         select $"{name} ({buildup})").ToList();
+
+            var special = row["passive_effect"]?.ToString();
+            if (!string.IsNullOrEmpty(special))
+                parts.Add(special);
+
+            return string.Join(", ", parts);
         }
 
         // Turns a database column name into a label for the user, e.g. "weapon_type" -> "Weapon Type"

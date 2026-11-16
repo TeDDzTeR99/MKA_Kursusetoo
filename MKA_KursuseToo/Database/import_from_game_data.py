@@ -1,7 +1,7 @@
 """
 Imports weapon data from the game into elden_ring_weapons.db:
   - attribute scaling for every weapon, affinity and upgrade level (weapon_scaling)
-  - attack damage for every weapon, affinity and upgrade level (weapon_damage)
+  - attack damage and status buildup for every weapon, affinity and upgrade level (weapon_damage)
   - base damage (Standard, +0) in the weapons table
   - stat requirements (weapon_requirements)
   - upgrade path / max upgrade level
@@ -46,6 +46,10 @@ WEAPON_TYPES = {
 # Attack type ids in the game data: 0 physical, 1 magic, 2 fire, 3 lightning, 4 holy
 DAMAGE_TYPES = [0, 1, 2, 3, 4]
 
+# Status effect type ids: 5 poison, 6 scarlet rot, 7 bleed, 8 frost, 9 sleep, 10 madness, 11 death blight
+# (same order as the *_buildup columns in weapon_damage)
+STATUS_TYPES = [5, 6, 7, 8, 9, 10, 11]
+
 # affinityId in the game data -> name in our affinities table (-1 = unique weapon, no affinity)
 AFFINITIES = {
     -1: "Standard", 0: "Standard", 1: "Heavy", 2: "Keen", 3: "Quality", 4: "Fire",
@@ -65,6 +69,21 @@ def main(data_path, db_path):
 
     tiers = data["scalingTiers"]                     # [[1.75, "S"], [1.4, "A"], ...]
     reinforce = data["reinforceTypes"]
+    status_params = data["statusSpEffectParams"]
+
+    def status_buildup(entry, multipliers):
+        """Status buildup at one upgrade level, e.g. {7: 57} = bleed 57.
+        Each weapon lists up to 3 status effect ids; upgrading adds an offset to each id
+        (statusSpEffectId1..3 of that level), which is how affinity buildup grows with upgrades."""
+        offsets = [multipliers.get("statusSpEffectId1", 0),
+                   multipliers.get("statusSpEffectId2", 0),
+                   multipliers.get("statusSpEffectId3", 0)]
+        result = {}
+        for i, effect_id in enumerate(entry.get("statusSpEffectParamIds") or []):
+            if effect_id:
+                params = status_params.get(str(effect_id + offsets[i])) or {}
+                result.update({int(t): int(v) for t, v in params.items()})
+        return result
 
     def grade_for(raw):
         for threshold, letter in tiers:
@@ -152,12 +171,16 @@ def main(data_path, db_path):
             for level, multipliers in enumerate(levels):
                 damage = [math.floor(attack.get(t, 0) * multipliers["attack"][str(t)] + 1e-9)
                           for t in DAMAGE_TYPES]
+                status = status_buildup(entry, multipliers)
+                buildup = [status.get(t, 0) for t in STATUS_TYPES]
                 cur.execute(
                     """INSERT INTO weapon_damage (
                            weapon_id, affinity_id, upgrade_level,
-                           physical_damage, magic_damage, fire_damage, lightning_damage, holy_damage)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                    (weapon_id, affinity_id, level, *damage))
+                           physical_damage, magic_damage, fire_damage, lightning_damage, holy_damage,
+                           poison_buildup, scarlet_rot_buildup, bleed_buildup, frost_buildup,
+                           sleep_buildup, madness_buildup, death_blight_buildup)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (weapon_id, affinity_id, level, *damage, *buildup))
 
                 grades, values = [], []
                 for attr in ATTRIBUTES:

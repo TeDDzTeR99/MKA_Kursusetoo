@@ -229,4 +229,25 @@
   <data name="Field_arcane_scaling" xml:space="preserve">
     <value>Arcane Scaling</value>
   </data>
+  <data name="Status_bleed" xml:space="preserve">
+    <value>Hemorrhage</value>
+  </data>
+  <data name="Status_frost" xml:space="preserve">
+    <value>Frostbite</value>
+  </data>
+  <data name="Status_poison" xml:space="preserve">
+    <value>Poison</value>
+  </data>
+  <data name="Status_scarlet_rot" xml:space="preserve">
+    <value>Scarlet Rot</value>
+  </data>
+  <data name="Status_sleep" xml:space="preserve">
+    <value>Sleep</value>
+  </data>
+  <data name="Status_madness" xml:space="preserve">
+    <value>Madness</value>
+  </data>
+  <data name="Status_death_blight" xml:space="preserve">
+    <value>Death Blight</value>
+  </data>
 </root>
