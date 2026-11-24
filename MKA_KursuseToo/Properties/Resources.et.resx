@@ -32,22 +32,10 @@
     <value>Elden Ringi viki</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Elden Ringi relvad</value>
+    <value>Elden Ringi viki</value>
   </data>
   <data name="SearchButton" xml:space="preserve">
     <value>Otsi</value>
-  </data>
-  <data name="ListAllButton" xml:space="preserve">
-    <value>Kõik relvad</value>
-  </data>
-  <data name="CategoriesButton" xml:space="preserve">
-    <value>Kategooriad</value>
-  </data>
-  <data name="WeaponNameHeader" xml:space="preserve">
-    <value>Relva nimi</value>
-  </data>
-  <data name="WeaponTypeHeader" xml:space="preserve">
-    <value>Relva tüüp</value>
   </data>
   <data name="DetailsWindowTitle" xml:space="preserve">
     <value>Relva andmed</value>
@@ -147,5 +135,96 @@
   </data>
   <data name="Status_death_blight" xml:space="preserve">
     <value>Surmatõbi</value>
+  </data>
+  <data name="TalismanWindowTitle" xml:space="preserve">
+    <value>Talismani andmed</value>
+  </data>
+  <data name="TalismanNotFound" xml:space="preserve">
+    <value>Talismani ei leitud.</value>
+  </data>
+  <data name="ShadowOfTheErdtree" xml:space="preserve">
+    <value>Shadow of the Erdtree</value>
+  </data>
+  <data name="Field_effect" xml:space="preserve">
+    <value>Mõju</value>
+  </data>
+  <data name="Field_sell_value" xml:space="preserve">
+    <value>Müügihind</value>
+  </data>
+  <data name="Field_cannot_equip_with" xml:space="preserve">
+    <value>Ei saa kanda koos</value>
+  </data>
+  <data name="Field_dlc" xml:space="preserve">
+    <value>Lisapakk</value>
+  </data>
+  <data name="Field_description" xml:space="preserve">
+    <value>Kirjeldus</value>
+  </data>
+  <data name="HomeButton" xml:space="preserve">
+    <value>Avaleht</value>
+  </data>
+  <data name="BackButton" xml:space="preserve">
+    <value>Tagasi</value>
+  </data>
+  <data name="HomeHeading" xml:space="preserve">
+    <value>Kategooriad</value>
+  </data>
+  <data name="CategoryWeapons" xml:space="preserve">
+    <value>Relvad</value>
+  </data>
+  <data name="CategoryTalismans" xml:space="preserve">
+    <value>Talismanid</value>
+  </data>
+  <data name="AllWeapons" xml:space="preserve">
+    <value>Kõik relvad</value>
+  </data>
+  <data name="SearchResultsHeading" xml:space="preserve">
+    <value>Otsingu „{0}“ tulemused</value>
+  </data>
+  <data name="NoSearchResults" xml:space="preserve">
+    <value>Otsingule „{0}“ vasteid ei leitud</value>
+  </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Tulekul</value>
+  </data>
+  <data name="NoTalismansImported" xml:space="preserve">
+    <value>Talismane pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="CategoryShields" xml:space="preserve">
+    <value>Kilbid</value>
+  </data>
+  <data name="CategoryArrowsAndBolts" xml:space="preserve">
+    <value>Nooled ja poldid</value>
+  </data>
+  <data name="CategoryArmor" xml:space="preserve">
+    <value>Rüüd</value>
+  </data>
+  <data name="CategorySorceries" xml:space="preserve">
+    <value>Nõidused</value>
+  </data>
+  <data name="CategoryIncantations" xml:space="preserve">
+    <value>Loitsud</value>
+  </data>
+  <data name="CategoryAshesOfWar" xml:space="preserve">
+    <value>Sõjatuhad</value>
+  </data>
+  <data name="CategorySpiritAshes" xml:space="preserve">
+    <value>Vaimutuhad</value>
+  </data>
+  <data name="CategoryConsumables" xml:space="preserve">
+    <value>Tarbeesemed</value>
+  </data>
+  <data name="CategoryCraftingMaterials" xml:space="preserve">
+    <value>Meisterdamine</value>
+  </data>
+  <data name="CategoryUpgradeMaterials" xml:space="preserve">
+    <value>Täiustamine</value>
+  </data>
+  <data name="CategoryKeyItems" xml:space="preserve">
+    <value>Võtmeesemed</value>
+  </data>
+  <data name="LanguageSwitch" xml:space="preserve">
+    <value>English</value>
+    <comment>Label of the language switch: the name of the other language</comment>
   </data>
 </root>

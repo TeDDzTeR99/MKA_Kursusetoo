@@ -11,7 +11,6 @@
 namespace MKA_KursuseToo.Properties
 {
 
-
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -123,7 +122,7 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to: Elden Ring Weapons
+        ///   Looks up a localized string similar to: Elden Ring Wiki
         /// </summary>
         internal static string AppTitle
         {
@@ -141,50 +140,6 @@ namespace MKA_KursuseToo.Properties
             get
             {
                 return ResourceManager.GetString("SearchButton", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to: List All
-        /// </summary>
-        internal static string ListAllButton
-        {
-            get
-            {
-                return ResourceManager.GetString("ListAllButton", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to: Categories
-        /// </summary>
-        internal static string CategoriesButton
-        {
-            get
-            {
-                return ResourceManager.GetString("CategoriesButton", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to: Weapon Name
-        /// </summary>
-        internal static string WeaponNameHeader
-        {
-            get
-            {
-                return ResourceManager.GetString("WeaponNameHeader", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to: Weapon Type
-        /// </summary>
-        internal static string WeaponTypeHeader
-        {
-            get
-            {
-                return ResourceManager.GetString("WeaponTypeHeader", resourceCulture);
             }
         }
 
@@ -218,6 +173,281 @@ namespace MKA_KursuseToo.Properties
             get
             {
                 return ResourceManager.GetString("UpgradeLevelLabel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Talisman Details
+        /// </summary>
+        internal static string TalismanWindowTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("TalismanWindowTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Talisman not found.
+        /// </summary>
+        internal static string TalismanNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("TalismanNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Shadow of the Erdtree
+        /// </summary>
+        internal static string ShadowOfTheErdtree
+        {
+            get
+            {
+                return ResourceManager.GetString("ShadowOfTheErdtree", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Home
+        /// </summary>
+        internal static string HomeButton
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeButton", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Back
+        /// </summary>
+        internal static string BackButton
+        {
+            get
+            {
+                return ResourceManager.GetString("BackButton", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Categories
+        /// </summary>
+        internal static string HomeHeading
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeHeading", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Weapons
+        /// </summary>
+        internal static string CategoryWeapons
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryWeapons", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Talismans
+        /// </summary>
+        internal static string CategoryTalismans
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryTalismans", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: All Weapons
+        /// </summary>
+        internal static string AllWeapons
+        {
+            get
+            {
+                return ResourceManager.GetString("AllWeapons", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Search results for “{0}”
+        /// </summary>
+        internal static string SearchResultsHeading
+        {
+            get
+            {
+                return ResourceManager.GetString("SearchResultsHeading", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No matches for “{0}”
+        /// </summary>
+        internal static string NoSearchResults
+        {
+            get
+            {
+                return ResourceManager.GetString("NoSearchResults", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Coming soon
+        /// </summary>
+        internal static string ComingSoon
+        {
+            get
+            {
+                return ResourceManager.GetString("ComingSoon", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No talismans imported yet. The README explains how to import them from the game files.
+        /// </summary>
+        internal static string NoTalismansImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoTalismansImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Shields
+        /// </summary>
+        internal static string CategoryShields
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryShields", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Arrows & Bolts
+        /// </summary>
+        internal static string CategoryArrowsAndBolts
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryArrowsAndBolts", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Armor
+        /// </summary>
+        internal static string CategoryArmor
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryArmor", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Sorceries
+        /// </summary>
+        internal static string CategorySorceries
+        {
+            get
+            {
+                return ResourceManager.GetString("CategorySorceries", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Incantations
+        /// </summary>
+        internal static string CategoryIncantations
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryIncantations", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Ashes of War
+        /// </summary>
+        internal static string CategoryAshesOfWar
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryAshesOfWar", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Spirit Ashes
+        /// </summary>
+        internal static string CategorySpiritAshes
+        {
+            get
+            {
+                return ResourceManager.GetString("CategorySpiritAshes", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Consumables
+        /// </summary>
+        internal static string CategoryConsumables
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryConsumables", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Crafting Materials
+        /// </summary>
+        internal static string CategoryCraftingMaterials
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryCraftingMaterials", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Upgrade Materials
+        /// </summary>
+        internal static string CategoryUpgradeMaterials
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryUpgradeMaterials", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Key Items
+        /// </summary>
+        internal static string CategoryKeyItems
+        {
+            get
+            {
+                return ResourceManager.GetString("CategoryKeyItems", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Eesti
+        /// </summary>
+        internal static string LanguageSwitch
+        {
+            get
+            {
+                return ResourceManager.GetString("LanguageSwitch", resourceCulture);
             }
         }
     }

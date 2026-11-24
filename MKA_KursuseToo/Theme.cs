@@ -24,6 +24,7 @@ namespace MKA_KursuseToo
         public static readonly Font BodyFont    = new Font("Segoe UI", 10.5F);
         public static readonly Font BoldFont    = new Font("Segoe UI", 10.5F, FontStyle.Bold);
         public static readonly Font TitleFont   = new Font("Georgia", 20F, FontStyle.Bold);
+        public static readonly Font TileFont    = new Font("Georgia", 14F, FontStyle.Bold);
 
         // Applies the theme to a window and everything inside it
         public static void Apply(Form form)

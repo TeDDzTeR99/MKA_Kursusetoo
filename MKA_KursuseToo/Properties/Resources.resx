@@ -134,22 +134,10 @@
     <value>Elden Ring Wiki</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Elden Ring Weapons</value>
+    <value>Elden Ring Wiki</value>
   </data>
   <data name="SearchButton" xml:space="preserve">
     <value>Search</value>
-  </data>
-  <data name="ListAllButton" xml:space="preserve">
-    <value>List All</value>
-  </data>
-  <data name="CategoriesButton" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="WeaponNameHeader" xml:space="preserve">
-    <value>Weapon Name</value>
-  </data>
-  <data name="WeaponTypeHeader" xml:space="preserve">
-    <value>Weapon Type</value>
   </data>
   <data name="DetailsWindowTitle" xml:space="preserve">
     <value>Weapon Details</value>
@@ -249,5 +237,96 @@
   </data>
   <data name="Status_death_blight" xml:space="preserve">
     <value>Death Blight</value>
+  </data>
+  <data name="TalismanWindowTitle" xml:space="preserve">
+    <value>Talisman Details</value>
+  </data>
+  <data name="TalismanNotFound" xml:space="preserve">
+    <value>Talisman not found.</value>
+  </data>
+  <data name="ShadowOfTheErdtree" xml:space="preserve">
+    <value>Shadow of the Erdtree</value>
+  </data>
+  <data name="Field_effect" xml:space="preserve">
+    <value>Effect</value>
+  </data>
+  <data name="Field_sell_value" xml:space="preserve">
+    <value>Sell Value</value>
+  </data>
+  <data name="Field_cannot_equip_with" xml:space="preserve">
+    <value>Can't Be Worn With</value>
+  </data>
+  <data name="Field_dlc" xml:space="preserve">
+    <value>DLC</value>
+  </data>
+  <data name="Field_description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="HomeButton" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="BackButton" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="HomeHeading" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoryWeapons" xml:space="preserve">
+    <value>Weapons</value>
+  </data>
+  <data name="CategoryTalismans" xml:space="preserve">
+    <value>Talismans</value>
+  </data>
+  <data name="AllWeapons" xml:space="preserve">
+    <value>All Weapons</value>
+  </data>
+  <data name="SearchResultsHeading" xml:space="preserve">
+    <value>Search results for “{0}”</value>
+  </data>
+  <data name="NoSearchResults" xml:space="preserve">
+    <value>No matches for “{0}”</value>
+  </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Coming soon</value>
+  </data>
+  <data name="NoTalismansImported" xml:space="preserve">
+    <value>No talismans imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="CategoryShields" xml:space="preserve">
+    <value>Shields</value>
+  </data>
+  <data name="CategoryArrowsAndBolts" xml:space="preserve">
+    <value>Arrows &amp; Bolts</value>
+  </data>
+  <data name="CategoryArmor" xml:space="preserve">
+    <value>Armor</value>
+  </data>
+  <data name="CategorySorceries" xml:space="preserve">
+    <value>Sorceries</value>
+  </data>
+  <data name="CategoryIncantations" xml:space="preserve">
+    <value>Incantations</value>
+  </data>
+  <data name="CategoryAshesOfWar" xml:space="preserve">
+    <value>Ashes of War</value>
+  </data>
+  <data name="CategorySpiritAshes" xml:space="preserve">
+    <value>Spirit Ashes</value>
+  </data>
+  <data name="CategoryConsumables" xml:space="preserve">
+    <value>Consumables</value>
+  </data>
+  <data name="CategoryCraftingMaterials" xml:space="preserve">
+    <value>Crafting Materials</value>
+  </data>
+  <data name="CategoryUpgradeMaterials" xml:space="preserve">
+    <value>Upgrade Materials</value>
+  </data>
+  <data name="CategoryKeyItems" xml:space="preserve">
+    <value>Key Items</value>
+  </data>
+  <data name="LanguageSwitch" xml:space="preserve">
+    <value>Eesti</value>
+    <comment>Label of the language switch: the name of the other language</comment>
   </data>
 </root>

@@ -86,6 +86,9 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="TalismanView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Theme.cs" />
     <Compile Include="WeaponDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
