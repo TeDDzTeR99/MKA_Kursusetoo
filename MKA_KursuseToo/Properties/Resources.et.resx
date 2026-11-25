@@ -449,4 +449,100 @@
   <data name="Field_unlocks_cookbook" xml:space="preserve">
     <value>Retseptid</value>
   </data>
+  <data name="AllSorceries" xml:space="preserve">
+    <value>Kõik nõidused</value>
+  </data>
+  <data name="AllIncantations" xml:space="preserve">
+    <value>Kõik loitsud</value>
+  </data>
+  <data name="SpellNotFound" xml:space="preserve">
+    <value>Loitsu ei leitud.</value>
+  </data>
+  <data name="NoSpellsImported" xml:space="preserve">
+    <value>Loitse pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="Field_fp" xml:space="preserve">
+    <value>FP</value>
+  </data>
+  <data name="Field_stamina" xml:space="preserve">
+    <value>Vastupidavus</value>
+  </data>
+  <data name="Field_slots" xml:space="preserve">
+    <value>Mälupesad</value>
+  </data>
+  <data name="SpellSchool_glintstone" xml:space="preserve">
+    <value>Helkkivi</value>
+  </data>
+  <data name="SpellSchool_primeval" xml:space="preserve">
+    <value>Ürgsed</value>
+  </data>
+  <data name="SpellSchool_carian" xml:space="preserve">
+    <value>Caria</value>
+  </data>
+  <data name="SpellSchool_night" xml:space="preserve">
+    <value>Öö</value>
+  </data>
+  <data name="SpellSchool_magma" xml:space="preserve">
+    <value>Magma</value>
+  </data>
+  <data name="SpellSchool_cold" xml:space="preserve">
+    <value>Külm</value>
+  </data>
+  <data name="SpellSchool_crystalian" xml:space="preserve">
+    <value>Kristall</value>
+  </data>
+  <data name="SpellSchool_gravity" xml:space="preserve">
+    <value>Gravitatsioon</value>
+  </data>
+  <data name="SpellSchool_oracle" xml:space="preserve">
+    <value>Oraaklimullid</value>
+  </data>
+  <data name="SpellSchool_thorn" xml:space="preserve">
+    <value>Okkad</value>
+  </data>
+  <data name="SpellSchool_death" xml:space="preserve">
+    <value>Surm</value>
+  </data>
+  <data name="SpellSchool_two_fingers" xml:space="preserve">
+    <value>Kaks Sõrme</value>
+  </data>
+  <data name="SpellSchool_assassin" xml:space="preserve">
+    <value>Palgamõrvar</value>
+  </data>
+  <data name="SpellSchool_gold" xml:space="preserve">
+    <value>Kuld</value>
+  </data>
+  <data name="SpellSchool_erdtree" xml:space="preserve">
+    <value>Erdtree</value>
+  </data>
+  <data name="SpellSchool_golden_order" xml:space="preserve">
+    <value>Kuldne Kord</value>
+  </data>
+  <data name="SpellSchool_dragon_cult" xml:space="preserve">
+    <value>Draakonikultus</value>
+  </data>
+  <data name="SpellSchool_flame" xml:space="preserve">
+    <value>Tulemungad ja hiidude leek</value>
+  </data>
+  <data name="SpellSchool_godskin" xml:space="preserve">
+    <value>Jumalanahk</value>
+  </data>
+  <data name="SpellSchool_bestial" xml:space="preserve">
+    <value>Loomalikud</value>
+  </data>
+  <data name="SpellSchool_bloodflame" xml:space="preserve">
+    <value>Vereleek</value>
+  </data>
+  <data name="SpellSchool_rot" xml:space="preserve">
+    <value>Mädanik ja mürk</value>
+  </data>
+  <data name="SpellSchool_frenzied_flame" xml:space="preserve">
+    <value>Hullumeelne leek</value>
+  </data>
+  <data name="SpellSchool_dragon_communion" xml:space="preserve">
+    <value>Draakoniosadus</value>
+  </data>
+  <data name="SpellSchool_divine_beast" xml:space="preserve">
+    <value>Jumalik metsaline</value>
+  </data>
 </root>

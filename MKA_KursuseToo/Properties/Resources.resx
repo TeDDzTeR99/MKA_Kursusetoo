@@ -552,4 +552,100 @@
   <data name="Field_unlocks_cookbook" xml:space="preserve">
     <value>Recipes</value>
   </data>
+  <data name="AllSorceries" xml:space="preserve">
+    <value>All Sorceries</value>
+  </data>
+  <data name="AllIncantations" xml:space="preserve">
+    <value>All Incantations</value>
+  </data>
+  <data name="SpellNotFound" xml:space="preserve">
+    <value>Spell not found.</value>
+  </data>
+  <data name="NoSpellsImported" xml:space="preserve">
+    <value>No spells imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="Field_fp" xml:space="preserve">
+    <value>FP</value>
+  </data>
+  <data name="Field_stamina" xml:space="preserve">
+    <value>Stamina</value>
+  </data>
+  <data name="Field_slots" xml:space="preserve">
+    <value>Memory slots</value>
+  </data>
+  <data name="SpellSchool_glintstone" xml:space="preserve">
+    <value>Glintstone</value>
+  </data>
+  <data name="SpellSchool_primeval" xml:space="preserve">
+    <value>Primeval</value>
+  </data>
+  <data name="SpellSchool_carian" xml:space="preserve">
+    <value>Carian</value>
+  </data>
+  <data name="SpellSchool_night" xml:space="preserve">
+    <value>Night</value>
+  </data>
+  <data name="SpellSchool_magma" xml:space="preserve">
+    <value>Magma</value>
+  </data>
+  <data name="SpellSchool_cold" xml:space="preserve">
+    <value>Cold</value>
+  </data>
+  <data name="SpellSchool_crystalian" xml:space="preserve">
+    <value>Crystalian</value>
+  </data>
+  <data name="SpellSchool_gravity" xml:space="preserve">
+    <value>Gravity</value>
+  </data>
+  <data name="SpellSchool_oracle" xml:space="preserve">
+    <value>Oracle Bubbles</value>
+  </data>
+  <data name="SpellSchool_thorn" xml:space="preserve">
+    <value>Thorn</value>
+  </data>
+  <data name="SpellSchool_death" xml:space="preserve">
+    <value>Death</value>
+  </data>
+  <data name="SpellSchool_two_fingers" xml:space="preserve">
+    <value>Two Fingers</value>
+  </data>
+  <data name="SpellSchool_assassin" xml:space="preserve">
+    <value>Assassin</value>
+  </data>
+  <data name="SpellSchool_gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="SpellSchool_erdtree" xml:space="preserve">
+    <value>Erdtree</value>
+  </data>
+  <data name="SpellSchool_golden_order" xml:space="preserve">
+    <value>Golden Order</value>
+  </data>
+  <data name="SpellSchool_dragon_cult" xml:space="preserve">
+    <value>Dragon Cult</value>
+  </data>
+  <data name="SpellSchool_flame" xml:space="preserve">
+    <value>Fire Monks &amp; Giants' Flame</value>
+  </data>
+  <data name="SpellSchool_godskin" xml:space="preserve">
+    <value>Godskin</value>
+  </data>
+  <data name="SpellSchool_bestial" xml:space="preserve">
+    <value>Bestial</value>
+  </data>
+  <data name="SpellSchool_bloodflame" xml:space="preserve">
+    <value>Bloodflame</value>
+  </data>
+  <data name="SpellSchool_rot" xml:space="preserve">
+    <value>Rot &amp; Poison</value>
+  </data>
+  <data name="SpellSchool_frenzied_flame" xml:space="preserve">
+    <value>Frenzied Flame</value>
+  </data>
+  <data name="SpellSchool_dragon_communion" xml:space="preserve">
+    <value>Dragon Communion</value>
+  </data>
+  <data name="SpellSchool_divine_beast" xml:space="preserve">
+    <value>Divine Beast</value>
+  </data>
 </root>

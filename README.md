@@ -117,6 +117,7 @@ as it comes from English sources.
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
 | `talismans` | Name, effect, description, weight, sell value, accessory group (talismans in one group can't be worn together), DLC flag. The ID is the talisman's row ID in the game data |
 | `key_items` | Name, effect, description, sell value, kind (keys, maps, cookbooks, bell bearings, …), DLC flag, in the game's inventory order. The ID is the item's row ID in `EquipParamGoods` |
+| `spells` | Sorceries and incantations: name, school, effect, description, FP, stamina, memory slots, Intelligence / Faith / Arcane requirements, DLC flag. The views `sorceries` and `incantations` split it by type. The ID is the spell's row ID in `EquipParamGoods` and `Magic` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -180,6 +181,16 @@ python MKA_KursuseToo/Database/import_key_items.py EquipParamGoods.csv <folder w
 
 Item pictures for every category come from the game files too, see `import_icons.py` (needs WitchyBND and Pillow).
 
+#### Sorceries and incantations
+
+Spells come from `EquipParamGoods` (which rows are spells, and their school from the inventory order) and the
+`Magic` param (FP, stamina, memory slots, requirements), exported the same way. Run `014_spells.sql` once
+(already applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_spells.py EquipParamGoods.csv Magic.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -195,6 +206,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `007_status_buildup_per_level_affinity.sql` | Adds status buildup per affinity and level; `passive_effect` becomes `special_effect` |
 | `008_talismans.sql` | Adds the `talismans` table (filled by `import_talismans.py`) |
 | `013_key_items.sql` | Adds the `key_items` table (filled by `import_key_items.py`) |
+| `014_spells.sql` | Adds the `spells` table and the `sorceries` / `incantations` views (filled by `import_spells.py`) |
 
 ## Author
 

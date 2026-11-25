@@ -210,6 +210,50 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Sorceries
+        /// </summary>
+        internal static string AllSorceries
+        {
+            get
+            {
+                return ResourceManager.GetString("AllSorceries", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: All Incantations
+        /// </summary>
+        internal static string AllIncantations
+        {
+            get
+            {
+                return ResourceManager.GetString("AllIncantations", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Spell not found.
+        /// </summary>
+        internal static string SpellNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("SpellNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No spells imported yet. ...
+        /// </summary>
+        internal static string NoSpellsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoSpellsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems

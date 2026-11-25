@@ -71,8 +71,28 @@ namespace MKA_KursuseToo
                     Open = () => NavigateTo(ShowTalismans),
                     OpenItem = OpenTalisman
                 },
-                Placeholder(nameof(Resources.CategorySorceries)),
-                Placeholder(nameof(Resources.CategoryIncantations)),
+                new Category
+                {
+                    Kind = "sorcery",
+                    TitleKey = nameof(Resources.CategorySorceries),
+                    CountSql = "SELECT COUNT(*) FROM sorceries;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM sorceries
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(SorceryCategory, "sorceries", "SpellSchool_",
+                                                            Resources.AllSorceries, Resources.NoSpellsImported)),
+                    OpenItem = id => OpenSpell(id, SorceryCategory)
+                },
+                new Category
+                {
+                    Kind = "incantation",
+                    TitleKey = nameof(Resources.CategoryIncantations),
+                    CountSql = "SELECT COUNT(*) FROM incantations;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM incantations
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(IncantationCategory, "incantations", "SpellSchool_",
+                                                            Resources.AllIncantations, Resources.NoSpellsImported)),
+                    OpenItem = id => OpenSpell(id, IncantationCategory)
+                },
                 Placeholder(nameof(Resources.CategoryAshesOfWar)),
                 Placeholder(nameof(Resources.CategorySpiritAshes)),
                 Placeholder(nameof(Resources.CategoryConsumables)),
@@ -106,6 +126,8 @@ namespace MKA_KursuseToo
         private Category TalismanCategory => _categories.First(c => c.Kind == "talisman");
         private Category UpgradeMaterialCategory => _categories.First(c => c.Kind == "upgrade_material");
         private Category KeyItemCategory => _categories.First(c => c.Kind == "key_item");
+        private Category SorceryCategory => _categories.First(c => c.Kind == "sorcery");
+        private Category IncantationCategory => _categories.First(c => c.Kind == "incantation");
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -532,5 +554,9 @@ namespace MKA_KursuseToo
 
         private void OpenKeyItem(int id) =>
             NavigateTo(() => ShowDetails(Resources.CategoryKeyItems, new KeyItemView(id)));
+
+        // Sorceries and incantations share one details page; category gives its heading and picture folder
+        private void OpenSpell(int id, Category category) =>
+            NavigateTo(() => ShowDetails(category.Title, new SpellView(id, category.Kind)));
     }
 }
