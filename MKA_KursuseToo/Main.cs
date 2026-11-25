@@ -93,8 +93,28 @@ namespace MKA_KursuseToo
                                                             Resources.AllIncantations, Resources.NoSpellsImported)),
                     OpenItem = id => OpenSpell(id, IncantationCategory)
                 },
-                Placeholder(nameof(Resources.CategoryAshesOfWar)),
-                Placeholder(nameof(Resources.CategorySpiritAshes)),
+                new Category
+                {
+                    Kind = "ash_of_war",
+                    TitleKey = nameof(Resources.CategoryAshesOfWar),
+                    CountSql = "SELECT COUNT(*) FROM ashes_of_war;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM ashes_of_war
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(AshOfWarCategory, "ashes_of_war", "AshOfWarKind_",
+                                                            Resources.AllAshesOfWar, Resources.NoAshesImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryAshesOfWar, new AshOfWarView(id)))
+                },
+                new Category
+                {
+                    Kind = "spirit_ash",
+                    TitleKey = nameof(Resources.CategorySpiritAshes),
+                    CountSql = "SELECT COUNT(*) FROM spirit_ashes;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM spirit_ashes
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(SpiritAshCategory, "spirit_ashes", "SpiritAshKind_",
+                                                            Resources.AllSpiritAshes, Resources.NoAshesImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategorySpiritAshes, new SpiritAshView(id)))
+                },
                 Placeholder(nameof(Resources.CategoryConsumables)),
                 Placeholder(nameof(Resources.CategoryCraftingMaterials)),
                 new Category
@@ -128,6 +148,8 @@ namespace MKA_KursuseToo
         private Category KeyItemCategory => _categories.First(c => c.Kind == "key_item");
         private Category SorceryCategory => _categories.First(c => c.Kind == "sorcery");
         private Category IncantationCategory => _categories.First(c => c.Kind == "incantation");
+        private Category AshOfWarCategory => _categories.First(c => c.Kind == "ash_of_war");
+        private Category SpiritAshCategory => _categories.First(c => c.Kind == "spirit_ash");
 
         private void Main_Load(object sender, EventArgs e)
         {

@@ -254,6 +254,50 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Ashes of War
+        /// </summary>
+        internal static string AllAshesOfWar
+        {
+            get
+            {
+                return ResourceManager.GetString("AllAshesOfWar", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: All Spirit Ashes
+        /// </summary>
+        internal static string AllSpiritAshes
+        {
+            get
+            {
+                return ResourceManager.GetString("AllSpiritAshes", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Ash not found.
+        /// </summary>
+        internal static string AshNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("AshNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No ashes imported yet. ...
+        /// </summary>
+        internal static string NoAshesImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoAshesImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems

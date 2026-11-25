@@ -73,6 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AshOfWarView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpiritAshView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DetailedView.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -545,4 +545,76 @@
   <data name="SpellSchool_divine_beast" xml:space="preserve">
     <value>Jumalik metsaline</value>
   </data>
+  <data name="AllAshesOfWar" xml:space="preserve">
+    <value>Kõik sõjatuhad</value>
+  </data>
+  <data name="AllSpiritAshes" xml:space="preserve">
+    <value>Kõik vaimutuhad</value>
+  </data>
+  <data name="AshNotFound" xml:space="preserve">
+    <value>Tuhka ei leitud.</value>
+  </data>
+  <data name="NoAshesImported" xml:space="preserve">
+    <value>Tuhku pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="Field_default_affinity" xml:space="preserve">
+    <value>Vaikimisi afiinsus</value>
+  </data>
+  <data name="Field_affinities" xml:space="preserve">
+    <value>Afiinsused</value>
+  </data>
+  <data name="Field_weapon_types" xml:space="preserve">
+    <value>Relvatüübid</value>
+  </data>
+  <data name="Field_hp" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="AshOfWarKind_heavy" xml:space="preserve">
+    <value>Raske</value>
+  </data>
+  <data name="AshOfWarKind_keen" xml:space="preserve">
+    <value>Terav</value>
+  </data>
+  <data name="AshOfWarKind_quality" xml:space="preserve">
+    <value>Kvaliteet</value>
+  </data>
+  <data name="AshOfWarKind_magic" xml:space="preserve">
+    <value>Maagia</value>
+  </data>
+  <data name="AshOfWarKind_fire" xml:space="preserve">
+    <value>Tuli</value>
+  </data>
+  <data name="AshOfWarKind_flame_art" xml:space="preserve">
+    <value>Leegikunst</value>
+  </data>
+  <data name="AshOfWarKind_lightning" xml:space="preserve">
+    <value>Välk</value>
+  </data>
+  <data name="AshOfWarKind_sacred" xml:space="preserve">
+    <value>Püha</value>
+  </data>
+  <data name="AshOfWarKind_poison" xml:space="preserve">
+    <value>Mürk</value>
+  </data>
+  <data name="AshOfWarKind_blood" xml:space="preserve">
+    <value>Veri</value>
+  </data>
+  <data name="AshOfWarKind_cold" xml:space="preserve">
+    <value>Külm</value>
+  </data>
+  <data name="AshOfWarKind_occult" xml:space="preserve">
+    <value>Okultne</value>
+  </data>
+  <data name="AshOfWarKind_bow" xml:space="preserve">
+    <value>Vibud</value>
+  </data>
+  <data name="AshOfWarKind_shield" xml:space="preserve">
+    <value>Kilbid</value>
+  </data>
+  <data name="SpiritAshKind_grave_glovewort" xml:space="preserve">
+    <value>Hauakindaleht</value>
+  </data>
+  <data name="SpiritAshKind_ghost_glovewort" xml:space="preserve">
+    <value>Vaimukindaleht</value>
+  </data>
 </root>

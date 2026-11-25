@@ -118,6 +118,8 @@ as it comes from English sources.
 | `talismans` | Name, effect, description, weight, sell value, accessory group (talismans in one group can't be worn together), DLC flag. The ID is the talisman's row ID in the game data |
 | `key_items` | Name, effect, description, sell value, kind (keys, maps, cookbooks, bell bearings, …), DLC flag, in the game's inventory order. The ID is the item's row ID in `EquipParamGoods` |
 | `spells` | Sorceries and incantations: name, school, effect, description, FP, stamina, memory slots, Intelligence / Faith / Arcane requirements, DLC flag. The views `sorceries` and `incantations` split it by type. The ID is the spell's row ID in `EquipParamGoods` and `Magic` |
+| `ashes_of_war` | Name, kind (default affinity, or bow / shield), default affinity, every affinity it can give, weapon types it fits, skill FP cost, description, DLC flag. The ID is the row ID in `EquipParamGem` |
+| `spirit_ashes` | Name, upgrade material (Grave / Ghost Glovewort), effect, description, summoning FP or HP cost, max upgrade level, DLC flag. The ID is the +0 row ID in `EquipParamGoods` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -191,6 +193,16 @@ Spells come from `EquipParamGoods` (which rows are spells, and their school from
 python MKA_KursuseToo/Database/import_spells.py EquipParamGoods.csv Magic.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
 ```
 
+#### Ashes of war and spirit ashes
+
+Ashes of war come from `EquipParamGem` (affinities, weapon types) and `SwordArtsParam` (skill FP cost); spirit
+ashes from `EquipParamGoods` (one row per upgrade level, only +0 is kept). Run `015_ashes.sql` once (already
+applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_ashes.py EquipParamGem.csv SwordArtsParam.csv EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -207,6 +219,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `008_talismans.sql` | Adds the `talismans` table (filled by `import_talismans.py`) |
 | `013_key_items.sql` | Adds the `key_items` table (filled by `import_key_items.py`) |
 | `014_spells.sql` | Adds the `spells` table and the `sorceries` / `incantations` views (filled by `import_spells.py`) |
+| `015_ashes.sql` | Adds the `ashes_of_war` and `spirit_ashes` tables (filled by `import_ashes.py`) |
 
 ## Author
 

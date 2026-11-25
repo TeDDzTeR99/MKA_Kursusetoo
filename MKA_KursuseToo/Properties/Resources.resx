@@ -648,4 +648,76 @@
   <data name="SpellSchool_divine_beast" xml:space="preserve">
     <value>Divine Beast</value>
   </data>
+  <data name="AllAshesOfWar" xml:space="preserve">
+    <value>All Ashes of War</value>
+  </data>
+  <data name="AllSpiritAshes" xml:space="preserve">
+    <value>All Spirit Ashes</value>
+  </data>
+  <data name="AshNotFound" xml:space="preserve">
+    <value>Ash not found.</value>
+  </data>
+  <data name="NoAshesImported" xml:space="preserve">
+    <value>No ashes imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="Field_default_affinity" xml:space="preserve">
+    <value>Default affinity</value>
+  </data>
+  <data name="Field_affinities" xml:space="preserve">
+    <value>Affinities</value>
+  </data>
+  <data name="Field_weapon_types" xml:space="preserve">
+    <value>Weapon types</value>
+  </data>
+  <data name="Field_hp" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="AshOfWarKind_heavy" xml:space="preserve">
+    <value>Heavy</value>
+  </data>
+  <data name="AshOfWarKind_keen" xml:space="preserve">
+    <value>Keen</value>
+  </data>
+  <data name="AshOfWarKind_quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="AshOfWarKind_magic" xml:space="preserve">
+    <value>Magic</value>
+  </data>
+  <data name="AshOfWarKind_fire" xml:space="preserve">
+    <value>Fire</value>
+  </data>
+  <data name="AshOfWarKind_flame_art" xml:space="preserve">
+    <value>Flame Art</value>
+  </data>
+  <data name="AshOfWarKind_lightning" xml:space="preserve">
+    <value>Lightning</value>
+  </data>
+  <data name="AshOfWarKind_sacred" xml:space="preserve">
+    <value>Sacred</value>
+  </data>
+  <data name="AshOfWarKind_poison" xml:space="preserve">
+    <value>Poison</value>
+  </data>
+  <data name="AshOfWarKind_blood" xml:space="preserve">
+    <value>Blood</value>
+  </data>
+  <data name="AshOfWarKind_cold" xml:space="preserve">
+    <value>Cold</value>
+  </data>
+  <data name="AshOfWarKind_occult" xml:space="preserve">
+    <value>Occult</value>
+  </data>
+  <data name="AshOfWarKind_bow" xml:space="preserve">
+    <value>Bows</value>
+  </data>
+  <data name="AshOfWarKind_shield" xml:space="preserve">
+    <value>Shields</value>
+  </data>
+  <data name="SpiritAshKind_grave_glovewort" xml:space="preserve">
+    <value>Grave Glovewort</value>
+  </data>
+  <data name="SpiritAshKind_ghost_glovewort" xml:space="preserve">
+    <value>Ghost Glovewort</value>
+  </data>
 </root>
