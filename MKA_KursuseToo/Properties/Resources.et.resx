@@ -794,4 +794,7 @@
   <data name="CraftingMaterialKind_mineral" xml:space="preserve">
     <value>Mineraalid ja esemed</value>
   </data>
+  <data name="Field_used_to_craft" xml:space="preserve">
+    <value>Kasutatakse meisterdamiseks</value>
+  </data>
 </root>

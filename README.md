@@ -52,6 +52,7 @@ Built as a course project (*kursusetöö*).
   - spells: FP, stamina, memory slots and requirements; ashes of war: FP cost, affinities and the weapon types they fit
   - upgrade materials: how many each upgrade level needs; bell bearings and cookbooks: what they unlock
   - consumables and materials: effect, FP cost, how many can be carried and stored, sell value
+  - crafting materials: which items they're used to craft, and how many each needs
 - **Dark theme** with gold accents, inspired by the Fextralife wiki, and a dark title bar on Windows 10/11.
 - **Resizable** main window: the list fills the window.
 - **English / Estonian** switch in the top right corner; the choice is remembered (see [Languages](#languages)).
@@ -156,6 +157,7 @@ as it comes from English sources.
 | `ammunition` | Arrows and bolts: name, kind (arrow / great arrow / bolt / greatbolt), description, damage, max carried, sell value, DLC flag. The ID is the row ID in `EquipParamWeapon` |
 | `consumables` | Name, kind (flasks, food, pots, aromatics, throwing items, special items, greases, tools, runes, multiplayer items), effect, description, FP cost, max carried, max stored, sell value, DLC flag. The ID is the row ID in `EquipParamGoods` |
 | `crafting_materials` | Name, kind (animal parts / plants / minerals & objects), description, max carried, max stored, sell value, DLC flag. The ID is the row ID in `EquipParamGoods` |
+| `crafting_material_uses` | Which items each crafting material is used to craft, and how many one craft needs |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -299,10 +301,12 @@ python MKA_KursuseToo/Database/import_consumables.py EquipParamGoods.csv <folder
 #### Crafting materials
 
 Crafting materials come from `EquipParamGoods` (goodsType 2). The kind comes from the game's inventory order
-(`sortId` // 1000). Run `020_crafting_materials.sql` once (already applied to the included database), then:
+(`sortId` // 1000). What each one is used to craft comes from the recipes in `ShopLineupParam_Recipe` and the
+materials each recipe needs in `EquipMtrlSetParam`. Run `020_crafting_materials.sql` and
+`021_crafting_material_uses.sql` once (already applied to the included database), then:
 
 ```
-python MKA_KursuseToo/Database/import_crafting_materials.py EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+python MKA_KursuseToo/Database/import_crafting_materials.py EquipParamGoods.csv <folder with the .fmg.xml files> ShopLineupParam_Recipe.csv EquipMtrlSetParam.csv MKA_KursuseToo/elden_ring_weapons.db
 ```
 
 #### Item pictures
@@ -343,6 +347,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `018_ammunition.sql` | Adds the `ammunition` table (filled by `import_ammunition.py`) |
 | `019_consumables.sql` | Adds the `consumables` table (filled by `import_consumables.py`) |
 | `020_crafting_materials.sql` | Adds the `crafting_materials` table (filled by `import_crafting_materials.py`) |
+| `021_crafting_material_uses.sql` | Adds the `crafting_material_uses` table (filled by `import_crafting_materials.py`) |
 
 ## Author
 

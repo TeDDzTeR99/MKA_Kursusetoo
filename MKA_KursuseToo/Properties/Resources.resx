@@ -897,4 +897,7 @@
   <data name="CraftingMaterialKind_mineral" xml:space="preserve">
     <value>Minerals &amp; Objects</value>
   </data>
+  <data name="Field_used_to_craft" xml:space="preserve">
+    <value>Used to craft</value>
+  </data>
 </root>
