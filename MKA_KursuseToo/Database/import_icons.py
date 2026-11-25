@@ -38,6 +38,7 @@ KINDS = {
     "ash_of_war": ("ashes_of_war", "EquipParamGem.csv"),
     "spirit_ash": ("spirit_ashes", "EquipParamGoods.csv"),
     "armor": ("armor", "EquipParamProtector.csv"),
+    "shield": ("shields", "EquipParamWeapon.csv"),
 }
 
 

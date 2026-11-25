@@ -331,6 +331,39 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Shields
+        /// </summary>
+        internal static string AllShields
+        {
+            get
+            {
+                return ResourceManager.GetString("AllShields", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Shield not found.
+        /// </summary>
+        internal static string ShieldNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("ShieldNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No shields imported yet. ...
+        /// </summary>
+        internal static string NoShieldsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoShieldsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems

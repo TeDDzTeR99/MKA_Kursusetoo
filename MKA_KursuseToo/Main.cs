@@ -58,7 +58,17 @@ namespace MKA_KursuseToo
                     Open = () => NavigateTo(ShowWeaponTypes),
                     OpenItem = OpenWeapon
                 },
-                Placeholder(nameof(Resources.CategoryShields)),
+                new Category
+                {
+                    Kind = "shield",
+                    TitleKey = nameof(Resources.CategoryShields),
+                    CountSql = "SELECT COUNT(*) FROM shields;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM shields
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(ShieldCategory, "shields", "ShieldKind_",
+                                                            Resources.AllShields, Resources.NoShieldsImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryShields, new ShieldView(id)))
+                },
                 Placeholder(nameof(Resources.CategoryArrowsAndBolts)),
                 new Category
                 {
@@ -160,6 +170,7 @@ namespace MKA_KursuseToo
         private Category IncantationCategory => _categories.First(c => c.Kind == "incantation");
         private Category AshOfWarCategory => _categories.First(c => c.Kind == "ash_of_war");
         private Category ArmorCategory => _categories.First(c => c.Kind == "armor");
+        private Category ShieldCategory => _categories.First(c => c.Kind == "shield");
         private Category SpiritAshCategory => _categories.First(c => c.Kind == "spirit_ash");
 
         private void Main_Load(object sender, EventArgs e)

@@ -780,4 +780,40 @@
   <data name="Field_vitality" xml:space="preserve">
     <value>Vitality</value>
   </data>
+  <data name="AllShields" xml:space="preserve">
+    <value>All Shields</value>
+  </data>
+  <data name="ShieldNotFound" xml:space="preserve">
+    <value>Shield not found.</value>
+  </data>
+  <data name="NoShieldsImported" xml:space="preserve">
+    <value>No shields imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="ShieldKind_small" xml:space="preserve">
+    <value>Small Shields</value>
+  </data>
+  <data name="ShieldKind_medium" xml:space="preserve">
+    <value>Medium Shields</value>
+  </data>
+  <data name="ShieldKind_great" xml:space="preserve">
+    <value>Greatshields</value>
+  </data>
+  <data name="ShieldKind_thrusting" xml:space="preserve">
+    <value>Thrusting Shields</value>
+  </data>
+  <data name="Field_guard_physical" xml:space="preserve">
+    <value>Physical guard</value>
+  </data>
+  <data name="Field_guard_magic" xml:space="preserve">
+    <value>Magic guard</value>
+  </data>
+  <data name="Field_guard_fire" xml:space="preserve">
+    <value>Fire guard</value>
+  </data>
+  <data name="Field_guard_lightning" xml:space="preserve">
+    <value>Lightning guard</value>
+  </data>
+  <data name="Field_guard_holy" xml:space="preserve">
+    <value>Holy guard</value>
+  </data>
 </root>

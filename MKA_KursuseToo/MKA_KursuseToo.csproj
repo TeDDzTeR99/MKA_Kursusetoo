@@ -102,6 +102,9 @@
     <Compile Include="InfoboxView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ShieldView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SpellView.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -677,4 +677,40 @@
   <data name="Field_vitality" xml:space="preserve">
     <value>Elujõud</value>
   </data>
+  <data name="AllShields" xml:space="preserve">
+    <value>Kõik kilbid</value>
+  </data>
+  <data name="ShieldNotFound" xml:space="preserve">
+    <value>Kilpi ei leitud.</value>
+  </data>
+  <data name="NoShieldsImported" xml:space="preserve">
+    <value>Kilpe pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="ShieldKind_small" xml:space="preserve">
+    <value>Väikesed kilbid</value>
+  </data>
+  <data name="ShieldKind_medium" xml:space="preserve">
+    <value>Keskmised kilbid</value>
+  </data>
+  <data name="ShieldKind_great" xml:space="preserve">
+    <value>Suurkilbid</value>
+  </data>
+  <data name="ShieldKind_thrusting" xml:space="preserve">
+    <value>Torkekilbid</value>
+  </data>
+  <data name="Field_guard_physical" xml:space="preserve">
+    <value>Füüsiline blokk</value>
+  </data>
+  <data name="Field_guard_magic" xml:space="preserve">
+    <value>Maagia blokk</value>
+  </data>
+  <data name="Field_guard_fire" xml:space="preserve">
+    <value>Tule blokk</value>
+  </data>
+  <data name="Field_guard_lightning" xml:space="preserve">
+    <value>Välgu blokk</value>
+  </data>
+  <data name="Field_guard_holy" xml:space="preserve">
+    <value>Püha blokk</value>
+  </data>
 </root>
