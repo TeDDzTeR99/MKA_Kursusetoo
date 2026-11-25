@@ -22,6 +22,7 @@ DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 UninstallDisplayIcon={app}\{#AppExe}
+SetupIconFile=..\MKA_KursuseToo\app.ico
 OutputDir=Output
 OutputBaseFilename=EldenRingWikiSetup
 Compression=lzma2

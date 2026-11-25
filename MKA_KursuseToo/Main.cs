@@ -38,6 +38,8 @@ namespace MKA_KursuseToo
         {
             UseSavedLanguage();
             InitializeComponent();
+            // The window uses the same icon as the .exe (app.ico, set as ApplicationIcon in the project)
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
             // In the order the game's inventory lists them
             _categories = new List<Category>
