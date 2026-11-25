@@ -1,19 +1,38 @@
 # Elden Ring Wiki (MKA_KursuseToo)
 
-A Windows Forms desktop app for browsing Elden Ring weapons and talismans. Data is stored in a local SQLite database: the home page has a button for each item category and a search bar, and each item opens in a wiki-style details window.
+A Windows Forms desktop app for browsing Elden Ring items: weapons, shields, arrows and bolts, armor, talismans,
+sorceries, incantations, ashes of war, spirit ashes, consumables, crafting materials, upgrade materials and key items,
+including Shadow of the Erdtree. Data is stored in a local SQLite database: the home page has a button for each item
+category and a search bar, and each item opens in a wiki-style details page with its in-game picture.
 
 Built as a course project (*kursusetöö*).
 
-| Weapon list | Weapon details |
-|---|---|
-| ![Main window with the weapon list](docs/main-window.png) | ![Details window for Moonveil](docs/weapon-details.png) |
+| Home page | Item list | Weapon details |
+|---|---|---|
+| ![Home page with a button per category](docs/main-window.png) | ![The katanas, with their in-game pictures](docs/item-list.png) | ![Details page for Moonveil](docs/weapon-details.png) |
 
 ## Features
 
-- **Home page**: one button per item category with the number of items in it, and a search bar. Weapons and
-  Talismans work now; the other categories (Shields, Armor, Sorceries, Spirit Ashes, …) are greyed-out
-  *Coming soon* buttons until their data is added.
-- **Weapons**: buttons for *All Weapons* (234) and for each of the 30 weapon types. Click one to see its weapons.
+- **Home page**: one button per item category with the number of items in it, and a search bar.
+- **13 categories**, each split into the kinds the game itself uses. Every category opens on a page of buttons:
+  one for *All …* and one per kind, each with its item count. Click one to see its items.
+
+  | Category | Items | Kinds |
+  |---|---|---|
+  | Weapons | 234 | the 30 weapon types (Dagger, Straight Sword, …) |
+  | Shields | 81 | small, medium, greatshields, thrusting shields |
+  | Arrows & Bolts | 68 | arrows, greatarrows, bolts, greatbolts |
+  | Armor | 722 | head, chest, arms, legs |
+  | Talismans | 155 | (one alphabetical list) |
+  | Sorceries | 84 | by school (Glintstone, Carian, …) |
+  | Incantations | 129 | by school (Golden Order, Dragon Cult, …) |
+  | Ashes of War | 116 | by default affinity, plus bow and shield ashes |
+  | Spirit Ashes | 84 | Grave Glovewort or Ghost Glovewort upgrades |
+  | Consumables | 262 | flasks, food, pots, aromatics, throwing items, greases, tools, runes, multiplayer items, … |
+  | Crafting Materials | 106 | animal parts, plants, minerals & objects |
+  | Upgrade Materials | 43 | smithing stones, somber smithing stones, gloveworts, … |
+  | Key Items | 296 | keys, maps, cookbooks, bell bearings, quest items, … |
+- **Item pictures**: every item shows its in-game icon, in the lists and on its details page.
 - **Search** all categories at once. Results are grouped under a heading per category, e.g. *Weapons (10)* followed by
   *Talismans (1)*. Partial matches work, so "sword" finds every sword. Press **Enter** to search.
 - **Home** and **Back** buttons to move between pages.
@@ -26,10 +45,13 @@ Built as a course project (*kursusetöö*).
   - scaling for each stat as exact value and grade, e.g. `52 (D)`. Hover over it to see the grade's range (`D: 25–59`)
   - pick any **affinity** (Standard, Heavy, Keen, …) and **upgrade level** (+0 to +25, or +10 for somber weapons) to see how damage and scaling change
   - the window sizes itself to fit its content; long text such as locations wraps
-- **Talismans**: every talisman in alphabetical order. Click one to see its effect, weight, sell value, the
-  in-game description, and which talismans can't be worn together with it (e.g. a talisman and its +1 version).
-  Talismans from Shadow of the Erdtree are marked as DLC. Locations aren't included yet.
-  Until talismans are imported (see [Talismans](#talismans)), the list shows a note saying so.
+- **Details pages for the other categories** show what the in-game menu shows, plus the in-game description.
+  Items from Shadow of the Erdtree are marked as DLC. For example:
+  - talismans: effect, weight, sell value, and which talismans can't be worn together with it
+  - armor: weight, poise, damage negation and resistances; shields: guard negation, guard boost, damage, requirements and scaling
+  - spells: FP, stamina, memory slots and requirements; ashes of war: FP cost, affinities and the weapon types they fit
+  - upgrade materials: how many each upgrade level needs; bell bearings and cookbooks: what they unlock
+  - consumables and materials: effect, FP cost, how many can be carried and stored, sell value
 - **Dark theme** with gold accents, inspired by the Fextralife wiki, and a dark title bar on Windows 10/11.
 - **Resizable** main window: the list fills the window.
 - **English / Estonian** switch in the top right corner; the choice is remembered (see [Languages](#languages)).
@@ -72,15 +94,20 @@ MKA_KursuseToo/
 ├── Program.cs               # Entry point, starts the Main form
 ├── Main.cs                  # Main window: home page with category buttons, lists, grouped search
 ├── Main.Designer.cs         # Main window layout (generated by the designer)
-├── DetailedView.cs          # Weapon details window
-├── DetailedView.Designer.cs # Details window layout (generated by the designer)
-├── TalismanView.cs          # Talisman details window (layout built in code)
+├── DetailedView.cs          # Weapon details page (affinity and upgrade level pickers)
+├── DetailedView.Designer.cs # Weapon details layout (generated by the designer)
+├── InfoboxView.cs           # Base class for the other details pages: picture + field/value table
+├── TalismanView.cs, ArmorView.cs, ShieldView.cs, AmmoView.cs, SpellView.cs, AshOfWarView.cs,
+│   SpiritAshView.cs, ConsumableView.cs, CraftingMaterialView.cs, UpgradeMaterialView.cs,
+│   KeyItemView.cs           # One details page per category, each built on InfoboxView
+├── ItemImages.cs            # Loads Images/<kind>/<id>.png and draws it on the details pages
 ├── WeaponDatabase.cs        # Shared database access (path + query helper)
-├── Theme.cs                 # Dark theme with gold accents, used by both windows
+├── Theme.cs                 # Dark theme with gold accents
 ├── Properties/
 │   ├── Resources.resx       # All interface texts (English, default)
 │   └── Resources.et.resx    # Estonian translations
 ├── elden_ring_weapons.db    # SQLite database
+├── Images/                  # Item pictures, one folder per category, named by the item's id
 ├── Database/                # Database migrations and the game-data import scripts
 ├── App.config
 └── packages.config          # NuGet dependencies
@@ -108,7 +135,7 @@ as it comes from English sources.
 
 | Table | Contents |
 |---|---|
-| `weapons` | Name, type, base damage, critical, guard boost, weight, upgrade info, special effect (staffs/seals), location |
+| `weapons` | Name, type, base damage, critical, guard boost, weight, upgrade info, special effect (staffs/seals), location, in-game description. The ID is the row ID in `EquipParamWeapon` |
 | `weapon_types` | Weapon categories (Dagger, Greatsword, …) |
 | `weapon_requirements` | Stat requirements per weapon |
 | `weapon_scaling` | Scaling grade (`*_grade_id`) and exact value (`*_value`) per stat, one row per weapon, affinity and upgrade level |
@@ -116,7 +143,11 @@ as it comes from English sources.
 | `affinities` | Standard, Heavy, Keen, Quality, Fire, Flame Art, Lightning, Sacred, Magic, Cold, Poison, Blood, Occult |
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
 | `talismans` | Name, effect, description, weight, sell value, accessory group (talismans in one group can't be worn together), DLC flag. The ID is the talisman's row ID in the game data |
+| `talisman_stats` | The numbers behind each talisman's effect (e.g. max HP +6%), from `SpEffectParam` |
+| `upgrade_materials` | Name, effect, description, sell value, kind (smithing stones, gloveworts, …), DLC flag. The ID is the row ID in `EquipParamGoods` |
+| `upgrade_material_costs` | How many of a material each upgrade level needs, for regular weapons, somber weapons and spirit ashes |
 | `key_items` | Name, effect, description, sell value, kind (keys, maps, cookbooks, bell bearings, …), DLC flag, in the game's inventory order. The ID is the item's row ID in `EquipParamGoods` |
+| `key_item_unlocks` | What each bell bearing adds to the Twin Maiden Husks' shop (with price) and which recipes each cookbook teaches |
 | `spells` | Sorceries and incantations: name, school, effect, description, FP, stamina, memory slots, Intelligence / Faith / Arcane requirements, DLC flag. The views `sorceries` and `incantations` split it by type. The ID is the spell's row ID in `EquipParamGoods` and `Magic` |
 | `ashes_of_war` | Name, kind (default affinity, or bow / shield), default affinity, every affinity it can give, weapon types it fits, skill FP cost, description, DLC flag. The ID is the row ID in `EquipParamGem` |
 | `spirit_ashes` | Name, upgrade material (Grave / Ghost Glovewort), effect, description, summoning FP or HP cost, max upgrade level, DLC flag. The ID is the +0 row ID in `EquipParamGoods` |
@@ -161,19 +192,39 @@ shortened to the main one or two sources, see `005_locations.sql`.
 Talismans come from the game's own data, exported from your own copy of Elden Ring (Fextralife's terms don't allow
 collecting their pages with a script, so it isn't used for talismans):
 
-1. **Numbers**: export the `EquipParamAccessory` param as CSV, e.g. with [Smithbox](https://github.com/vawser/Smithbox)
-   (Param Editor). The script uses the `ID`, `weight`, `sellValue` and `accessoryGroup` columns.
+1. **Numbers**: export the `EquipParamAccessory` and `SpEffectParam` params as CSV, e.g. with
+   [Smithbox](https://github.com/vawser/Smithbox) (Param Editor). The script uses the `ID`, `weight`, `sellValue` and
+   `accessoryGroup` columns, and the effect numbers from `SpEffectParam` (table `talisman_stats`).
 2. **Text**: unpack `msg/engus/item.msgbnd.dcx` (e.g. with [WitchyBND](https://github.com/ividyon/WitchyBND)) and convert
    the `.fmg` files to XML. The script reads `AccessoryName`, `AccessoryInfo` (effect) and `AccessoryCaption`
    (description), including the `_dlc01` / `_dlc02` versions for Shadow of the Erdtree.
-3. Run `008_talismans.sql` once (already applied to the included database), then:
+3. Run `008_talismans.sql` and `009_talisman_stats.sql` once (already applied to the included database), then:
 
 ```
-python MKA_KursuseToo/Database/import_talismans.py EquipParamAccessory.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+python MKA_KursuseToo/Database/import_talismans.py EquipParamAccessory.csv <folder with the .fmg.xml files> SpEffectParam.csv MKA_KursuseToo/elden_ring_weapons.db
 ```
 
 The script replaces all talismans each time, so it can be run again after a game patch. The effect text is the game's
 own short description (e.g. "Raises maximum HP"); exact percentages aren't in the text files.
+
+#### Weapon descriptions
+
+The in-game description of each weapon comes from the `WeaponName` / `WeaponCaption` text files, matched by name.
+Run `011_weapon_descriptions.sql` once (already applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_weapon_descriptions.py <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
+#### Upgrade materials
+
+Upgrade materials come from `EquipParamGoods` (goodsType 14). `EquipMtrlSetParam` gives how many each upgrade level
+costs, and `EquipParamWeapon` which weapons are somber. Run `010_upgrade_materials.sql` once (already applied to the
+included database), then:
+
+```
+python MKA_KursuseToo/Database/import_upgrade_materials.py EquipParamGoods.csv EquipMtrlSetParam.csv EquipParamWeapon.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
 
 #### Key items
 
@@ -186,7 +237,6 @@ add to the Twin Maiden Husks' shop, and `ShopLineupParam_Recipe` the recipes eac
 python MKA_KursuseToo/Database/import_key_items.py EquipParamGoods.csv <folder with the .fmg.xml files> ShopLineupParam.csv ShopLineupParam_Recipe.csv MKA_KursuseToo/elden_ring_weapons.db
 ```
 
-Item pictures for every category come from the game files too, see `import_icons.py` (needs WitchyBND and Pillow).
 
 #### Sorceries and incantations
 
@@ -255,6 +305,18 @@ Crafting materials come from `EquipParamGoods` (goodsType 2). The kind comes fro
 python MKA_KursuseToo/Database/import_crafting_materials.py EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
 ```
 
+#### Item pictures
+
+The pictures in `MKA_KursuseToo/Images/<category>/<id>.png` are the game's own icons. Unpack `menu/hi/00_solo.tpfbdt`
+with [WitchyBND](https://github.com/ividyon/WitchyBND); the icons are the `MENU_Knowledge_<icon id>.tpf.dcx` files in
+it. The script looks up each item's icon id in the param CSVs, unpacks those files with WitchyBND and saves them
+as 256 px PNGs (needs Pillow: `pip install pillow`). Run it after the item imports, since it makes a picture for
+every item in the database:
+
+```
+python MKA_KursuseToo/Database/import_icons.py <folder with the param CSVs> <folder with the MENU_Knowledge files> WitchyBND.exe MKA_KursuseToo/elden_ring_weapons.db MKA_KursuseToo/Images
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -269,6 +331,10 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `006_remove_damage_types.sql` | Removes the unused `damage_types` tables (replaced by `affinities`) |
 | `007_status_buildup_per_level_affinity.sql` | Adds status buildup per affinity and level; `passive_effect` becomes `special_effect` |
 | `008_talismans.sql` | Adds the `talismans` table (filled by `import_talismans.py`) |
+| `009_talisman_stats.sql` | Adds the `talisman_stats` table (filled by `import_talismans.py`) |
+| `010_upgrade_materials.sql` | Adds the `upgrade_materials` and `upgrade_material_costs` tables (filled by `import_upgrade_materials.py`) |
+| `011_weapon_descriptions.sql` | Adds the `description` column to `weapons` (filled by `import_weapon_descriptions.py`) |
+| `012_game_weapon_ids.sql` | Changes weapon ids to the game's own row ids in `EquipParamWeapon` |
 | `013_key_items.sql` | Adds the `key_items` table (filled by `import_key_items.py`) |
 | `014_spells.sql` | Adds the `spells` table and the `sorceries` / `incantations` views (filled by `import_spells.py`) |
 | `015_ashes.sql` | Adds the `ashes_of_war` and `spirit_ashes` tables (filled by `import_ashes.py`) |
