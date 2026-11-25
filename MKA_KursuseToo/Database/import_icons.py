@@ -3,7 +3,7 @@ Writes the game's item icons to Images/<kind>/<id>.png, where the app looks for 
 
 Inputs, from your own copy of Elden Ring:
   1. The folder with the param CSVs (see import_talismans.py). The iconId column of EquipParamWeapon,
-     EquipParamAccessory, EquipParamGem and EquipParamGoods (upgrade materials, key items, spells, spirit ashes) says which icon each item uses.
+     EquipParamProtector, EquipParamAccessory, EquipParamGem and EquipParamGoods (upgrade materials, key items, spells, spirit ashes) says which icon each item uses.
   2. The folder with the icon files MENU_Knowledge_<iconId, 5 digits>.tpf.dcx (unpacked from 00_solo.tpfbdt).
   3. WitchyBND.exe. The icon files are Oodle (KRAK) compressed, which Python cannot open.
   4. elden_ring_weapons.db. Every table's id is the game's param row id, so it matches the CSV ID column.
@@ -37,6 +37,7 @@ KINDS = {
     "incantation": ("incantations", "EquipParamGoods.csv"),
     "ash_of_war": ("ashes_of_war", "EquipParamGem.csv"),
     "spirit_ash": ("spirit_ashes", "EquipParamGoods.csv"),
+    "armor": ("armor", "EquipParamProtector.csv"),
 }
 
 
@@ -44,7 +45,9 @@ def main(param_folder, icon_folder, witchy, db_path, images_folder):
     con = sqlite3.connect(db_path)
     wanted = {}  # (kind, id) -> iconId
     for kind, (table, csv_name) in KINDS.items():
-        icons = {int(row["id"]): int(row["iconid"]) for row in read_param(Path(param_folder) / csv_name)}
+        # Armor has an icon per body type (iconIdM / iconIdF); the M one is used
+        icons = {int(row["id"]): int(row.get("iconid") or row["iconidm"])
+                 for row in read_param(Path(param_folder) / csv_name)}
         for (item_id,) in con.execute(f"SELECT id FROM {table}"):
             if item_id in icons:
                 wanted[(kind, item_id)] = icons[item_id]

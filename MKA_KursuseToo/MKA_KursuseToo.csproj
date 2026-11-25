@@ -73,6 +73,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmorView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="AshOfWarView.cs">
       <SubType>UserControl</SubType>
     </Compile>

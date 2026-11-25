@@ -60,7 +60,17 @@ namespace MKA_KursuseToo
                 },
                 Placeholder(nameof(Resources.CategoryShields)),
                 Placeholder(nameof(Resources.CategoryArrowsAndBolts)),
-                Placeholder(nameof(Resources.CategoryArmor)),
+                new Category
+                {
+                    Kind = "armor",
+                    TitleKey = nameof(Resources.CategoryArmor),
+                    CountSql = "SELECT COUNT(*) FROM armor;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM armor
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(ArmorCategory, "armor", "ArmorKind_",
+                                                            Resources.AllArmor, Resources.NoArmorImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryArmor, new ArmorView(id)))
+                },
                 new Category
                 {
                     Kind = "talisman",
@@ -149,6 +159,7 @@ namespace MKA_KursuseToo
         private Category SorceryCategory => _categories.First(c => c.Kind == "sorcery");
         private Category IncantationCategory => _categories.First(c => c.Kind == "incantation");
         private Category AshOfWarCategory => _categories.First(c => c.Kind == "ash_of_war");
+        private Category ArmorCategory => _categories.First(c => c.Kind == "armor");
         private Category SpiritAshCategory => _categories.First(c => c.Kind == "spirit_ash");
 
         private void Main_Load(object sender, EventArgs e)

@@ -617,4 +617,64 @@
   <data name="SpiritAshKind_ghost_glovewort" xml:space="preserve">
     <value>Vaimukindaleht</value>
   </data>
+  <data name="AllArmor" xml:space="preserve">
+    <value>Kõik rüüd</value>
+  </data>
+  <data name="ArmorNotFound" xml:space="preserve">
+    <value>Rüüd ei leitud.</value>
+  </data>
+  <data name="NoArmorImported" xml:space="preserve">
+    <value>Rüüsid pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="ArmorKind_head" xml:space="preserve">
+    <value>Pea</value>
+  </data>
+  <data name="ArmorKind_chest" xml:space="preserve">
+    <value>Rind</value>
+  </data>
+  <data name="ArmorKind_arms" xml:space="preserve">
+    <value>Käed</value>
+  </data>
+  <data name="ArmorKind_legs" xml:space="preserve">
+    <value>Jalad</value>
+  </data>
+  <data name="Field_poise" xml:space="preserve">
+    <value>Tasakaal</value>
+  </data>
+  <data name="Field_physical" xml:space="preserve">
+    <value>Füüsilise kahju vähendus</value>
+  </data>
+  <data name="Field_strike" xml:space="preserve">
+    <value>Löögikahju vähendus</value>
+  </data>
+  <data name="Field_slash" xml:space="preserve">
+    <value>Lõikekahju vähendus</value>
+  </data>
+  <data name="Field_pierce" xml:space="preserve">
+    <value>Torkekahju vähendus</value>
+  </data>
+  <data name="Field_magic" xml:space="preserve">
+    <value>Maagiakahju vähendus</value>
+  </data>
+  <data name="Field_fire" xml:space="preserve">
+    <value>Tulekahju vähendus</value>
+  </data>
+  <data name="Field_lightning" xml:space="preserve">
+    <value>Välgukahju vähendus</value>
+  </data>
+  <data name="Field_holy" xml:space="preserve">
+    <value>Pühakahju vähendus</value>
+  </data>
+  <data name="Field_immunity" xml:space="preserve">
+    <value>Immuunsus</value>
+  </data>
+  <data name="Field_robustness" xml:space="preserve">
+    <value>Sitkus</value>
+  </data>
+  <data name="Field_focus" xml:space="preserve">
+    <value>Fookus</value>
+  </data>
+  <data name="Field_vitality" xml:space="preserve">
+    <value>Elujõud</value>
+  </data>
 </root>

@@ -120,6 +120,7 @@ as it comes from English sources.
 | `spells` | Sorceries and incantations: name, school, effect, description, FP, stamina, memory slots, Intelligence / Faith / Arcane requirements, DLC flag. The views `sorceries` and `incantations` split it by type. The ID is the spell's row ID in `EquipParamGoods` and `Magic` |
 | `ashes_of_war` | Name, kind (default affinity, or bow / shield), default affinity, every affinity it can give, weapon types it fits, skill FP cost, description, DLC flag. The ID is the row ID in `EquipParamGem` |
 | `spirit_ashes` | Name, upgrade material (Grave / Ghost Glovewort), effect, description, summoning FP or HP cost, max upgrade level, DLC flag. The ID is the +0 row ID in `EquipParamGoods` |
+| `armor` | Name, slot (head / chest / arms / legs), effect, description, weight, poise, damage negation (physical, strike, slash, pierce, magic, fire, lightning, holy), resistances (immunity, robustness, focus, vitality), sell value, DLC flag. The ID is the row ID in `EquipParamProtector` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -203,6 +204,15 @@ applied to the included database), then:
 python MKA_KursuseToo/Database/import_ashes.py EquipParamGem.csv SwordArtsParam.csv EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
 ```
 
+#### Armor
+
+Armor comes from `EquipParamProtector`. Damage negation is shown as in the game menu, (1 - cut rate) × 100, and
+poise is `toughnessCorrectRate` × 1000. Run `016_armor.sql` once (already applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_armor.py EquipParamProtector.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -220,6 +230,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `013_key_items.sql` | Adds the `key_items` table (filled by `import_key_items.py`) |
 | `014_spells.sql` | Adds the `spells` table and the `sorceries` / `incantations` views (filled by `import_spells.py`) |
 | `015_ashes.sql` | Adds the `ashes_of_war` and `spirit_ashes` tables (filled by `import_ashes.py`) |
+| `016_armor.sql` | Adds the `armor` table (filled by `import_armor.py`) |
 
 ## Author
 

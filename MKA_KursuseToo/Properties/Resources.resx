@@ -720,4 +720,64 @@
   <data name="SpiritAshKind_ghost_glovewort" xml:space="preserve">
     <value>Ghost Glovewort</value>
   </data>
+  <data name="AllArmor" xml:space="preserve">
+    <value>All Armor</value>
+  </data>
+  <data name="ArmorNotFound" xml:space="preserve">
+    <value>Armor not found.</value>
+  </data>
+  <data name="NoArmorImported" xml:space="preserve">
+    <value>No armor imported yet. The README explains how to import it from the game files.</value>
+  </data>
+  <data name="ArmorKind_head" xml:space="preserve">
+    <value>Head</value>
+  </data>
+  <data name="ArmorKind_chest" xml:space="preserve">
+    <value>Chest</value>
+  </data>
+  <data name="ArmorKind_arms" xml:space="preserve">
+    <value>Arms</value>
+  </data>
+  <data name="ArmorKind_legs" xml:space="preserve">
+    <value>Legs</value>
+  </data>
+  <data name="Field_poise" xml:space="preserve">
+    <value>Poise</value>
+  </data>
+  <data name="Field_physical" xml:space="preserve">
+    <value>Physical negation</value>
+  </data>
+  <data name="Field_strike" xml:space="preserve">
+    <value>Strike negation</value>
+  </data>
+  <data name="Field_slash" xml:space="preserve">
+    <value>Slash negation</value>
+  </data>
+  <data name="Field_pierce" xml:space="preserve">
+    <value>Pierce negation</value>
+  </data>
+  <data name="Field_magic" xml:space="preserve">
+    <value>Magic negation</value>
+  </data>
+  <data name="Field_fire" xml:space="preserve">
+    <value>Fire negation</value>
+  </data>
+  <data name="Field_lightning" xml:space="preserve">
+    <value>Lightning negation</value>
+  </data>
+  <data name="Field_holy" xml:space="preserve">
+    <value>Holy negation</value>
+  </data>
+  <data name="Field_immunity" xml:space="preserve">
+    <value>Immunity</value>
+  </data>
+  <data name="Field_robustness" xml:space="preserve">
+    <value>Robustness</value>
+  </data>
+  <data name="Field_focus" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="Field_vitality" xml:space="preserve">
+    <value>Vitality</value>
+  </data>
 </root>
