@@ -68,6 +68,26 @@ Built as a course project (*kursusetöö*).
 | Data access | `Microsoft.Data.Sqlite` (NuGet) |
 | Translations | .NET resource files (`.resx`) |
 
+## Install
+
+Run `EldenRingWikiSetup.exe`. It installs the app with its database and every item picture (about 170 MB), adds it
+to the Start menu (and, if you tick the box, the desktop), and can be removed again under **Settings → Apps**.
+You can install it for yourself only (no admin rights needed) or for all users. Needs Windows 10 or 11.
+
+### Building the installer
+
+The installer is made with [Inno Setup 6](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`)
+from `installer/EldenRingWiki.iss`. From the repository root:
+
+```
+MSBuild MKA_KursuseToo\MKA_KursuseToo.csproj -p:Configuration=Release
+ISCC installer\EldenRingWiki.iss
+```
+
+The setup file is written to `installer\Output\EldenRingWikiSetup.exe` (not committed: it is ~155 MB). It packs
+whatever is in `bin\Release`, so re-run the imports and the Release build first if the data has changed. When
+releasing a new version, raise `AppVersion` in the `.iss` file.
+
 ## Getting started
 
 ### Requirements
@@ -113,6 +133,7 @@ MKA_KursuseToo/
 ├── App.config
 └── packages.config          # NuGet dependencies
 docs/                        # Screenshots used in this README
+installer/EldenRingWiki.iss  # Inno Setup script that builds EldenRingWikiSetup.exe
 ```
 
 ## Languages

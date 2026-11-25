@@ -20,3 +20,6 @@ Desktop.ini
 
 # Python bytecode from the import scripts
 __pycache__/
+
+# Installer output (built by installer/EldenRingWiki.iss)
+installer/Output/
