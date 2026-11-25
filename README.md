@@ -122,6 +122,7 @@ as it comes from English sources.
 | `spirit_ashes` | Name, upgrade material (Grave / Ghost Glovewort), effect, description, summoning FP or HP cost, max upgrade level, DLC flag. The ID is the +0 row ID in `EquipParamGoods` |
 | `armor` | Name, slot (head / chest / arms / legs), effect, description, weight, poise, damage negation (physical, strike, slash, pierce, magic, fire, lightning, holy), resistances (immunity, robustness, focus, vitality), sell value, DLC flag. The ID is the row ID in `EquipParamProtector` |
 | `shields` | Name, kind (small / medium / great / thrusting), description, weight, guard negation and guard boost, damage, requirements, scaling letters (Standard +0), max upgrade level, DLC flag. The ID is the row ID in `EquipParamWeapon` |
+| `ammunition` | Arrows and bolts: name, kind (arrow / great arrow / bolt / greatbolt), description, damage, max carried, sell value, DLC flag. The ID is the row ID in `EquipParamWeapon` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -224,6 +225,15 @@ applied to the included database), then:
 python MKA_KursuseToo/Database/import_shields.py EquipParamWeapon.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
 ```
 
+#### Arrows and bolts
+
+Arrows and bolts come from `EquipParamWeapon` (wepType 81, 83, 85, 86). Run `018_ammunition.sql` once (already
+applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_ammunition.py EquipParamWeapon.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -243,6 +253,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `015_ashes.sql` | Adds the `ashes_of_war` and `spirit_ashes` tables (filled by `import_ashes.py`) |
 | `016_armor.sql` | Adds the `armor` table (filled by `import_armor.py`) |
 | `017_shields.sql` | Adds the `shields` table (filled by `import_shields.py`) |
+| `018_ammunition.sql` | Adds the `ammunition` table (filled by `import_ammunition.py`) |
 
 ## Author
 

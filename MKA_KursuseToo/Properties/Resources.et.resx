@@ -713,4 +713,28 @@
   <data name="Field_guard_holy" xml:space="preserve">
     <value>Püha blokk</value>
   </data>
+  <data name="AllArrowsAndBolts" xml:space="preserve">
+    <value>Kõik nooled ja poldid</value>
+  </data>
+  <data name="ArrowOrBoltNotFound" xml:space="preserve">
+    <value>Noolt ega polti ei leitud.</value>
+  </data>
+  <data name="NoArrowsAndBoltsImported" xml:space="preserve">
+    <value>Nooli ja polte pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="AmmoKind_arrow" xml:space="preserve">
+    <value>Nooled</value>
+  </data>
+  <data name="AmmoKind_great_arrow" xml:space="preserve">
+    <value>Suurnooled</value>
+  </data>
+  <data name="AmmoKind_bolt" xml:space="preserve">
+    <value>Poldid</value>
+  </data>
+  <data name="AmmoKind_greatbolt" xml:space="preserve">
+    <value>Suurpoldid</value>
+  </data>
+  <data name="Field_max_quantity" xml:space="preserve">
+    <value>Max kaasas</value>
+  </data>
 </root>

@@ -816,4 +816,28 @@
   <data name="Field_guard_holy" xml:space="preserve">
     <value>Holy guard</value>
   </data>
+  <data name="AllArrowsAndBolts" xml:space="preserve">
+    <value>All Arrows &amp; Bolts</value>
+  </data>
+  <data name="ArrowOrBoltNotFound" xml:space="preserve">
+    <value>Arrow or bolt not found.</value>
+  </data>
+  <data name="NoArrowsAndBoltsImported" xml:space="preserve">
+    <value>No arrows or bolts imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="AmmoKind_arrow" xml:space="preserve">
+    <value>Arrows</value>
+  </data>
+  <data name="AmmoKind_great_arrow" xml:space="preserve">
+    <value>Greatarrows</value>
+  </data>
+  <data name="AmmoKind_bolt" xml:space="preserve">
+    <value>Bolts</value>
+  </data>
+  <data name="AmmoKind_greatbolt" xml:space="preserve">
+    <value>Greatbolts</value>
+  </data>
+  <data name="Field_max_quantity" xml:space="preserve">
+    <value>Max carried</value>
+  </data>
 </root>

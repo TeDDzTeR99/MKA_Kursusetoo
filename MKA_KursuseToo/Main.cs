@@ -69,7 +69,17 @@ namespace MKA_KursuseToo
                                                             Resources.AllShields, Resources.NoShieldsImported)),
                     OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryShields, new ShieldView(id)))
                 },
-                Placeholder(nameof(Resources.CategoryArrowsAndBolts)),
+                new Category
+                {
+                    Kind = "ammo",
+                    TitleKey = nameof(Resources.CategoryArrowsAndBolts),
+                    CountSql = "SELECT COUNT(*) FROM ammunition;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM ammunition
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(AmmoCategory, "ammunition", "AmmoKind_",
+                                                            Resources.AllArrowsAndBolts, Resources.NoArrowsAndBoltsImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryArrowsAndBolts, new AmmoView(id)))
+                },
                 new Category
                 {
                     Kind = "armor",
@@ -171,6 +181,7 @@ namespace MKA_KursuseToo
         private Category AshOfWarCategory => _categories.First(c => c.Kind == "ash_of_war");
         private Category ArmorCategory => _categories.First(c => c.Kind == "armor");
         private Category ShieldCategory => _categories.First(c => c.Kind == "shield");
+        private Category AmmoCategory => _categories.First(c => c.Kind == "ammo");
         private Category SpiritAshCategory => _categories.First(c => c.Kind == "spirit_ash");
 
         private void Main_Load(object sender, EventArgs e)

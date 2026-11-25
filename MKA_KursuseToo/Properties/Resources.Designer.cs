@@ -364,6 +364,39 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Arrows &amp; Bolts
+        /// </summary>
+        internal static string AllArrowsAndBolts
+        {
+            get
+            {
+                return ResourceManager.GetString("AllArrowsAndBolts", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Arrow or bolt not found.
+        /// </summary>
+        internal static string ArrowOrBoltNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("ArrowOrBoltNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No arrows or bolts imported yet. ...
+        /// </summary>
+        internal static string NoArrowsAndBoltsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoArrowsAndBoltsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems
