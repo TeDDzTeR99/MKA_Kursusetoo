@@ -172,7 +172,9 @@ namespace MKA_KursuseToo
                     ws.dexterity_value AS dexterity_scaling_value,
                     ws.intelligence_value AS intelligence_scaling_value,
                     ws.faith_value AS faith_scaling_value,
-                    ws.arcane_value AS arcane_scaling_value
+                    ws.arcane_value AS arcane_scaling_value,
+
+                    w.description   -- last, so the long text is the bottom row
 
                 FROM weapons w
                 LEFT JOIN weapon_types wt ON wt.id = w.weapon_type_id
