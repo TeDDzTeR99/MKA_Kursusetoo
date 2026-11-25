@@ -99,6 +99,7 @@ namespace MKA_KursuseToo
             display.Columns.Add("Value");
 
             AddRow(display, "effect", row["effect"]?.ToString());
+            AddStatRows(display);
             AddRow(display, "weight", Convert.ToDouble(row["weight"]).ToString("0.0", CultureInfo.CurrentCulture));
             AddRow(display, "sell_value", row["sell_value"]?.ToString());
             AddRow(display, "cannot_equip_with", ConflictingTalismans(row["accessory_group"]));
@@ -127,6 +128,33 @@ namespace MKA_KursuseToo
         {
             if (!string.IsNullOrWhiteSpace(value))
                 table.Rows.Add(Resources.ResourceManager.GetString("Field_" + field, Resources.Culture) ?? field, value);
+        }
+
+        // One row per stat, e.g. "Max HP: +6%". A stat with several values (stacking or conditional
+        // effects) shows them all in one row: "Attack power: +3%, +5%, +10%".
+        private void AddStatRows(DataTable table)
+        {
+            var stats = WeaponDatabase.Query(
+                @"SELECT stat, amount, is_percent, interval_s
+                  FROM talisman_stats
+                  WHERE talisman_id = @id
+                  ORDER BY position;",
+                new Dictionary<string, object> { { "@id", _talismanId } });
+
+            foreach (var group in stats.Rows.Cast<DataRow>().GroupBy(r => r["stat"].ToString()))
+            {
+                var values = group.Select(r =>
+                {
+                    var text = Convert.ToDouble(r["amount"]).ToString("+0.##;-0.##", CultureInfo.CurrentCulture)
+                               + (Convert.ToInt64(r["is_percent"]) == 1 ? "%" : "");
+                    if (r["interval_s"] != DBNull.Value)
+                        text += " " + string.Format(Resources.Stat_every,
+                            Convert.ToDouble(r["interval_s"]).ToString("0.##", CultureInfo.CurrentCulture));
+                    return text;
+                });
+                var label = Resources.ResourceManager.GetString("Stat_" + group.Key, Resources.Culture) ?? group.Key;
+                table.Rows.Add(label, string.Join(", ", values));
+            }
         }
 
         // Other talismans in the same accessory group, e.g. "Erdtree's Favor +1, Erdtree's Favor +2".

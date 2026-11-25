@@ -199,6 +199,17 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: every {0} s
+        /// </summary>
+        internal static string Stat_every
+        {
+            get
+            {
+                return ResourceManager.GetString("Stat_every", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: Shadow of the Erdtree
         /// </summary>
         internal static string ShadowOfTheErdtree

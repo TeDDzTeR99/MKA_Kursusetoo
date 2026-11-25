@@ -227,4 +227,151 @@
     <value>English</value>
     <comment>Label of the language switch: the name of the other language</comment>
   </data>
+  <data name="Stat_max_hp" xml:space="preserve">
+    <value>Maksimaalne HP</value>
+  </data>
+  <data name="Stat_max_fp" xml:space="preserve">
+    <value>Maksimaalne FP</value>
+  </data>
+  <data name="Stat_max_stamina" xml:space="preserve">
+    <value>Maksimaalne vastupidavus</value>
+  </data>
+  <data name="Stat_equip_load" xml:space="preserve">
+    <value>Varustuse kandevõime</value>
+  </data>
+  <data name="Stat_runes" xml:space="preserve">
+    <value>Ruunid vaenlastelt</value>
+  </data>
+  <data name="Stat_item_discovery" xml:space="preserve">
+    <value>Esemete leidmine</value>
+  </data>
+  <data name="Stat_stamina_recovery" xml:space="preserve">
+    <value>Vastupidavuse taastumine</value>
+  </data>
+  <data name="Stat_stance_damage" xml:space="preserve">
+    <value>Tasakaalu murdmine</value>
+  </data>
+  <data name="Stat_poise_damage_taken" xml:space="preserve">
+    <value>Saadud tasakaalukahju</value>
+  </data>
+  <data name="Stat_buff_duration" xml:space="preserve">
+    <value>Tugevduste kestus</value>
+  </data>
+  <data name="Stat_spell_fp_cost" xml:space="preserve">
+    <value>Loitsude FP kulu</value>
+  </data>
+  <data name="Stat_skill_fp_cost" xml:space="preserve">
+    <value>Oskuste FP kulu</value>
+  </data>
+  <data name="Stat_hp_flask" xml:space="preserve">
+    <value>HP pudeli ravi</value>
+  </data>
+  <data name="Stat_fp_flask" xml:space="preserve">
+    <value>FP pudeli taastamine</value>
+  </data>
+  <data name="Stat_guard_stamina_cost" xml:space="preserve">
+    <value>Blokeerimise vastupidavuse kulu</value>
+  </data>
+  <data name="Stat_bow_range" xml:space="preserve">
+    <value>Vibu laskekaugus</value>
+  </data>
+  <data name="Stat_fall_damage" xml:space="preserve">
+    <value>Kukkumiskahju</value>
+  </data>
+  <data name="Stat_memory_slots" xml:space="preserve">
+    <value>Mälupesad</value>
+  </data>
+  <data name="Stat_casting_speed" xml:space="preserve">
+    <value>Loitsimise kiirus</value>
+  </data>
+  <data name="Stat_vigor" xml:space="preserve">
+    <value>Elujõud</value>
+  </data>
+  <data name="Stat_mind" xml:space="preserve">
+    <value>Vaim</value>
+  </data>
+  <data name="Stat_endurance" xml:space="preserve">
+    <value>Vastupidavus</value>
+  </data>
+  <data name="Stat_strength" xml:space="preserve">
+    <value>Jõud</value>
+  </data>
+  <data name="Stat_dexterity" xml:space="preserve">
+    <value>Osavus</value>
+  </data>
+  <data name="Stat_intelligence" xml:space="preserve">
+    <value>Intelligentsus</value>
+  </data>
+  <data name="Stat_faith" xml:space="preserve">
+    <value>Usk</value>
+  </data>
+  <data name="Stat_arcane" xml:space="preserve">
+    <value>Müstika</value>
+  </data>
+  <data name="Stat_immunity_poison" xml:space="preserve">
+    <value>Mürgikindlus</value>
+  </data>
+  <data name="Stat_immunity_rot" xml:space="preserve">
+    <value>Mädanikukindlus</value>
+  </data>
+  <data name="Stat_robustness_bleed" xml:space="preserve">
+    <value>Verejooksukindlus</value>
+  </data>
+  <data name="Stat_robustness_frost" xml:space="preserve">
+    <value>Külmakindlus</value>
+  </data>
+  <data name="Stat_focus_sleep" xml:space="preserve">
+    <value>Unekindlus</value>
+  </data>
+  <data name="Stat_focus_madness" xml:space="preserve">
+    <value>Hullumeelsuse kindlus</value>
+  </data>
+  <data name="Stat_vitality_death" xml:space="preserve">
+    <value>Surmaneedusekindlus</value>
+  </data>
+  <data name="Stat_attack_all" xml:space="preserve">
+    <value>Ründejõud</value>
+  </data>
+  <data name="Stat_attack_physical" xml:space="preserve">
+    <value>Füüsiline ründejõud</value>
+  </data>
+  <data name="Stat_attack_magic" xml:space="preserve">
+    <value>Maagiline ründejõud</value>
+  </data>
+  <data name="Stat_attack_fire" xml:space="preserve">
+    <value>Tule ründejõud</value>
+  </data>
+  <data name="Stat_attack_lightning" xml:space="preserve">
+    <value>Välgu ründejõud</value>
+  </data>
+  <data name="Stat_attack_holy" xml:space="preserve">
+    <value>Püha ründejõud</value>
+  </data>
+  <data name="Stat_damage_taken_all" xml:space="preserve">
+    <value>Saadud kahju</value>
+  </data>
+  <data name="Stat_damage_taken_physical" xml:space="preserve">
+    <value>Saadud füüsiline kahju</value>
+  </data>
+  <data name="Stat_damage_taken_magic" xml:space="preserve">
+    <value>Saadud maagiline kahju</value>
+  </data>
+  <data name="Stat_damage_taken_fire" xml:space="preserve">
+    <value>Saadud tulekahju</value>
+  </data>
+  <data name="Stat_damage_taken_lightning" xml:space="preserve">
+    <value>Saadud välgukahju</value>
+  </data>
+  <data name="Stat_damage_taken_holy" xml:space="preserve">
+    <value>Saadud püha kahju</value>
+  </data>
+  <data name="Stat_hp_restore" xml:space="preserve">
+    <value>Taastatud HP</value>
+  </data>
+  <data name="Stat_fp_restore" xml:space="preserve">
+    <value>Taastatud FP</value>
+  </data>
+  <data name="Stat_every" xml:space="preserve">
+    <value>iga {0} s järel</value>
+  </data>
 </root>

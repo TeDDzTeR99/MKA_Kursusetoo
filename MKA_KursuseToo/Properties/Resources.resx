@@ -329,4 +329,152 @@
     <value>Eesti</value>
     <comment>Label of the language switch: the name of the other language</comment>
   </data>
+  <data name="Stat_max_hp" xml:space="preserve">
+    <value>Max HP</value>
+  </data>
+  <data name="Stat_max_fp" xml:space="preserve">
+    <value>Max FP</value>
+  </data>
+  <data name="Stat_max_stamina" xml:space="preserve">
+    <value>Max stamina</value>
+  </data>
+  <data name="Stat_equip_load" xml:space="preserve">
+    <value>Equip load</value>
+  </data>
+  <data name="Stat_runes" xml:space="preserve">
+    <value>Runes from enemies</value>
+  </data>
+  <data name="Stat_item_discovery" xml:space="preserve">
+    <value>Item discovery</value>
+  </data>
+  <data name="Stat_stamina_recovery" xml:space="preserve">
+    <value>Stamina recovery</value>
+  </data>
+  <data name="Stat_stance_damage" xml:space="preserve">
+    <value>Stance damage</value>
+  </data>
+  <data name="Stat_poise_damage_taken" xml:space="preserve">
+    <value>Poise damage taken</value>
+  </data>
+  <data name="Stat_buff_duration" xml:space="preserve">
+    <value>Buff duration</value>
+  </data>
+  <data name="Stat_spell_fp_cost" xml:space="preserve">
+    <value>Spell FP cost</value>
+  </data>
+  <data name="Stat_skill_fp_cost" xml:space="preserve">
+    <value>Skill FP cost</value>
+  </data>
+  <data name="Stat_hp_flask" xml:space="preserve">
+    <value>HP flask healing</value>
+  </data>
+  <data name="Stat_fp_flask" xml:space="preserve">
+    <value>FP flask restoration</value>
+  </data>
+  <data name="Stat_guard_stamina_cost" xml:space="preserve">
+    <value>Blocking stamina cost</value>
+  </data>
+  <data name="Stat_bow_range" xml:space="preserve">
+    <value>Bow range</value>
+  </data>
+  <data name="Stat_fall_damage" xml:space="preserve">
+    <value>Fall damage</value>
+  </data>
+  <data name="Stat_memory_slots" xml:space="preserve">
+    <value>Memory slots</value>
+  </data>
+  <data name="Stat_casting_speed" xml:space="preserve">
+    <value>Casting speed</value>
+  </data>
+  <data name="Stat_vigor" xml:space="preserve">
+    <value>Vigor</value>
+  </data>
+  <data name="Stat_mind" xml:space="preserve">
+    <value>Mind</value>
+  </data>
+  <data name="Stat_endurance" xml:space="preserve">
+    <value>Endurance</value>
+  </data>
+  <data name="Stat_strength" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+  <data name="Stat_dexterity" xml:space="preserve">
+    <value>Dexterity</value>
+  </data>
+  <data name="Stat_intelligence" xml:space="preserve">
+    <value>Intelligence</value>
+  </data>
+  <data name="Stat_faith" xml:space="preserve">
+    <value>Faith</value>
+  </data>
+  <data name="Stat_arcane" xml:space="preserve">
+    <value>Arcane</value>
+  </data>
+  <data name="Stat_immunity_poison" xml:space="preserve">
+    <value>Poison resistance</value>
+  </data>
+  <data name="Stat_immunity_rot" xml:space="preserve">
+    <value>Scarlet rot resistance</value>
+  </data>
+  <data name="Stat_robustness_bleed" xml:space="preserve">
+    <value>Bleed resistance</value>
+  </data>
+  <data name="Stat_robustness_frost" xml:space="preserve">
+    <value>Frost resistance</value>
+  </data>
+  <data name="Stat_focus_sleep" xml:space="preserve">
+    <value>Sleep resistance</value>
+  </data>
+  <data name="Stat_focus_madness" xml:space="preserve">
+    <value>Madness resistance</value>
+  </data>
+  <data name="Stat_vitality_death" xml:space="preserve">
+    <value>Death blight resistance</value>
+  </data>
+  <data name="Stat_attack_all" xml:space="preserve">
+    <value>Attack power</value>
+  </data>
+  <data name="Stat_attack_physical" xml:space="preserve">
+    <value>Physical attack</value>
+  </data>
+  <data name="Stat_attack_magic" xml:space="preserve">
+    <value>Magic attack</value>
+  </data>
+  <data name="Stat_attack_fire" xml:space="preserve">
+    <value>Fire attack</value>
+  </data>
+  <data name="Stat_attack_lightning" xml:space="preserve">
+    <value>Lightning attack</value>
+  </data>
+  <data name="Stat_attack_holy" xml:space="preserve">
+    <value>Holy attack</value>
+  </data>
+  <data name="Stat_damage_taken_all" xml:space="preserve">
+    <value>Damage taken</value>
+  </data>
+  <data name="Stat_damage_taken_physical" xml:space="preserve">
+    <value>Physical damage taken</value>
+  </data>
+  <data name="Stat_damage_taken_magic" xml:space="preserve">
+    <value>Magic damage taken</value>
+  </data>
+  <data name="Stat_damage_taken_fire" xml:space="preserve">
+    <value>Fire damage taken</value>
+  </data>
+  <data name="Stat_damage_taken_lightning" xml:space="preserve">
+    <value>Lightning damage taken</value>
+  </data>
+  <data name="Stat_damage_taken_holy" xml:space="preserve">
+    <value>Holy damage taken</value>
+  </data>
+  <data name="Stat_hp_restore" xml:space="preserve">
+    <value>HP restored</value>
+  </data>
+  <data name="Stat_fp_restore" xml:space="preserve">
+    <value>FP restored</value>
+  </data>
+  <data name="Stat_every" xml:space="preserve">
+    <value>every {0} s</value>
+    <comment>Interval after a regeneration amount, e.g. "+2 every 1 s"</comment>
+  </data>
 </root>
