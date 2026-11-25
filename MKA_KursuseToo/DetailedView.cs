@@ -26,7 +26,7 @@ namespace MKA_KursuseToo
         {
             InitializeComponent();
             _itemId = itemId;
-            ItemImages.AttachCutout(this, "weapon", itemId, DetailedViewGrid);
+            ItemImages.AttachCutout("weapon", itemId, DetailedViewGrid);
         }
 
         private void DetailedView_Load(object sender, EventArgs e)

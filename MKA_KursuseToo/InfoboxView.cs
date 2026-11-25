@@ -37,7 +37,7 @@ namespace MKA_KursuseToo
             // Fill control first, then the Top one, so docking lays them out correctly
             Controls.Add(_grid);
             Controls.Add(_lblName);
-            ItemImages.AttachCutout(this, imageKind, itemId, _grid);   // picture at the right, level with the first row
+            ItemImages.AttachCutout(imageKind, itemId, _grid);   // picture at the right, level with the first row
 
             Load += InfoboxView_Load;
         }
