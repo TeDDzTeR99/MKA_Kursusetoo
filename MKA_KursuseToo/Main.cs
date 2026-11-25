@@ -334,7 +334,7 @@ namespace MKA_KursuseToo
 
         // Every page is a panel of cards: categories, sub-categories (weapon types, ...) and items alike.
         // Item cards are all drawn by AddCard, so a picture can later be added there in one place.
-        private static readonly Size ItemCardSize = new Size(180, 72);
+        private static readonly Size ItemCardSize = new Size(180, ItemImages.CardSize + 64);   // picture + 2 lines of name
 
         // A page of category / sub-category tiles. A tile with no Click action is drawn greyed out and does nothing.
         private void ShowTiles(string heading, Font font, Size size, IEnumerable<(string Text, Action Click)> tiles)
@@ -362,7 +362,8 @@ namespace MKA_KursuseToo
                 foreach (DataRow item in group.Items.Rows)
                 {
                     var id = Convert.ToInt32(item["Id"]);
-                    AddCard(item["Name"].ToString(), Theme.BodyFont, ItemCardSize, () => open(id));
+                    AddCard(item["Name"].ToString(), Theme.BodyFont, ItemCardSize, () => open(id),
+                            ItemImages.ForCard(group.Category.Kind, id));
                     any = true;
                 }
             }
@@ -410,10 +411,17 @@ namespace MKA_KursuseToo
             parent.ResumeLayout(false);
         }
 
-        private void AddCard(string text, Font font, Size size, Action click)
+        // An item card gets a picture above its name; category tiles have none
+        private void AddCard(string text, Font font, Size size, Action click, Image image = null)
         {
             // UseMnemonic off, so "&" (e.g. "Arrows & Bolts") is shown instead of being read as a shortcut key
             var button = new Button { Text = text, Size = size, Margin = new Padding(8), UseMnemonic = false };
+            if (image != null)
+            {
+                button.Image = image;   // shared with ItemImages' cache, so the button must not dispose it
+                button.TextImageRelation = TextImageRelation.ImageAboveText;
+                button.Padding = new Padding(0, 6, 0, 2);
+            }
             Theme.StyleButton(button);
             button.Font = FontThatFits(text, font, size.Width - 16);   // 16 = button's inner padding
 

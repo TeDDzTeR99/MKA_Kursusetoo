@@ -14,7 +14,8 @@ namespace MKA_KursuseToo
         private readonly Label _lblName = new Label();
         private readonly DataGridView _grid = new DataGridView();
 
-        protected InfoboxView()
+        // imageKind and itemId pick the picture: Images\<imageKind>\<itemId>.png (see ItemImages)
+        protected InfoboxView(string imageKind, int itemId)
         {
             Font = new Font("Segoe UI", 10.5F);
 
@@ -36,6 +37,7 @@ namespace MKA_KursuseToo
             // Fill control first, then the Top one, so docking lays them out correctly
             Controls.Add(_grid);
             Controls.Add(_lblName);
+            Controls.Add(ItemImages.DetailsSlot(imageKind, itemId));   // added last, so it sits at the very top
 
             Load += InfoboxView_Load;
         }

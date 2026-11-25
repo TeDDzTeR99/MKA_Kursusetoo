@@ -12,7 +12,7 @@ namespace MKA_KursuseToo
     {
         private readonly int _talismanId;
 
-        public TalismanView(int talismanId)
+        public TalismanView(int talismanId) : base("talisman", talismanId)
         {
             _talismanId = talismanId;
         }

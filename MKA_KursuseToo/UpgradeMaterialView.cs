@@ -11,7 +11,7 @@ namespace MKA_KursuseToo
     {
         private readonly int _materialId;
 
-        public UpgradeMaterialView(int materialId)
+        public UpgradeMaterialView(int materialId) : base("upgrade_material", materialId)
         {
             _materialId = materialId;
         }

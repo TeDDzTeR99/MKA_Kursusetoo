@@ -26,6 +26,7 @@ namespace MKA_KursuseToo
         {
             InitializeComponent();
             _itemId = itemId;
+            Controls.Add(ItemImages.DetailsSlot("weapon", itemId));   // added last, so it sits above the name
         }
 
         private void DetailedView_Load(object sender, EventArgs e)
