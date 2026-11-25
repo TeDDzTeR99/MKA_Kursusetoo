@@ -6,7 +6,7 @@ using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
-    // Details window for one upgrade material (smithing stone, glovewort, ...)
+    // Details page for one upgrade material (smithing stone, glovewort, ...)
     public class UpgradeMaterialView : InfoboxView
     {
         private readonly int _materialId;
@@ -16,7 +16,6 @@ namespace MKA_KursuseToo
             _materialId = materialId;
         }
 
-        protected override string WindowTitle => Resources.UpgradeMaterialWindowTitle;
         protected override string NotFoundMessage => Resources.UpgradeMaterialNotFound;
 
         protected override string LoadDetails(DataTable rows)

@@ -21,7 +21,7 @@ namespace MKA_KursuseToo
             public string CountSql;         // number of items, shown on the home page button
             public string SearchSql;        // must return Id and Name; @search is the LIKE pattern
             public Action Open;             // what clicking the home page button shows
-            public Action<int> OpenItem;    // opens the details window for one item
+            public Action<int> OpenItem;    // shows the details page of one item
 
             // A category without data yet: a greyed-out "Coming soon" button that can't be clicked
             // and isn't searched
@@ -345,7 +345,7 @@ namespace MKA_KursuseToo
             EndCards();
         }
 
-        // A page of item cards; clicking one opens its details window.
+        // A page of item cards; clicking one shows its details page.
         // With withHeadings, each group starts with a full-width heading such as "Weapons (10)".
         // If there are no items at all, emptyNote (when given) is shown instead.
         private void ShowItems(string heading, IEnumerable<(Category Category, DataTable Items)> groups,
@@ -376,15 +376,38 @@ namespace MKA_KursuseToo
         {
             lblPage.Text = heading;
             pnlTiles.SuspendLayout();
-            // Controls.Clear() doesn't free the old controls, so dispose them
-            foreach (var old in pnlTiles.Controls.Cast<Control>().ToList())
-                old.Dispose();
+            DisposeChildren(pnlTiles);
         }
 
         private void EndCards()
         {
             pnlTiles.ResumeLayout();
+            DisposeChildren(pnlDetails);
+            pnlDetails.Visible = false;
+            pnlTiles.Visible = true;
             pnlTiles.AutoScrollPosition = Point.Empty;
+        }
+
+        // A details page (weapon, talisman, ...) in place of the cards; the toolbar stays as it is
+        private void ShowDetails(string heading, Control details)
+        {
+            lblPage.Text = heading;
+            DisposeChildren(pnlDetails);
+            details.Dock = DockStyle.Fill;
+            pnlDetails.Controls.Add(details);
+            pnlTiles.Visible = false;
+            pnlDetails.Visible = true;
+            DisposeChildren(pnlTiles);
+        }
+
+        // Controls.Clear() doesn't free the old controls, so dispose them. Layout is paused meanwhile:
+        // otherwise every removal re-arranges all remaining cards (155 talismans took ~10 s instead of 0.1 s).
+        private static void DisposeChildren(Control parent)
+        {
+            parent.SuspendLayout();
+            foreach (var old in parent.Controls.Cast<Control>().ToList())
+                old.Dispose();
+            parent.ResumeLayout(false);
         }
 
         private void AddCard(string text, Font font, Size size, Action click)
@@ -477,28 +500,14 @@ namespace MKA_KursuseToo
             return text.Replace(@"\", @"\\").Replace("%", @"\%").Replace("_", @"\_");
         }
 
-        private void OpenWeapon(int id)
-        {
-            using (var detailsForm = new DetailedView(id))
-            {
-                detailsForm.ShowDialog(this);
-            }
-        }
+        // Each is a page of its own, so Back returns to the list it was opened from
+        private void OpenWeapon(int id) =>
+            NavigateTo(() => ShowDetails(Resources.CategoryWeapons, new DetailedView(id)));
 
-        private void OpenTalisman(int id)
-        {
-            using (var talismanForm = new TalismanView(id))
-            {
-                talismanForm.ShowDialog(this);
-            }
-        }
+        private void OpenTalisman(int id) =>
+            NavigateTo(() => ShowDetails(Resources.CategoryTalismans, new TalismanView(id)));
 
-        private void OpenUpgradeMaterial(int id)
-        {
-            using (var materialForm = new UpgradeMaterialView(id))
-            {
-                materialForm.ShowDialog(this);
-            }
-        }
+        private void OpenUpgradeMaterial(int id) =>
+            NavigateTo(() => ShowDetails(Resources.CategoryUpgradeMaterials, new UpgradeMaterialView(id)));
     }
 }

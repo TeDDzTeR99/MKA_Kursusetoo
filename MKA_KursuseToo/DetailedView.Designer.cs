@@ -112,18 +112,14 @@
             // DetailedView
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Size = new System.Drawing.Size(800, 450);
             // Order matters for docking: Fill control first, then Top controls (last added = top-most)
             this.Controls.Add(this.DetailedViewGrid);
             this.Controls.Add(this.pnlScalingOptions);
             this.Controls.Add(this.lblName);
             this.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.Name = "DetailedView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Weapon Details";
             this.Load += new System.EventHandler(this.DetailedView_Load);
-            this.Shown += new System.EventHandler(this.DetailedView_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DetailedViewGrid)).EndInit();
             this.pnlScalingOptions.ResumeLayout(false);
             this.pnlScalingOptions.PerformLayout();

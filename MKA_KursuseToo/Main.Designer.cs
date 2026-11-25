@@ -37,6 +37,7 @@
             this.Search = new System.Windows.Forms.Button();
             this.lblPage = new System.Windows.Forms.Label();
             this.pnlTiles = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlDetails = new System.Windows.Forms.Panel();
             this.pnlToolbar.SuspendLayout();
             this.SuspendLayout();
             //
@@ -130,6 +131,15 @@
             this.pnlTiles.Size = new System.Drawing.Size(820, 580);
             this.pnlTiles.TabIndex = 3;
             //
+            // pnlDetails
+            //
+            this.pnlDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDetails.Location = new System.Drawing.Point(0, 140);
+            this.pnlDetails.Name = "pnlDetails";
+            this.pnlDetails.Size = new System.Drawing.Size(820, 580);
+            this.pnlDetails.TabIndex = 4;
+            this.pnlDetails.Visible = false;
+            //
             // Main
             //
             this.AcceptButton = this.Search;
@@ -137,6 +147,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(820, 720);
             // Order matters for docking: Fill controls first, then Top controls (last added = top-most).
+            // Only one of pnlTiles and pnlDetails is visible at a time.
+            this.Controls.Add(this.pnlDetails);
             this.Controls.Add(this.pnlTiles);
             this.Controls.Add(this.lblPage);
             this.Controls.Add(this.pnlToolbar);
@@ -166,5 +178,6 @@
         private System.Windows.Forms.Button Search;
         private System.Windows.Forms.Label lblPage;
         private System.Windows.Forms.FlowLayoutPanel pnlTiles;
+        private System.Windows.Forms.Panel pnlDetails;
     }
 }

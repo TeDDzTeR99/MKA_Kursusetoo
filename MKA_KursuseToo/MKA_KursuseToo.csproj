@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DetailedView.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DetailedView.Designer.cs">
       <DependentUpon>DetailedView.cs</DependentUpon>
@@ -87,13 +87,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="InfoboxView.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TalismanView.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UpgradeMaterialView.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Theme.cs" />
     <Compile Include="WeaponDatabase.cs" />

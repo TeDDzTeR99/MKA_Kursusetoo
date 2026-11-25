@@ -139,9 +139,6 @@
   <data name="SearchButton" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="DetailsWindowTitle" xml:space="preserve">
-    <value>Weapon Details</value>
-  </data>
   <data name="AffinityLabel" xml:space="preserve">
     <value>Affinity:</value>
   </data>
@@ -237,9 +234,6 @@
   </data>
   <data name="Status_death_blight" xml:space="preserve">
     <value>Death Blight</value>
-  </data>
-  <data name="TalismanWindowTitle" xml:space="preserve">
-    <value>Talisman Details</value>
   </data>
   <data name="TalismanNotFound" xml:space="preserve">
     <value>Talisman not found.</value>
@@ -476,9 +470,6 @@
   <data name="Stat_every" xml:space="preserve">
     <value>every {0} s</value>
     <comment>Interval after a regeneration amount, e.g. "+2 every 1 s"</comment>
-  </data>
-  <data name="UpgradeMaterialWindowTitle" xml:space="preserve">
-    <value>Upgrade Material Details</value>
   </data>
   <data name="UpgradeMaterialNotFound" xml:space="preserve">
     <value>Upgrade material not found.</value>

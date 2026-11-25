@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Drawing;
 using System.Windows.Forms;
 using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
-    public partial class DetailedView : Form
+    // Weapon details page, shown inside the main window
+    public partial class DetailedView : UserControl
     {
         private readonly int _itemId;
 
@@ -31,7 +31,6 @@ namespace MKA_KursuseToo
         private void DetailedView_Load(object sender, EventArgs e)
         {
             // Texts come from Properties/Resources (English) or Resources.et (Estonian)
-            Text = Resources.DetailsWindowTitle;
             lblAffinity.Text = Resources.AffinityLabel;
             lblLevel.Text = Resources.UpgradeLevelLabel;
 
@@ -44,7 +43,6 @@ namespace MKA_KursuseToo
             DetailedViewGrid.AllowUserToDeleteRows = false;
             DetailedViewGrid.RowHeadersVisible = false;
             DetailedViewGrid.ColumnHeadersVisible = false;   // "Field" / "Value" headers aren't needed
-            DetailedViewGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;   // sized in FitWindowToContent
             DetailedViewGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DetailedViewGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DetailedViewGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -200,8 +198,8 @@ namespace MKA_KursuseToo
 
             if (dt.Rows.Count == 0)
             {
-                MessageBox.Show(Resources.WeaponNotFound);
-                Close();
+                lblName.Text = Resources.WeaponNotFound;
+                DetailedViewGrid.DataSource = null;
                 return;
             }
 
@@ -257,70 +255,13 @@ namespace MKA_KursuseToo
                 fieldStyle.SelectionBackColor = Theme.HeaderBack;
                 fieldStyle.SelectionForeColor = Theme.Accent;
                 fieldStyle.Font = Theme.BoldFont;
+                fieldColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
 
-            FitWindowToContent();
-        }
-
-        // Long values (e.g. locations) wrap onto several lines instead of making the window very wide
-        private const int MaxValueColumnWidth = 480;
-
-        // Resizes the window so the whole grid fits without scrollbars (capped to the screen size)
-        private void FitWindowToContent()
-        {
-            // Measure columns on one line first (with wrapping on, WinForms picks the narrowest possible width)
+            // The value column takes the rest of the page width; long values (e.g. locations) wrap
             var valueColumn = DetailedViewGrid.Columns["Value"];
-            if (valueColumn == null)
-                return;   // nothing loaded into the grid yet
-
-            DetailedViewGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-            DetailedViewGrid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-            // Then cap the value column and let only that column wrap
-            if (valueColumn.Width > MaxValueColumnWidth)
-                valueColumn.Width = MaxValueColumnWidth;
-            valueColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
-            DetailedViewGrid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
-
-            var gridWidth = DetailedViewGrid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
-                            + SystemInformation.VerticalScrollBarWidth   // room in case a scrollbar is still needed
-                            + 2;                                         // grid border
-            var headerHeight = DetailedViewGrid.ColumnHeadersVisible ? DetailedViewGrid.ColumnHeadersHeight : 0;
-            var gridHeight = headerHeight
-                             + DetailedViewGrid.Rows.GetRowsHeight(DataGridViewElementStates.Visible)
-                             + 2;
-
-            var width = Math.Max(gridWidth, Math.Max(lblName.PreferredWidth, pnlScalingOptions.PreferredSize.Width));
-            // Space taken by everything above the grid (title + dropdowns), measured after layout
-            PerformLayout();
-            var spaceAboveGrid = ClientSize.Height - DetailedViewGrid.Height;
-            var height = spaceAboveGrid + gridHeight;
-
-            // Don't grow past the screen the window is on
-            var screen = Screen.FromControl(this).WorkingArea;
-            var chrome = Size - ClientSize;   // title bar + borders
-            width = Math.Min(width, screen.Width - chrome.Width);
-            height = Math.Min(height, screen.Height - chrome.Height);
-
-            ClientSize = new Size(width, height);
-            KeepOnScreen();
-        }
-
-        // Moves the window so it is fully inside the screen (e.g. after it grew taller)
-        private void KeepOnScreen()
-        {
-            var screen = Screen.FromControl(this).WorkingArea;
-            var left = Math.Max(screen.Left, Math.Min(Left, screen.Right - Width));
-            var top = Math.Max(screen.Top, Math.Min(Top, screen.Bottom - Height));
-            Location = new Point(left, top);
-        }
-
-        private void DetailedView_Shown(object sender, EventArgs e)
-        {
-            // Rows get their final height only once the window is on screen, so measure again now.
-            // This also moves the window back inside the screen if it got too tall.
-            FitWindowToContent();
+            if (valueColumn != null)
+                valueColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void cmbAffinity_SelectedIndexChanged(object sender, EventArgs e)

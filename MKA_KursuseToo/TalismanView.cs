@@ -7,7 +7,7 @@ using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
-    // Details window for one talisman
+    // Details page for one talisman
     public class TalismanView : InfoboxView
     {
         private readonly int _talismanId;
@@ -17,7 +17,6 @@ namespace MKA_KursuseToo
             _talismanId = talismanId;
         }
 
-        protected override string WindowTitle => Resources.TalismanWindowTitle;
         protected override string NotFoundMessage => Resources.TalismanNotFound;
 
         protected override string LoadDetails(DataTable rows)

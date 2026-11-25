@@ -144,17 +144,6 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to: Weapon Details
-        /// </summary>
-        internal static string DetailsWindowTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("DetailsWindowTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to: Affinity:
         /// </summary>
         internal static string AffinityLabel
@@ -177,17 +166,6 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to: Talisman Details
-        /// </summary>
-        internal static string TalismanWindowTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("TalismanWindowTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to: Talisman not found.
         /// </summary>
         internal static string TalismanNotFound
@@ -195,17 +173,6 @@ namespace MKA_KursuseToo.Properties
             get
             {
                 return ResourceManager.GetString("TalismanNotFound", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to: Upgrade Material Details
-        /// </summary>
-        internal static string UpgradeMaterialWindowTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("UpgradeMaterialWindowTitle", resourceCulture);
             }
         }
 

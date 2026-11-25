@@ -27,12 +27,13 @@ namespace MKA_KursuseToo
         public static readonly Font TileFont    = new Font("Georgia", 14F, FontStyle.Bold);
 
         // Applies the theme to a window and everything inside it
-        public static void Apply(Form form)
+        public static void Apply(Control control)
         {
-            form.BackColor = Background;
-            form.ForeColor = Text;
-            UseDarkTitleBar(form);
-            ApplyToChildren(form);
+            control.BackColor = Background;
+            control.ForeColor = Text;
+            if (control is Form form)
+                UseDarkTitleBar(form);
+            ApplyToChildren(control);
         }
 
         private static void ApplyToChildren(Control parent)

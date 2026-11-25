@@ -37,9 +37,6 @@
   <data name="SearchButton" xml:space="preserve">
     <value>Otsi</value>
   </data>
-  <data name="DetailsWindowTitle" xml:space="preserve">
-    <value>Relva andmed</value>
-  </data>
   <data name="AffinityLabel" xml:space="preserve">
     <value>Afiinsus:</value>
   </data>
@@ -135,9 +132,6 @@
   </data>
   <data name="Status_death_blight" xml:space="preserve">
     <value>Surmatõbi</value>
-  </data>
-  <data name="TalismanWindowTitle" xml:space="preserve">
-    <value>Talismani andmed</value>
   </data>
   <data name="TalismanNotFound" xml:space="preserve">
     <value>Talismani ei leitud.</value>
@@ -373,9 +367,6 @@
   </data>
   <data name="Stat_every" xml:space="preserve">
     <value>iga {0} s järel</value>
-  </data>
-  <data name="UpgradeMaterialWindowTitle" xml:space="preserve">
-    <value>Täiustusmaterjali andmed</value>
   </data>
   <data name="UpgradeMaterialNotFound" xml:space="preserve">
     <value>Täiustusmaterjali ei leitud.</value>

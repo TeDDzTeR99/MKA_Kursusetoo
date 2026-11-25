@@ -1,30 +1,22 @@
 using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using MKA_KursuseToo.Properties;
 
 namespace MKA_KursuseToo
 {
-    // Details window for one item: a title and a two-column "infobox" grid, like DetailedView
-    // but without the affinity and level dropdowns. Subclasses (talismans, upgrade materials, ...)
-    // only say which rows to show.
-    public abstract class InfoboxView : Form
+    // Details page for one item, shown inside the main window: a title and a two-column "infobox" grid,
+    // like DetailedView but without the affinity and level dropdowns. Subclasses (talismans, upgrade
+    // materials, ...) only say which rows to show.
+    public abstract class InfoboxView : UserControl
     {
-        private const int MaxValueColumnWidth = 480;
-
         private readonly Label _lblName = new Label();
         private readonly DataGridView _grid = new DataGridView();
 
         protected InfoboxView()
         {
             Font = new Font("Segoe UI", 10.5F);
-            AutoScaleMode = AutoScaleMode.Dpi;
-            StartPosition = FormStartPosition.CenterParent;
-            MinimizeBox = false;
-            ShowInTaskbar = false;
-            ClientSize = new Size(560, 300);
 
             _lblName.Dock = DockStyle.Top;
             _lblName.Height = 56;
@@ -46,13 +38,9 @@ namespace MKA_KursuseToo
             Controls.Add(_lblName);
 
             Load += InfoboxView_Load;
-            Shown += (sender, e) => FitWindowToContent();   // rows get their final height only once shown
         }
 
-        // Window title, e.g. "Talisman Details"
-        protected abstract string WindowTitle { get; }
-
-        // Message shown when the item isn't in the database
+        // Shown instead of the name when the item isn't in the database
         protected abstract string NotFoundMessage { get; }
 
         // Fills the Field/Value rows and returns the item's name, or null if the item doesn't exist
@@ -60,8 +48,6 @@ namespace MKA_KursuseToo
 
         private void InfoboxView_Load(object sender, EventArgs e)
         {
-            Text = WindowTitle;
-
             Theme.Apply(this);
             _lblName.Font = Theme.TitleFont;
             _lblName.ForeColor = Theme.Accent;
@@ -88,14 +74,10 @@ namespace MKA_KursuseToo
             display.Columns.Add("Value");
 
             var name = LoadDetails(display);
+            _lblName.Text = name ?? NotFoundMessage;
             if (name == null)
-            {
-                MessageBox.Show(NotFoundMessage);
-                Close();
                 return;
-            }
 
-            _lblName.Text = name;
             _grid.DataSource = display;
 
             // Field names in a shaded gold column, like a wiki infobox
@@ -109,7 +91,10 @@ namespace MKA_KursuseToo
                 fieldStyle.Font = Theme.BoldFont;
             }
 
-            FitWindowToContent();
+            // Field names as wide as they need, values take the rest of the page width and wrap
+            _grid.Columns["Field"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            _grid.Columns["Value"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            _grid.Columns["Value"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         // A row labelled with the Field_<field> resource text. Empty values are left out instead of
@@ -121,42 +106,6 @@ namespace MKA_KursuseToo
         {
             if (!string.IsNullOrWhiteSpace(value))
                 table.Rows.Add(label, value);
-        }
-
-        // Resizes the window so the whole grid fits without scrollbars (capped to the screen size)
-        private void FitWindowToContent()
-        {
-            var valueColumn = _grid.Columns["Value"];
-            if (valueColumn == null)
-                return;   // nothing loaded yet
-
-            // Measure on one line first, then cap the value column and let only that column wrap
-            _grid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-            _grid.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            if (valueColumn.Width > MaxValueColumnWidth)
-                valueColumn.Width = MaxValueColumnWidth;
-            valueColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            _grid.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
-
-            var gridWidth = _grid.Columns.GetColumnsWidth(DataGridViewElementStates.Visible)
-                            + SystemInformation.VerticalScrollBarWidth + 2;
-            // Ask each row how tall it wants to be with the new column widths. Row.Height can still hold
-            // the old one-line height here: the grid applies the wrap change to its rows only when it repaints.
-            var gridHeight = _grid.Rows.Cast<DataGridViewRow>()
-                                 .Sum(r => r.GetPreferredHeight(r.Index, DataGridViewAutoSizeRowMode.AllCells, true))
-                             + 2;   // grid border
-
-            var width = Math.Max(gridWidth, _lblName.PreferredWidth);
-            var height = _lblName.Height + gridHeight;
-
-            var screen = Screen.FromControl(this).WorkingArea;
-            var chrome = Size - ClientSize;   // title bar + borders
-            ClientSize = new Size(Math.Min(width, screen.Width - chrome.Width),
-                                  Math.Min(height, screen.Height - chrome.Height));
-
-            // Keep the window fully on screen after it grew
-            Location = new Point(Math.Max(screen.Left, Math.Min(Left, screen.Right - Width)),
-                                 Math.Max(screen.Top, Math.Min(Top, screen.Bottom - Height)));
         }
     }
 }
