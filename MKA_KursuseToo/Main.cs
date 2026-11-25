@@ -213,6 +213,13 @@ namespace MKA_KursuseToo
             lblTitle.ForeColor = Theme.Accent;
             lblPage.ForeColor = Theme.TextMuted;
             pnlTiles.BackColor = Theme.Background;
+            // Card headings are full width (see AddCardHeading), also after a resize. The Layout event runs before
+            // the cards are placed, so they wrap against the new width (ClientSizeChanged came too late).
+            pnlTiles.Layout += (s, args) =>
+            {
+                foreach (var heading in pnlTiles.Controls.OfType<Label>())
+                    heading.Width = HeadingWidth(heading);
+            };
             btnLanguage.Font = Theme.BodyFont;
             btnLanguage.BringToFront();   // it sits on top of the title, in the top right corner
 
@@ -536,21 +543,23 @@ namespace MKA_KursuseToo
             pnlTiles.Controls.Add(button);
         }
 
-        // Text on its own line between cards, e.g. a search result group heading
+        // Text on its own line between cards, e.g. a search result group heading.
+        // It is as wide as the panel, so the cards before and after it wrap onto their own lines. Not SetFlowBreak:
+        // FlowLayoutPanel sizes a break's row by the control after it, which left a card-high gap under each heading.
         private void AddCardHeading(string text, Color color, Font font)
         {
-            // Start a new line before and after it
-            if (pnlTiles.Controls.Count > 0)
-                pnlTiles.SetFlowBreak(pnlTiles.Controls[pnlTiles.Controls.Count - 1], true);
-
             var label = new Label
             {
-                Text = text, AutoSize = true, ForeColor = color, Font = font, UseMnemonic = false,
+                Text = text, ForeColor = color, Font = font, UseMnemonic = false,
                 Margin = new Padding(8, 12, 8, 0)
             };
+            label.Size = new Size(HeadingWidth(label), label.PreferredHeight);
             pnlTiles.Controls.Add(label);
-            pnlTiles.SetFlowBreak(label, true);
         }
+
+        // Leaves room for the vertical scrollbar even before it appears, so the heading never causes a horizontal one
+        private int HeadingWidth(Control heading) =>
+            Math.Max(1, pnlTiles.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - heading.Margin.Horizontal);
 
         // Smaller versions of the tile fonts, made once and reused (a Font holds a Windows resource)
         private static readonly Dictionary<(string, float, FontStyle), Font> SmallerFonts =
