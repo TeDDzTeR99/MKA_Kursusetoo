@@ -70,7 +70,8 @@ Built as a course project (*kursusetöö*).
 
 ## Install
 
-Run `EldenRingWikiSetup.exe`. It installs the app with its database and every item picture (about 170 MB), adds it
+Download `EldenRingWikiSetup.exe` from the [latest release](https://github.com/TeDDzTeR99/MKA_Kursusetoo/releases/latest)
+and run it. It installs the app with its database and every item picture (about 170 MB), adds it
 to the Start menu (and, if you tick the box, the desktop), and can be removed again under **Settings → Apps**.
 You can install it for yourself only (no admin rights needed) or for all users. Needs Windows 10 or 11.
 
