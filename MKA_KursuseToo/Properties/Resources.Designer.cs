@@ -397,6 +397,39 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Consumables
+        /// </summary>
+        internal static string AllConsumables
+        {
+            get
+            {
+                return ResourceManager.GetString("AllConsumables", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Consumable not found.
+        /// </summary>
+        internal static string ConsumableNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("ConsumableNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No consumables imported yet. ...
+        /// </summary>
+        internal static string NoConsumablesImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoConsumablesImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems

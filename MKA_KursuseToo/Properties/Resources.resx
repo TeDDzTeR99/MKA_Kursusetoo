@@ -840,4 +840,46 @@
   <data name="Field_max_quantity" xml:space="preserve">
     <value>Max carried</value>
   </data>
+  <data name="AllConsumables" xml:space="preserve">
+    <value>All Consumables</value>
+  </data>
+  <data name="ConsumableNotFound" xml:space="preserve">
+    <value>Consumable not found.</value>
+  </data>
+  <data name="NoConsumablesImported" xml:space="preserve">
+    <value>No consumables imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="ConsumableKind_flask" xml:space="preserve">
+    <value>Flasks &amp; Essentials</value>
+  </data>
+  <data name="ConsumableKind_food" xml:space="preserve">
+    <value>Food &amp; Boluses</value>
+  </data>
+  <data name="ConsumableKind_pot" xml:space="preserve">
+    <value>Pots</value>
+  </data>
+  <data name="ConsumableKind_aromatic" xml:space="preserve">
+    <value>Aromatics</value>
+  </data>
+  <data name="ConsumableKind_throwable" xml:space="preserve">
+    <value>Throwing Items</value>
+  </data>
+  <data name="ConsumableKind_special" xml:space="preserve">
+    <value>Special Items</value>
+  </data>
+  <data name="ConsumableKind_grease" xml:space="preserve">
+    <value>Greases</value>
+  </data>
+  <data name="ConsumableKind_tool" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="ConsumableKind_rune" xml:space="preserve">
+    <value>Runes</value>
+  </data>
+  <data name="ConsumableKind_multiplayer" xml:space="preserve">
+    <value>Multiplayer Items</value>
+  </data>
+  <data name="Field_max_stored" xml:space="preserve">
+    <value>Max stored</value>
+  </data>
 </root>

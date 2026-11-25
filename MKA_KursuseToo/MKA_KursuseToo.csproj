@@ -102,6 +102,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ItemImages.cs" />
+    <Compile Include="ConsumableView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="InfoboxView.cs">
       <SubType>UserControl</SubType>
     </Compile>
