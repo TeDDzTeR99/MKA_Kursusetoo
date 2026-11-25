@@ -26,7 +26,7 @@ namespace MKA_KursuseToo
         {
             InitializeComponent();
             _itemId = itemId;
-            Controls.Add(ItemImages.DetailsSlot("weapon", itemId));   // added last, so it sits above the name
+            ItemImages.AttachCutout(this, "weapon", itemId, DetailedViewGrid);
         }
 
         private void DetailedView_Load(object sender, EventArgs e)
@@ -257,6 +257,8 @@ namespace MKA_KursuseToo
                 fieldStyle.SelectionForeColor = Theme.Accent;
                 fieldStyle.Font = Theme.BoldFont;
                 fieldColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                // With wrapping on, the column would be sized to the narrowest wrapped width; names stay on one line
+                fieldStyle.WrapMode = DataGridViewTriState.False;
             }
 
             // The value column takes the rest of the page width; long values (e.g. locations) wrap
