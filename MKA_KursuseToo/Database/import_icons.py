@@ -41,6 +41,7 @@ KINDS = {
     "shield": ("shields", "EquipParamWeapon.csv"),
     "ammo": ("ammunition", "EquipParamWeapon.csv"),
     "consumable": ("consumables", "EquipParamGoods.csv"),
+    "crafting_material": ("crafting_materials", "EquipParamGoods.csv"),
 }
 
 

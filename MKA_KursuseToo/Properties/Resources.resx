@@ -882,4 +882,22 @@
   <data name="Field_max_stored" xml:space="preserve">
     <value>Max stored</value>
   </data>
+  <data name="AllCraftingMaterials" xml:space="preserve">
+    <value>All Crafting Materials</value>
+  </data>
+  <data name="CraftingMaterialNotFound" xml:space="preserve">
+    <value>Crafting material not found.</value>
+  </data>
+  <data name="NoCraftingMaterialsImported" xml:space="preserve">
+    <value>No crafting materials imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="CraftingMaterialKind_fauna" xml:space="preserve">
+    <value>Animal Parts</value>
+  </data>
+  <data name="CraftingMaterialKind_flora" xml:space="preserve">
+    <value>Plants</value>
+  </data>
+  <data name="CraftingMaterialKind_mineral" xml:space="preserve">
+    <value>Minerals &amp; Objects</value>
+  </data>
 </root>

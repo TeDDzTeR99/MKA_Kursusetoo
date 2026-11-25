@@ -430,6 +430,39 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: All Crafting Materials
+        /// </summary>
+        internal static string AllCraftingMaterials
+        {
+            get
+            {
+                return ResourceManager.GetString("AllCraftingMaterials", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Crafting material not found.
+        /// </summary>
+        internal static string CraftingMaterialNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("CraftingMaterialNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No crafting materials imported yet. ...
+        /// </summary>
+        internal static string NoCraftingMaterialsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoCraftingMaterialsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Key Items
         /// </summary>
         internal static string AllKeyItems

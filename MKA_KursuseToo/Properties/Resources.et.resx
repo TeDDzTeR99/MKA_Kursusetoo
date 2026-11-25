@@ -779,4 +779,22 @@
   <data name="Field_max_stored" xml:space="preserve">
     <value>Max hoiul</value>
   </data>
+  <data name="AllCraftingMaterials" xml:space="preserve">
+    <value>Kõik meisterdamismaterjalid</value>
+  </data>
+  <data name="CraftingMaterialNotFound" xml:space="preserve">
+    <value>Meisterdamismaterjali ei leitud.</value>
+  </data>
+  <data name="NoCraftingMaterialsImported" xml:space="preserve">
+    <value>Meisterdamismaterjale pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="CraftingMaterialKind_fauna" xml:space="preserve">
+    <value>Loomade osad</value>
+  </data>
+  <data name="CraftingMaterialKind_flora" xml:space="preserve">
+    <value>Taimed</value>
+  </data>
+  <data name="CraftingMaterialKind_mineral" xml:space="preserve">
+    <value>Mineraalid ja esemed</value>
+  </data>
 </root>

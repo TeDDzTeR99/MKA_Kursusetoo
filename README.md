@@ -124,6 +124,7 @@ as it comes from English sources.
 | `shields` | Name, kind (small / medium / great / thrusting), description, weight, guard negation and guard boost, damage, requirements, scaling letters (Standard +0), max upgrade level, DLC flag. The ID is the row ID in `EquipParamWeapon` |
 | `ammunition` | Arrows and bolts: name, kind (arrow / great arrow / bolt / greatbolt), description, damage, max carried, sell value, DLC flag. The ID is the row ID in `EquipParamWeapon` |
 | `consumables` | Name, kind (flasks, food, pots, aromatics, throwing items, special items, greases, tools, runes, multiplayer items), effect, description, FP cost, max carried, max stored, sell value, DLC flag. The ID is the row ID in `EquipParamGoods` |
+| `crafting_materials` | Name, kind (animal parts / plants / minerals & objects), description, max carried, max stored, sell value, DLC flag. The ID is the row ID in `EquipParamGoods` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -245,6 +246,15 @@ out. Run `019_consumables.sql` once (already applied to the included database), 
 python MKA_KursuseToo/Database/import_consumables.py EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
 ```
 
+#### Crafting materials
+
+Crafting materials come from `EquipParamGoods` (goodsType 2). The kind comes from the game's inventory order
+(`sortId` // 1000). Run `020_crafting_materials.sql` once (already applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_crafting_materials.py EquipParamGoods.csv <folder with the .fmg.xml files> MKA_KursuseToo/elden_ring_weapons.db
+```
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -266,6 +276,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `017_shields.sql` | Adds the `shields` table (filled by `import_shields.py`) |
 | `018_ammunition.sql` | Adds the `ammunition` table (filled by `import_ammunition.py`) |
 | `019_consumables.sql` | Adds the `consumables` table (filled by `import_consumables.py`) |
+| `020_crafting_materials.sql` | Adds the `crafting_materials` table (filled by `import_crafting_materials.py`) |
 
 ## Author
 

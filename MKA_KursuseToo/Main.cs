@@ -156,7 +156,19 @@ namespace MKA_KursuseToo
                                                             Resources.AllConsumables, Resources.NoConsumablesImported)),
                     OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryConsumables, new ConsumableView(id)))
                 },
-                Placeholder(nameof(Resources.CategoryCraftingMaterials)),
+                new Category
+                {
+                    Kind = "crafting_material",
+                    TitleKey = nameof(Resources.CategoryCraftingMaterials),
+                    CountSql = "SELECT COUNT(*) FROM crafting_materials;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM crafting_materials
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(CraftingMaterialCategory, "crafting_materials",
+                                                            "CraftingMaterialKind_", Resources.AllCraftingMaterials,
+                                                            Resources.NoCraftingMaterialsImported)),
+                    OpenItem = id => NavigateTo(() => ShowDetails(Resources.CategoryCraftingMaterials,
+                                                                  new CraftingMaterialView(id)))
+                },
                 new Category
                 {
                     Kind = "upgrade_material",
@@ -193,6 +205,7 @@ namespace MKA_KursuseToo
         private Category ShieldCategory => _categories.First(c => c.Kind == "shield");
         private Category AmmoCategory => _categories.First(c => c.Kind == "ammo");
         private Category ConsumableCategory => _categories.First(c => c.Kind == "consumable");
+        private Category CraftingMaterialCategory => _categories.First(c => c.Kind == "crafting_material");
         private Category SpiritAshCategory => _categories.First(c => c.Kind == "spirit_ash");
 
         private void Main_Load(object sender, EventArgs e)

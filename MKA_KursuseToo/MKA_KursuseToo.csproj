@@ -105,6 +105,9 @@
     <Compile Include="ConsumableView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="CraftingMaterialView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="InfoboxView.cs">
       <SubType>UserControl</SubType>
     </Compile>
