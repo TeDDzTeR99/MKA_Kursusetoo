@@ -23,16 +23,10 @@ namespace MKA_KursuseToo
             public Action Open;             // what clicking the home page button shows
             public Action<int> OpenItem;    // shows the details page of one item
 
-            // A category without data yet: a greyed-out "Coming soon" button that can't be clicked
-            // and isn't searched
-            public bool IsPlaceholder => Open == null;
-
             // Shown on the home page button and as the search result heading. Looked up each time,
             // so it follows the language switch.
             public string Title => Resources.ResourceManager.GetString(TitleKey, Resources.Culture);
         }
-
-        private static Category Placeholder(string titleKey) => new Category { TitleKey = titleKey };
 
         private readonly List<Category> _categories;
 
@@ -331,13 +325,10 @@ namespace MKA_KursuseToo
         // ---------- Pages ----------
 
         // Home page: one big button per category, with the number of items in it
-        // ("Coming soon" for categories that have no data yet)
         private void ShowHome()
         {
             ShowTiles(Resources.HomeHeading, Theme.TileFont, new Size(184, 92),
-                _categories.Select(c => c.IsPlaceholder
-                    ? ($"{c.Title}\n{Resources.ComingSoon}", (Action)null)
-                    : (TileText(c.Title, Count(c.CountSql)), c.Open)));
+                _categories.Select(c => (TileText(c.Title, Count(c.CountSql)), c.Open)));
         }
 
         // Weapons page: "All Weapons" plus one button per weapon type that has weapons
@@ -432,7 +423,6 @@ namespace MKA_KursuseToo
         {
             var parameters = new Dictionary<string, object> { { "@search", "%" + EscapeLike(searchText) + "%" } };
             var groups = _categories
-                .Where(c => !c.IsPlaceholder)
                 .Select(c => (c, WeaponDatabase.Query(c.SearchSql, parameters)))
                 .Where(g => g.Item2.Rows.Count > 0)
                 .ToList();
@@ -538,23 +528,8 @@ namespace MKA_KursuseToo
             Theme.StyleButton(button);
             button.Font = FontThatFits(text, font, size.Width - 16);   // 16 = button's inner padding
 
-            if (click == null)
-            {
-                // Not Enabled = false: Windows would draw the text in a dark grey that can't be read
-                // on the dark theme. Instead: muted colours, no hover effect, not reachable with Tab.
-                button.ForeColor = Theme.TextMuted;
-                button.BackColor = Theme.Surface;
-                button.FlatAppearance.BorderColor = Theme.Border;
-                button.FlatAppearance.MouseOverBackColor = Theme.Surface;
-                button.FlatAppearance.MouseDownBackColor = Theme.Surface;
-                button.Cursor = Cursors.Default;
-                button.TabStop = false;
-            }
-            else
-            {
-                // Run the click after the button's own event has finished: the next page disposes this button
-                button.Click += (s, e) => BeginInvoke(click);
-            }
+            // Run the click after the button's own event has finished: the next page disposes this button
+            button.Click += (s, e) => BeginInvoke(click);
 
             pnlTiles.Controls.Add(button);
         }

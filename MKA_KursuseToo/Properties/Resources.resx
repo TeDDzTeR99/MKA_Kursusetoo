@@ -280,9 +280,6 @@
   <data name="NoSearchResults" xml:space="preserve">
     <value>No matches for “{0}”</value>
   </data>
-  <data name="ComingSoon" xml:space="preserve">
-    <value>Coming soon</value>
-  </data>
   <data name="NoTalismansImported" xml:space="preserve">
     <value>No talismans imported yet. The README explains how to import them from the game files.</value>
   </data>

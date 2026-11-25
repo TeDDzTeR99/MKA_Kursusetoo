@@ -178,9 +178,6 @@
   <data name="NoSearchResults" xml:space="preserve">
     <value>Otsingule „{0}“ vasteid ei leitud</value>
   </data>
-  <data name="ComingSoon" xml:space="preserve">
-    <value>Tulekul</value>
-  </data>
   <data name="NoTalismansImported" xml:space="preserve">
     <value>Talismane pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
   </data>

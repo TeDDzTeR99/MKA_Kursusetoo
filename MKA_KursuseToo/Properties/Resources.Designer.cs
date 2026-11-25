@@ -617,17 +617,6 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to: Coming soon
-        /// </summary>
-        internal static string ComingSoon
-        {
-            get
-            {
-                return ResourceManager.GetString("ComingSoon", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to: No talismans imported yet. The README explains how to import them from the game files.
         /// </summary>
         internal static string NoTalismansImported
