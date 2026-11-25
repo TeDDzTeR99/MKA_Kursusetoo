@@ -3,7 +3,7 @@ Writes the game's item icons to Images/<kind>/<id>.png, where the app looks for 
 
 Inputs, from your own copy of Elden Ring:
   1. The folder with the param CSVs (see import_talismans.py). The iconId column of EquipParamWeapon,
-     EquipParamAccessory and EquipParamGoods says which icon each item uses.
+     EquipParamAccessory and EquipParamGoods (upgrade materials, key items) says which icon each item uses.
   2. The folder with the icon files MENU_Knowledge_<iconId, 5 digits>.tpf.dcx (unpacked from 00_solo.tpfbdt).
   3. WitchyBND.exe. The icon files are Oodle (KRAK) compressed, which Python cannot open.
   4. elden_ring_weapons.db. Every table's id is the game's param row id, so it matches the CSV ID column.
@@ -32,6 +32,7 @@ KINDS = {
     "weapon": ("weapons", "EquipParamWeapon.csv"),
     "talisman": ("talismans", "EquipParamAccessory.csv"),
     "upgrade_material": ("upgrade_materials", "EquipParamGoods.csv"),
+    "key_item": ("key_items", "EquipParamGoods.csv"),
 }
 
 

@@ -199,6 +199,50 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: {0} runes
+        /// </summary>
+        internal static string PriceRunes
+        {
+            get
+            {
+                return ResourceManager.GetString("PriceRunes", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: All Key Items
+        /// </summary>
+        internal static string AllKeyItems
+        {
+            get
+            {
+                return ResourceManager.GetString("AllKeyItems", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Key item not found.
+        /// </summary>
+        internal static string KeyItemNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("KeyItemNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No key items imported yet. ...
+        /// </summary>
+        internal static string NoKeyItemsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoKeyItemsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: All Upgrade Materials
         /// </summary>
         internal static string AllUpgradeMaterials

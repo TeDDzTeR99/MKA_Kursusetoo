@@ -116,6 +116,7 @@ as it comes from English sources.
 | `affinities` | Standard, Heavy, Keen, Quality, Fire, Flame Art, Lightning, Sacred, Magic, Cold, Poison, Blood, Occult |
 | `scaling_grades` | Grade letters S, A, B, C, D, E, - with the value range each one covers |
 | `talismans` | Name, effect, description, weight, sell value, accessory group (talismans in one group can't be worn together), DLC flag. The ID is the talisman's row ID in the game data |
+| `key_items` | Name, effect, description, sell value, kind (keys, maps, cookbooks, bell bearings, …), DLC flag, in the game's inventory order. The ID is the item's row ID in `EquipParamGoods` |
 
 There is also a view, `v_weapons_overview`, that joins all of the above into one row per weapon (Standard affinity, +0).
 
@@ -166,6 +167,19 @@ python MKA_KursuseToo/Database/import_talismans.py EquipParamAccessory.csv <fold
 The script replaces all talismans each time, so it can be run again after a game patch. The effect text is the game's
 own short description (e.g. "Raises maximum HP"); exact percentages aren't in the text files.
 
+#### Key items
+
+Key items come from `EquipParamGoods` (the same CSV export as above) and the `GoodsName`, `GoodsInfo` and
+`GoodsCaption` text files. They are grouped by the game's own inventory order (`sortId`) into kinds like Keys,
+Maps, Cookbooks and Bell Bearings. `ShopLineupParam` gives what the stone, glovewort and peddler bell bearings
+add to the Twin Maiden Husks' shop, and `ShopLineupParam_Recipe` the recipes each cookbook teaches (table `key_item_unlocks`). Run `013_key_items.sql` once (already applied to the included database), then:
+
+```
+python MKA_KursuseToo/Database/import_key_items.py EquipParamGoods.csv <folder with the .fmg.xml files> ShopLineupParam.csv ShopLineupParam_Recipe.csv MKA_KursuseToo/elden_ring_weapons.db
+```
+
+Item pictures for every category come from the game files too, see `import_icons.py` (needs WitchyBND and Pillow).
+
 ### Migrations
 
 Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Database/`:
@@ -180,6 +194,7 @@ Changes to the database structure are kept as SQL scripts in `MKA_KursuseToo/Dat
 | `006_remove_damage_types.sql` | Removes the unused `damage_types` tables (replaced by `affinities`) |
 | `007_status_buildup_per_level_affinity.sql` | Adds status buildup per affinity and level; `passive_effect` becomes `special_effect` |
 | `008_talismans.sql` | Adds the `talismans` table (filled by `import_talismans.py`) |
+| `013_key_items.sql` | Adds the `key_items` table (filled by `import_key_items.py`) |
 
 ## Author
 

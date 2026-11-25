@@ -79,6 +79,9 @@
     <Compile Include="DetailedView.Designer.cs">
       <DependentUpon>DetailedView.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeyItemView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -507,4 +507,49 @@
   <data name="UpgradeCategory_ghost_glovewort" xml:space="preserve">
     <value>Ghost Gloveworts</value>
   </data>
+  <data name="AllKeyItems" xml:space="preserve">
+    <value>All Key Items</value>
+  </data>
+  <data name="KeyItemNotFound" xml:space="preserve">
+    <value>Key item not found.</value>
+  </data>
+  <data name="NoKeyItemsImported" xml:space="preserve">
+    <value>No key items imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="KeyItemCategory_great_rune" xml:space="preserve">
+    <value>Great Runes</value>
+  </data>
+  <data name="KeyItemCategory_container" xml:space="preserve">
+    <value>Pots &amp; Pouches</value>
+  </data>
+  <data name="KeyItemCategory_key" xml:space="preserve">
+    <value>Keys &amp; Medallions</value>
+  </data>
+  <data name="KeyItemCategory_quest" xml:space="preserve">
+    <value>Quest Items</value>
+  </data>
+  <data name="KeyItemCategory_tool" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="KeyItemCategory_cookbook" xml:space="preserve">
+    <value>Cookbooks</value>
+  </data>
+  <data name="KeyItemCategory_map" xml:space="preserve">
+    <value>Maps</value>
+  </data>
+  <data name="KeyItemCategory_bell_bearing" xml:space="preserve">
+    <value>Bell Bearings</value>
+  </data>
+  <data name="KeyItemCategory_scroll" xml:space="preserve">
+    <value>Scrolls &amp; Prayerbooks</value>
+  </data>
+  <data name="Field_unlocks_bell_bearing" xml:space="preserve">
+    <value>Twin Maiden Husks sell</value>
+  </data>
+  <data name="PriceRunes" xml:space="preserve">
+    <value>{0} runes</value>
+  </data>
+  <data name="Field_unlocks_cookbook" xml:space="preserve">
+    <value>Recipes</value>
+  </data>
 </root>

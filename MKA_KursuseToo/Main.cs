@@ -83,17 +83,29 @@ namespace MKA_KursuseToo
                     TitleKey = nameof(Resources.CategoryUpgradeMaterials),
                     CountSql = "SELECT COUNT(*) FROM upgrade_materials;",
                     SearchSql = @"SELECT id AS Id, name AS Name FROM upgrade_materials
-                                  WHERE name LIKE @search ESCAPE '' ORDER BY name;",
-                    Open = () => NavigateTo(ShowUpgradeMaterialCategories),
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(UpgradeMaterialCategory, "upgrade_materials", "UpgradeCategory_",
+                                                            Resources.AllUpgradeMaterials, Resources.NoUpgradeMaterialsImported)),
                     OpenItem = OpenUpgradeMaterial
                 },
-                Placeholder(nameof(Resources.CategoryKeyItems))
+                new Category
+                {
+                    Kind = "key_item",
+                    TitleKey = nameof(Resources.CategoryKeyItems),
+                    CountSql = "SELECT COUNT(*) FROM key_items;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM key_items
+                                  WHERE name LIKE @search ESCAPE '\' ORDER BY name;",
+                    Open = () => NavigateTo(() => ShowKinds(KeyItemCategory, "key_items", "KeyItemCategory_",
+                                                            Resources.AllKeyItems, Resources.NoKeyItemsImported)),
+                    OpenItem = OpenKeyItem
+                }
             };
         }
 
         private Category WeaponCategory => _categories.First(c => c.Kind == "weapon");
         private Category TalismanCategory => _categories.First(c => c.Kind == "talisman");
         private Category UpgradeMaterialCategory => _categories.First(c => c.Kind == "upgrade_material");
+        private Category KeyItemCategory => _categories.First(c => c.Kind == "key_item");
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -274,44 +286,44 @@ namespace MKA_KursuseToo
                       Resources.NoTalismansImported);
         }
 
-        // Upgrade materials page: "All Upgrade Materials" plus one button per kind (Smithing Stones, ...),
-        // in the game's inventory order
-        private void ShowUpgradeMaterialCategories()
+        // Page of a category whose table has the game's own kinds (upgrade materials, key items): "All ..." plus
+        // one button per kind (Smithing Stones, Maps, ...), in the game's inventory order. table is a constant
+        // from this file; a kind's button text is the <kindPrefix><kind> resource, e.g. UpgradeCategory_flask.
+        private void ShowKinds(Category category, string table, string kindPrefix, string allTitle, string emptyText)
         {
-            var categories = WeaponDatabase.Query(
-                @"SELECT category, COUNT(*) AS materials
-                  FROM upgrade_materials
-                  GROUP BY category
-                  ORDER BY MIN(sort_id);");
+            var kinds = WeaponDatabase.Query(
+                $@"SELECT category, COUNT(*) AS items
+                   FROM {table}
+                   GROUP BY category
+                   ORDER BY MIN(sort_id);");
 
             var tiles = new List<(string, Action)>
             {
-                (TileText(Resources.AllUpgradeMaterials, Count(UpgradeMaterialCategory.CountSql)),
-                 () => NavigateTo(() => ShowUpgradeMaterials(null, Resources.AllUpgradeMaterials)))
+                (TileText(allTitle, Count(category.CountSql)),
+                 () => NavigateTo(() => ShowKindItems(category, table, null, allTitle, emptyText)))
             };
-            foreach (DataRow category in categories.Rows)
+            foreach (DataRow kind in kinds.Rows)
             {
-                var key = category["category"].ToString();
-                var name = Resources.ResourceManager.GetString("UpgradeCategory_" + key, Resources.Culture) ?? key;
-                tiles.Add((TileText(name, Convert.ToInt32(category["materials"])),
-                           () => NavigateTo(() => ShowUpgradeMaterials(key, name))));
+                var key = kind["category"].ToString();
+                var name = Resources.ResourceManager.GetString(kindPrefix + key, Resources.Culture) ?? key;
+                tiles.Add((TileText(name, Convert.ToInt32(kind["items"])),
+                           () => NavigateTo(() => ShowKindItems(category, table, key, name, emptyText))));
             }
 
-            ShowTiles(Resources.CategoryUpgradeMaterials, Theme.BoldFont, new Size(180, 64), tiles);
+            ShowTiles(category.Title, Theme.BoldFont, new Size(180, 64), tiles);
         }
 
-        // All upgrade materials (category null) or those of one kind, in the game's inventory order
+        // All items of such a category (kind null) or those of one kind, in the game's inventory order
         // so e.g. Smithing Stone [1] to [8] stay in sequence
-        private void ShowUpgradeMaterials(string category, string heading)
+        private void ShowKindItems(Category category, string table, string kind, string heading, string emptyText)
         {
-            var materials = WeaponDatabase.Query(
-                @"SELECT id AS Id, name AS Name FROM upgrade_materials
-                  WHERE @category IS NULL OR category = @category
-                  ORDER BY sort_id, name;",
-                new Dictionary<string, object> { { "@category", (object)category ?? DBNull.Value } });
+            var items = WeaponDatabase.Query(
+                $@"SELECT id AS Id, name AS Name FROM {table}
+                   WHERE @category IS NULL OR category = @category
+                   ORDER BY sort_id, name;",
+                new Dictionary<string, object> { { "@category", (object)kind ?? DBNull.Value } });
 
-            ShowItems($"{Resources.CategoryUpgradeMaterials} › {heading}", new[] { (UpgradeMaterialCategory, materials) },
-                      false, Resources.NoUpgradeMaterialsImported);
+            ShowItems($"{category.Title} › {heading}", new[] { (category, items) }, false, emptyText);
         }
 
         // Search results, grouped by category: "Weapons (10)" with its matches, then "Talismans (1)", ...
@@ -517,5 +529,8 @@ namespace MKA_KursuseToo
 
         private void OpenUpgradeMaterial(int id) =>
             NavigateTo(() => ShowDetails(Resources.CategoryUpgradeMaterials, new UpgradeMaterialView(id)));
+
+        private void OpenKeyItem(int id) =>
+            NavigateTo(() => ShowDetails(Resources.CategoryKeyItems, new KeyItemView(id)));
     }
 }
