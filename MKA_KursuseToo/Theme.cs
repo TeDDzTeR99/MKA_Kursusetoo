@@ -106,15 +106,6 @@ namespace MKA_KursuseToo
             grid.RowTemplate.Height = 30;
         }
 
-        // Clickable link columns in gold, underlined on hover
-        public static void StyleLinkColumn(DataGridViewLinkColumn column)
-        {
-            column.LinkColor = Accent;
-            column.ActiveLinkColor = AccentHover;
-            column.VisitedLinkColor = Accent;
-            column.LinkBehavior = LinkBehavior.HoverUnderline;
-        }
-
         // Windows 10 (1809+) and 11 can draw the title bar dark. Older Windows just ignores this.
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int value, int size);

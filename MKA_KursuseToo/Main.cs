@@ -16,7 +16,7 @@ namespace MKA_KursuseToo
         // (e.g. armor), add one entry to the list in the constructor, or fill in its placeholder.
         private sealed class Category
         {
-            public string Kind;             // stored in each grid row, so a click knows which details window to open
+            public string Kind;             // identifies the category in code, e.g. "weapon"
             public string TitleKey;         // resource name of the title, e.g. "CategoryWeapons"
             public string CountSql;         // number of items, shown on the home page button
             public string SearchSql;        // must return Id and Name; @search is the LIKE pattern
@@ -77,35 +77,29 @@ namespace MKA_KursuseToo
                 Placeholder(nameof(Resources.CategorySpiritAshes)),
                 Placeholder(nameof(Resources.CategoryConsumables)),
                 Placeholder(nameof(Resources.CategoryCraftingMaterials)),
-                Placeholder(nameof(Resources.CategoryUpgradeMaterials)),
+                new Category
+                {
+                    Kind = "upgrade_material",
+                    TitleKey = nameof(Resources.CategoryUpgradeMaterials),
+                    CountSql = "SELECT COUNT(*) FROM upgrade_materials;",
+                    SearchSql = @"SELECT id AS Id, name AS Name FROM upgrade_materials
+                                  WHERE name LIKE @search ESCAPE '' ORDER BY name;",
+                    Open = () => NavigateTo(ShowUpgradeMaterialCategories),
+                    OpenItem = OpenUpgradeMaterial
+                },
                 Placeholder(nameof(Resources.CategoryKeyItems))
             };
         }
 
         private Category WeaponCategory => _categories.First(c => c.Kind == "weapon");
         private Category TalismanCategory => _categories.First(c => c.Kind == "talisman");
+        private Category UpgradeMaterialCategory => _categories.First(c => c.Kind == "upgrade_material");
 
         private void Main_Load(object sender, EventArgs e)
         {
             ApplyTexts();
 
-            // The list grid: hidden Id and Kind columns, and a clickable Name column.
-            // Rows are added by hand, so a list can mix section headings and items.
-            DataOutput.ReadOnly = true;
-            DataOutput.AllowUserToAddRows = false;
-            DataOutput.AllowUserToDeleteRows = false;
-            DataOutput.AllowUserToResizeRows = false;
-            DataOutput.RowHeadersVisible = false;
-            DataOutput.ColumnHeadersVisible = false;   // the page heading says what is listed
-            DataOutput.MultiSelect = false;
-            DataOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DataOutput.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", Visible = false });
-            DataOutput.Columns.Add(new DataGridViewTextBoxColumn { Name = "Kind", Visible = false });
-            var nameColumn = new DataGridViewLinkColumn { Name = "Name", UseColumnTextForLinkValue = false };
-            DataOutput.Columns.Add(nameColumn);
-
             Theme.Apply(this);
-            Theme.StyleLinkColumn(nameColumn);
             lblTitle.Font = Theme.TitleFont;
             lblTitle.ForeColor = Theme.Accent;
             lblPage.ForeColor = Theme.TextMuted;
@@ -280,6 +274,46 @@ namespace MKA_KursuseToo
                       Resources.NoTalismansImported);
         }
 
+        // Upgrade materials page: "All Upgrade Materials" plus one button per kind (Smithing Stones, ...),
+        // in the game's inventory order
+        private void ShowUpgradeMaterialCategories()
+        {
+            var categories = WeaponDatabase.Query(
+                @"SELECT category, COUNT(*) AS materials
+                  FROM upgrade_materials
+                  GROUP BY category
+                  ORDER BY MIN(sort_id);");
+
+            var tiles = new List<(string, Action)>
+            {
+                (TileText(Resources.AllUpgradeMaterials, Count(UpgradeMaterialCategory.CountSql)),
+                 () => NavigateTo(() => ShowUpgradeMaterials(null, Resources.AllUpgradeMaterials)))
+            };
+            foreach (DataRow category in categories.Rows)
+            {
+                var key = category["category"].ToString();
+                var name = Resources.ResourceManager.GetString("UpgradeCategory_" + key, Resources.Culture) ?? key;
+                tiles.Add((TileText(name, Convert.ToInt32(category["materials"])),
+                           () => NavigateTo(() => ShowUpgradeMaterials(key, name))));
+            }
+
+            ShowTiles(Resources.CategoryUpgradeMaterials, Theme.BoldFont, new Size(180, 64), tiles);
+        }
+
+        // All upgrade materials (category null) or those of one kind, in the game's inventory order
+        // so e.g. Smithing Stone [1] to [8] stay in sequence
+        private void ShowUpgradeMaterials(string category, string heading)
+        {
+            var materials = WeaponDatabase.Query(
+                @"SELECT id AS Id, name AS Name FROM upgrade_materials
+                  WHERE @category IS NULL OR category = @category
+                  ORDER BY sort_id, name;",
+                new Dictionary<string, object> { { "@category", (object)category ?? DBNull.Value } });
+
+            ShowItems($"{Resources.CategoryUpgradeMaterials} › {heading}", new[] { (UpgradeMaterialCategory, materials) },
+                      false, Resources.NoUpgradeMaterialsImported);
+        }
+
         // Search results, grouped by category: "Weapons (10)" with its matches, then "Talismans (1)", ...
         private void ShowSearchResults(string searchText)
         {
@@ -298,98 +332,103 @@ namespace MKA_KursuseToo
 
         // ---------- Drawing the pages ----------
 
-        // Fills the tile panel with buttons and shows it instead of the grid.
-        // A tile with no Click action is drawn greyed out and does nothing.
+        // Every page is a panel of cards: categories, sub-categories (weapon types, ...) and items alike.
+        // Item cards are all drawn by AddCard, so a picture can later be added there in one place.
+        private static readonly Size ItemCardSize = new Size(180, 72);
+
+        // A page of category / sub-category tiles. A tile with no Click action is drawn greyed out and does nothing.
         private void ShowTiles(string heading, Font font, Size size, IEnumerable<(string Text, Action Click)> tiles)
         {
-            lblPage.Text = heading;
-
-            pnlTiles.SuspendLayout();
-            // Controls.Clear() doesn't free the old buttons, so dispose them
-            foreach (var old in pnlTiles.Controls.Cast<Control>().ToList())
-                old.Dispose();
-
+            BeginCards(heading);
             foreach (var tile in tiles)
-            {
-                // UseMnemonic off, so "&" (e.g. "Arrows & Bolts") is shown instead of being read as a shortcut key
-                var button = new Button { Text = tile.Text, Size = size, Margin = new Padding(8), UseMnemonic = false };
-                Theme.StyleButton(button);
-                button.Font = FontThatFits(tile.Text, font, size.Width - 16);   // 16 = button's inner padding
-
-                var click = tile.Click;
-                if (click == null)
-                {
-                    // Not Enabled = false: Windows would draw the text in a dark grey that can't be read
-                    // on the dark theme. Instead: muted colours, no hover effect, not reachable with Tab.
-                    button.ForeColor = Theme.TextMuted;
-                    button.BackColor = Theme.Surface;
-                    button.FlatAppearance.BorderColor = Theme.Border;
-                    button.FlatAppearance.MouseOverBackColor = Theme.Surface;
-                    button.FlatAppearance.MouseDownBackColor = Theme.Surface;
-                    button.Cursor = Cursors.Default;
-                    button.TabStop = false;
-                }
-                else
-                {
-                    // Run the click after the button's own event has finished: the next page disposes this button
-                    button.Click += (s, e) => BeginInvoke(click);
-                }
-
-                pnlTiles.Controls.Add(button);
-            }
-            pnlTiles.ResumeLayout();
-
-            DataOutput.Visible = false;
-            pnlTiles.Visible = true;
-            pnlTiles.AutoScrollPosition = Point.Empty;
+                AddCard(tile.Text, font, size, tile.Click);
+            EndCards();
         }
 
-        // Fills the grid with items and shows it instead of the tiles.
-        // With withHeadings, each group starts with a heading row such as "Weapons (10)".
-        // If there are no items at all, emptyNote (when given) is shown in the list instead.
+        // A page of item cards; clicking one opens its details window.
+        // With withHeadings, each group starts with a full-width heading such as "Weapons (10)".
+        // If there are no items at all, emptyNote (when given) is shown instead.
         private void ShowItems(string heading, IEnumerable<(Category Category, DataTable Items)> groups,
                                bool withHeadings, string emptyNote = null)
         {
-            lblPage.Text = heading;
-
-            DataOutput.Rows.Clear();
+            BeginCards(heading);
+            var any = false;
             foreach (var group in groups)
             {
                 if (withHeadings)
-                    AddHeadingRow($"{group.Category.Title} ({group.Items.Rows.Count})");
+                    AddCardHeading($"{group.Category.Title} ({group.Items.Rows.Count})", Theme.Accent, Theme.BoldFont);
 
+                var open = group.Category.OpenItem;
                 foreach (DataRow item in group.Items.Rows)
-                    DataOutput.Rows.Add(item["Id"], group.Category.Kind, item["Name"]);
+                {
+                    var id = Convert.ToInt32(item["Id"]);
+                    AddCard(item["Name"].ToString(), Theme.BodyFont, ItemCardSize, () => open(id));
+                    any = true;
+                }
             }
 
-            if (DataOutput.Rows.Count == 0 && emptyNote != null)
-                AddTextRow(emptyNote, Theme.Surface, Theme.TextMuted, Theme.BodyFont);
-
-            pnlTiles.Visible = false;
-            DataOutput.Visible = true;
-            if (DataOutput.Rows.Count > 0)
-                DataOutput.FirstDisplayedScrollingRowIndex = 0;
-
-            // Showing the grid selects its first row; nothing should look selected until the user clicks
-            DataOutput.CurrentCell = null;
-            DataOutput.ClearSelection();
+            if (!any && emptyNote != null)
+                AddCardHeading(emptyNote, Theme.TextMuted, Theme.BodyFont);
+            EndCards();
         }
 
-        // A section heading inside the grid, e.g. "Weapons (10)"
-        private void AddHeadingRow(string text) => AddTextRow(text, Theme.HeaderBack, Theme.Accent, Theme.BoldFont);
-
-        // A row of plain text instead of a link, with no Kind, so clicking it opens nothing
-        private void AddTextRow(string text, Color back, Color fore, Font font)
+        private void BeginCards(string heading)
         {
-            var row = DataOutput.Rows[DataOutput.Rows.Add()];
-            row.Cells["Name"] = new DataGridViewTextBoxCell { Value = text };
+            lblPage.Text = heading;
+            pnlTiles.SuspendLayout();
+            // Controls.Clear() doesn't free the old controls, so dispose them
+            foreach (var old in pnlTiles.Controls.Cast<Control>().ToList())
+                old.Dispose();
+        }
 
-            var style = row.DefaultCellStyle;
-            style.BackColor = back;
-            style.ForeColor = fore;
-            style.SelectionBackColor = back;
-            style.SelectionForeColor = fore;
-            style.Font = font;
+        private void EndCards()
+        {
+            pnlTiles.ResumeLayout();
+            pnlTiles.AutoScrollPosition = Point.Empty;
+        }
+
+        private void AddCard(string text, Font font, Size size, Action click)
+        {
+            // UseMnemonic off, so "&" (e.g. "Arrows & Bolts") is shown instead of being read as a shortcut key
+            var button = new Button { Text = text, Size = size, Margin = new Padding(8), UseMnemonic = false };
+            Theme.StyleButton(button);
+            button.Font = FontThatFits(text, font, size.Width - 16);   // 16 = button's inner padding
+
+            if (click == null)
+            {
+                // Not Enabled = false: Windows would draw the text in a dark grey that can't be read
+                // on the dark theme. Instead: muted colours, no hover effect, not reachable with Tab.
+                button.ForeColor = Theme.TextMuted;
+                button.BackColor = Theme.Surface;
+                button.FlatAppearance.BorderColor = Theme.Border;
+                button.FlatAppearance.MouseOverBackColor = Theme.Surface;
+                button.FlatAppearance.MouseDownBackColor = Theme.Surface;
+                button.Cursor = Cursors.Default;
+                button.TabStop = false;
+            }
+            else
+            {
+                // Run the click after the button's own event has finished: the next page disposes this button
+                button.Click += (s, e) => BeginInvoke(click);
+            }
+
+            pnlTiles.Controls.Add(button);
+        }
+
+        // Text on its own line between cards, e.g. a search result group heading
+        private void AddCardHeading(string text, Color color, Font font)
+        {
+            // Start a new line before and after it
+            if (pnlTiles.Controls.Count > 0)
+                pnlTiles.SetFlowBreak(pnlTiles.Controls[pnlTiles.Controls.Count - 1], true);
+
+            var label = new Label
+            {
+                Text = text, AutoSize = true, ForeColor = color, Font = font, UseMnemonic = false,
+                Margin = new Padding(8, 12, 8, 0)
+            };
+            pnlTiles.Controls.Add(label);
+            pnlTiles.SetFlowBreak(label, true);
         }
 
         // Smaller versions of the tile fonts, made once and reused (a Font holds a Windows resource)
@@ -438,22 +477,6 @@ namespace MKA_KursuseToo
             return text.Replace(@"\", @"\\").Replace("%", @"\%").Replace("_", @"\_");
         }
 
-        private void DataOutput_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Only a click on an item's name (the link) opens it; heading rows have no Kind
-            if (e.RowIndex < 0 || DataOutput.Columns[e.ColumnIndex].Name != "Name")
-                return;
-
-            // Heading and note rows have no Kind. Check that first: placeholder categories have no Kind
-            // either, so a null Kind would otherwise match one of them.
-            var row = DataOutput.Rows[e.RowIndex];
-            if (!(row.Cells["Kind"].Value is string kind))
-                return;
-
-            var category = _categories.FirstOrDefault(c => c.Kind == kind);
-            category?.OpenItem?.Invoke(Convert.ToInt32(row.Cells["Id"].Value));
-        }
-
         private void OpenWeapon(int id)
         {
             using (var detailsForm = new DetailedView(id))
@@ -467,6 +490,14 @@ namespace MKA_KursuseToo
             using (var talismanForm = new TalismanView(id))
             {
                 talismanForm.ShowDialog(this);
+            }
+        }
+
+        private void OpenUpgradeMaterial(int id)
+        {
+            using (var materialForm = new UpgradeMaterialView(id))
+            {
+                materialForm.ShowDialog(this);
             }
         }
     }

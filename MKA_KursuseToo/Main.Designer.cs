@@ -37,9 +37,7 @@
             this.Search = new System.Windows.Forms.Button();
             this.lblPage = new System.Windows.Forms.Label();
             this.pnlTiles = new System.Windows.Forms.FlowLayoutPanel();
-            this.DataOutput = new System.Windows.Forms.DataGridView();
             this.pnlToolbar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataOutput)).BeginInit();
             this.SuspendLayout();
             //
             // lblTitle
@@ -132,21 +130,6 @@
             this.pnlTiles.Size = new System.Drawing.Size(820, 580);
             this.pnlTiles.TabIndex = 3;
             //
-            // DataOutput
-            //
-            this.DataOutput.AllowUserToAddRows = false;
-            this.DataOutput.AllowUserToDeleteRows = false;
-            this.DataOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DataOutput.Location = new System.Drawing.Point(0, 140);
-            this.DataOutput.Name = "DataOutput";
-            this.DataOutput.ReadOnly = true;
-            this.DataOutput.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DataOutput.Size = new System.Drawing.Size(820, 580);
-            this.DataOutput.TabIndex = 4;
-            this.DataOutput.Visible = false;
-            this.DataOutput.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataOutput_CellContentClick);
-            //
             // Main
             //
             this.AcceptButton = this.Search;
@@ -154,8 +137,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(820, 720);
             // Order matters for docking: Fill controls first, then Top controls (last added = top-most).
-            // Only one of pnlTiles and DataOutput is visible at a time.
-            this.Controls.Add(this.DataOutput);
             this.Controls.Add(this.pnlTiles);
             this.Controls.Add(this.lblPage);
             this.Controls.Add(this.pnlToolbar);
@@ -169,7 +150,6 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.pnlToolbar.ResumeLayout(false);
             this.pnlToolbar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataOutput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +166,5 @@
         private System.Windows.Forms.Button Search;
         private System.Windows.Forms.Label lblPage;
         private System.Windows.Forms.FlowLayoutPanel pnlTiles;
-        private System.Windows.Forms.DataGridView DataOutput;
     }
 }

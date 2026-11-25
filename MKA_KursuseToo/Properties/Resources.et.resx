@@ -374,4 +374,43 @@
   <data name="Stat_every" xml:space="preserve">
     <value>iga {0} s järel</value>
   </data>
+  <data name="UpgradeMaterialWindowTitle" xml:space="preserve">
+    <value>Täiustusmaterjali andmed</value>
+  </data>
+  <data name="UpgradeMaterialNotFound" xml:space="preserve">
+    <value>Täiustusmaterjali ei leitud.</value>
+  </data>
+  <data name="NoUpgradeMaterialsImported" xml:space="preserve">
+    <value>Täiustusmaterjale pole veel imporditud. README-s on kirjas, kuidas neid mängu failidest importida.</value>
+  </data>
+  <data name="Field_upgrades_weapon" xml:space="preserve">
+    <value>Relva täiustamine</value>
+  </data>
+  <data name="Field_upgrades_somber_weapon" xml:space="preserve">
+    <value>Sünge relva täiustamine</value>
+  </data>
+  <data name="Field_upgrades_spirit_ash" xml:space="preserve">
+    <value>Vaimutuha täiustamine</value>
+  </data>
+  <data name="AllUpgradeMaterials" xml:space="preserve">
+    <value>Kõik täiustusmaterjalid</value>
+  </data>
+  <data name="UpgradeCategory_flask" xml:space="preserve">
+    <value>Pudeli täiustused</value>
+  </data>
+  <data name="UpgradeCategory_blessing" xml:space="preserve">
+    <value>Õnnistused</value>
+  </data>
+  <data name="UpgradeCategory_smithing_stone" xml:space="preserve">
+    <value>Sepakivid</value>
+  </data>
+  <data name="UpgradeCategory_somber_smithing_stone" xml:space="preserve">
+    <value>Sünged sepakivid</value>
+  </data>
+  <data name="UpgradeCategory_grave_glovewort" xml:space="preserve">
+    <value>Hauakindalehed</value>
+  </data>
+  <data name="UpgradeCategory_ghost_glovewort" xml:space="preserve">
+    <value>Vaimukindalehed</value>
+  </data>
 </root>

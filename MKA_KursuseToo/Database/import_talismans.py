@@ -67,10 +67,11 @@ def read_texts(folder, prefix):
 def read_param(csv_path):
     """Reads the EquipParamAccessory CSV. Returns a list of dicts with lower-case keys."""
     with open(csv_path, newline="", encoding="utf-8-sig") as f:
-        sample = f.read(4096)
+        # The delimiter is whichever of , ; tab the header uses most. (csv.Sniffer needs whole
+        # rows in its sample and fails on wide params like EquipParamGoods.)
+        header = f.readline()
         f.seek(0)
-        dialect = csv.Sniffer().sniff(sample, delimiters=",;\t")
-        reader = csv.DictReader(f, dialect=dialect)
+        reader = csv.DictReader(f, delimiter=max(",;\t", key=header.count))
         return [{(k or "").strip().lower(): (v or "").strip() for k, v in row.items()} for row in reader]
 
 

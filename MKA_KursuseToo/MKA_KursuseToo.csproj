@@ -86,7 +86,13 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="InfoboxView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TalismanView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpgradeMaterialView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Theme.cs" />

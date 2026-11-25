@@ -199,6 +199,50 @@ namespace MKA_KursuseToo.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to: Upgrade Material Details
+        /// </summary>
+        internal static string UpgradeMaterialWindowTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("UpgradeMaterialWindowTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: Upgrade material not found.
+        /// </summary>
+        internal static string UpgradeMaterialNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("UpgradeMaterialNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: No upgrade materials imported yet. ...
+        /// </summary>
+        internal static string NoUpgradeMaterialsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("NoUpgradeMaterialsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to: All Upgrade Materials
+        /// </summary>
+        internal static string AllUpgradeMaterials
+        {
+            get
+            {
+                return ResourceManager.GetString("AllUpgradeMaterials", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to: every {0} s
         /// </summary>
         internal static string Stat_every

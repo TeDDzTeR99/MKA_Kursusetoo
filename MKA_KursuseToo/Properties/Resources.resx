@@ -477,4 +477,43 @@
     <value>every {0} s</value>
     <comment>Interval after a regeneration amount, e.g. "+2 every 1 s"</comment>
   </data>
+  <data name="UpgradeMaterialWindowTitle" xml:space="preserve">
+    <value>Upgrade Material Details</value>
+  </data>
+  <data name="UpgradeMaterialNotFound" xml:space="preserve">
+    <value>Upgrade material not found.</value>
+  </data>
+  <data name="NoUpgradeMaterialsImported" xml:space="preserve">
+    <value>No upgrade materials imported yet. The README explains how to import them from the game files.</value>
+  </data>
+  <data name="Field_upgrades_weapon" xml:space="preserve">
+    <value>Weapon upgrade</value>
+  </data>
+  <data name="Field_upgrades_somber_weapon" xml:space="preserve">
+    <value>Somber weapon upgrade</value>
+  </data>
+  <data name="Field_upgrades_spirit_ash" xml:space="preserve">
+    <value>Spirit ash upgrade</value>
+  </data>
+  <data name="AllUpgradeMaterials" xml:space="preserve">
+    <value>All Upgrade Materials</value>
+  </data>
+  <data name="UpgradeCategory_flask" xml:space="preserve">
+    <value>Flask Upgrades</value>
+  </data>
+  <data name="UpgradeCategory_blessing" xml:space="preserve">
+    <value>Blessings</value>
+  </data>
+  <data name="UpgradeCategory_smithing_stone" xml:space="preserve">
+    <value>Smithing Stones</value>
+  </data>
+  <data name="UpgradeCategory_somber_smithing_stone" xml:space="preserve">
+    <value>Somber Smithing Stones</value>
+  </data>
+  <data name="UpgradeCategory_grave_glovewort" xml:space="preserve">
+    <value>Grave Gloveworts</value>
+  </data>
+  <data name="UpgradeCategory_ghost_glovewort" xml:space="preserve">
+    <value>Ghost Gloveworts</value>
+  </data>
 </root>
